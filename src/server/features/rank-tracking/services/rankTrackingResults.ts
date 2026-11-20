@@ -1,8 +1,10 @@
+import { z } from "zod";
 import { RankTrackingRepository } from "@/server/features/rank-tracking/repositories/RankTrackingRepository";
 import { toRankTrackingTimestamp } from "@/server/features/rank-tracking/rankTrackingTimestamps";
 import { AppError } from "@/server/lib/errors";
 import type { ComparePeriod } from "@/types/schemas/rank-tracking-search";
 import type {
+  RankTrackingCompetitorResult,
   RankTrackingDeviceResult,
   RankTrackingRow,
 } from "@/types/schemas/rank-tracking";
@@ -62,11 +64,23 @@ export async function getLatestResults(
   }
 
   const previousPositions = new Map<string, number | null>();
-  for (const snap of comparisonSnapshots) {
-    previousPositions.set(
-      `${snap.trackingKeywordId}:${snap.device}`,
-      snap.position,
+  // Each competitor's position in the same comparison snapshot, by domain.
+  const previousCompetitors = new Map<string, Map<string, number | null>>();
+  const setPrevious = (snap: SnapshotRow) => {
+    const key = `${snap.trackingKeywordId}:${snap.device}`;
+    previousPositions.set(key, snap.position);
+    previousCompetitors.set(
+      key,
+      new Map(
+        parseCompetitorPositions(snap.competitorPositions).map((c) => [
+          c.domain,
+          c.position,
+        ]),
+      ),
     );
+  };
+  for (const snap of comparisonSnapshots) {
+    setPrevious(snap);
   }
 
   // Fallback: for keyword+device combos with no comparison snapshot before
@@ -89,7 +103,7 @@ export async function getLatestResults(
     for (const snap of earliestSnapshots) {
       const key = `${snap.trackingKeywordId}:${snap.device}`;
       if (!previousPositions.has(key)) {
-        previousPositions.set(key, snap.position);
+        setPrevious(snap);
       }
     }
   }
@@ -123,11 +137,11 @@ export async function getLatestResults(
   for (const snapshot of currentSnapshots) {
     const row = rows.get(snapshot.trackingKeywordId);
     if (!row) continue;
+    const key = `${snapshot.trackingKeywordId}:${snapshot.device}`;
     row[snapshot.device] = toDeviceResult(
       snapshot,
-      previousPositions.get(
-        `${snapshot.trackingKeywordId}:${snapshot.device}`,
-      ) ?? null,
+      previousPositions.get(key) ?? null,
+      previousCompetitors.get(key),
     );
 
     if (!latestStartedAt || snapshot.checkedAt > latestStartedAt) {
@@ -169,6 +183,26 @@ function parseSerpFeatures(raw: string | null): string[] {
   return [];
 }
 
+// Written by the rank check itself, but validated here since it is stored as
+// text: a row that does not parse shows no competitors rather than failing.
+const competitorPositionsSchema = z.array(
+  z.object({
+    domain: z.string(),
+    position: z.number().nullable(),
+    url: z.string().nullable(),
+  }),
+);
+
+function parseCompetitorPositions(raw: string | null) {
+  if (!raw) return [];
+  try {
+    const parsed = competitorPositionsSchema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : [];
+  } catch {
+    return [];
+  }
+}
+
 function createEmptyDeviceResult(
   previousPosition: number | null,
 ): RankTrackingDeviceResult {
@@ -177,6 +211,7 @@ function createEmptyDeviceResult(
     previousPosition,
     rankingUrl: null,
     serpFeatures: [],
+    competitors: [],
     checkedAt: null,
   };
 }
@@ -184,12 +219,22 @@ function createEmptyDeviceResult(
 function toDeviceResult(
   snapshot: SnapshotRow,
   previousPosition: number | null,
+  previousCompetitors: Map<string, number | null> | undefined,
 ): RankTrackingDeviceResult {
+  const competitors: RankTrackingCompetitorResult[] = parseCompetitorPositions(
+    snapshot.competitorPositions,
+  ).map((c) => ({
+    domain: c.domain,
+    position: c.position,
+    previousPosition: previousCompetitors?.get(c.domain) ?? null,
+    url: c.url,
+  }));
   return {
     position: snapshot.position,
     previousPosition,
     rankingUrl: snapshot.url,
     serpFeatures: parseSerpFeatures(snapshot.serpFeatures),
+    competitors,
     checkedAt: snapshot.checkedAt,
   };
 }

@@ -169,6 +169,7 @@ export async function upsertSnapshots(
           position: snapshot.position,
           url: snapshot.url,
           serpFeatures: snapshot.serpFeatures,
+          competitorPositions: snapshot.competitorPositions,
         },
       }),
   );

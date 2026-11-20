@@ -114,6 +114,41 @@ export function DeviceRankCell({
   );
 }
 
+/** Each project competitor's position on the same results page, with its change. */
+export function CompetitorPositionsCell({
+  competitors,
+}: {
+  competitors: RankTrackingDeviceResult["competitors"];
+}) {
+  if (competitors.length === 0) {
+    return <span className="text-xs text-muted-foreground">-</span>;
+  }
+  return (
+    <div className="flex flex-col gap-1">
+      {competitors.map((c) => (
+        <div key={c.domain} className="flex items-center justify-between gap-2">
+          <span
+            className="max-w-32 truncate text-xs text-muted-foreground"
+            title={c.url ?? c.domain}
+          >
+            {c.domain}
+          </span>
+          <DeviceRankCell
+            result={{
+              position: c.position,
+              previousPosition: c.previousPosition,
+              rankingUrl: c.url,
+              serpFeatures: [],
+              competitors: [],
+              checkedAt: null,
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function DeviceUrlCell({
   result,
   domain,

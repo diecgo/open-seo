@@ -94,7 +94,7 @@ beforeAll(async () => {
       device TEXT NOT NULL,
       position INTEGER,
       url TEXT,
-      serp_features TEXT,
+      serp_features TEXT, competitor_positions TEXT,
       checked_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
     CREATE UNIQUE INDEX rank_snapshots_run_keyword_device_idx

@@ -46,7 +46,7 @@ beforeAll(async () => {
     );
     CREATE TABLE rank_snapshots (
       id INTEGER PRIMARY KEY, run_id TEXT, tracking_keyword_id TEXT, keyword TEXT,
-      device TEXT, position INTEGER, url TEXT, serp_features TEXT, checked_at TEXT
+      device TEXT, position INTEGER, url TEXT, serp_features TEXT, competitor_positions TEXT, checked_at TEXT
     );
     INSERT INTO rank_tracking_configs (id, project_id) VALUES ('config', 'project');
     INSERT INTO rank_tracking_keywords (id, config_id, keyword)

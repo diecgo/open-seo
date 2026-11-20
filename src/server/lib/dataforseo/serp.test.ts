@@ -176,6 +176,13 @@ describe("rank check task queue", () => {
                 items: [
                   {
                     type: "organic",
+                    rank_group: 1,
+                    rank_absolute: 1,
+                    domain: "shop.rival.com",
+                    url: "https://shop.rival.com/",
+                  },
+                  {
+                    type: "organic",
                     rank_group: 3,
                     rank_absolute: 4,
                     domain: "www.example.com",
@@ -195,6 +202,7 @@ describe("rank check task queue", () => {
       keywordId: "kw-1",
       keyword: "alpha",
       targetDomain: "example.com",
+      competitorDomains: ["rival.com", "absent.com"],
     });
 
     expect(outcome).toEqual({
@@ -205,6 +213,10 @@ describe("rank check task queue", () => {
         position: 3,
         url: "https://www.example.com/page",
         serpFeatures: ["organic"],
+        competitors: [
+          { domain: "rival.com", position: 1, url: "https://shop.rival.com/" },
+          { domain: "absent.com", position: null, url: null },
+        ],
       },
     });
   });

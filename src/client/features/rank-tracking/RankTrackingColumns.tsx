@@ -9,6 +9,7 @@ import { SortableHeader } from "@/client/components/table/SortableHeader";
 import type { RankTrackingRow } from "@/types/schemas/rank-tracking";
 import { formatLocationLabel } from "@/shared/keyword-locations";
 import {
+  CompetitorPositionsCell,
   CpcCell,
   DeviceRankCell,
   DeviceUrlCell,
@@ -35,6 +36,8 @@ const HEADER_TOOLTIPS: Record<string, string> = {
   mobilePosition:
     "Current Google ranking position, showing change from the comparison period",
   url: "The page on your site that ranks for this keyword",
+  competitors:
+    "Where the project's competitors rank on the same Google results page, with their change from the comparison period",
   serp: "Special result features appearing on the search results page (e.g. AI Overview, People Also Ask)",
 };
 
@@ -246,6 +249,27 @@ function makeUrlColumn(
   };
 }
 
+function makeCompetitorsColumn(
+  device: "desktop" | "mobile",
+): ColumnDef<RankTrackingRow> {
+  return {
+    id: device === "desktop" ? "desktopCompetitors" : "mobileCompetitors",
+    enableSorting: false,
+    header: () => (
+      <span
+        className="cursor-help text-xs font-medium tracking-wide uppercase text-muted-foreground"
+        title={HEADER_TOOLTIPS.competitors}
+      >
+        Competitors
+      </span>
+    ),
+    size: 240,
+    cell: ({ row }) => (
+      <CompetitorPositionsCell competitors={row.original[device].competitors} />
+    ),
+  };
+}
+
 function makeSerpColumn(
   device: "desktop" | "mobile",
 ): ColumnDef<RankTrackingRow> {
@@ -272,11 +296,20 @@ function makeSerpColumn(
 export function useRankTrackingColumns(options: {
   showDesktop: boolean;
   showMobile: boolean;
+  /** Adds each device's competitor positions; off when no row has any. */
+  showCompetitors?: boolean;
   domain: string;
   actions?: RankTrackingActions;
   locationName?: string | null;
 }): ColumnDef<RankTrackingRow>[] {
-  const { showDesktop, showMobile, domain, actions, locationName } = options;
+  const {
+    showDesktop,
+    showMobile,
+    showCompetitors = false,
+    domain,
+    actions,
+    locationName,
+  } = options;
   const locationLabel = locationName
     ? formatLocationLabel(locationName, 2)
     : undefined;
@@ -289,10 +322,12 @@ export function useRankTrackingColumns(options: {
     if (showDesktop) {
       cols.push(makeDeviceColumn("desktop"));
       cols.push(makeUrlColumn("desktop", domain));
+      if (showCompetitors) cols.push(makeCompetitorsColumn("desktop"));
     }
     if (showMobile) {
       cols.push(makeDeviceColumn("mobile"));
       cols.push(makeUrlColumn("mobile", domain));
+      if (showCompetitors) cols.push(makeCompetitorsColumn("mobile"));
     }
     cols.push(makeVolumeColumn(locationLabel), kdColumn, cpcColumn);
     if (showDesktop) {
@@ -302,5 +337,12 @@ export function useRankTrackingColumns(options: {
       cols.push(makeSerpColumn("mobile"));
     }
     return cols;
-  }, [showDesktop, showMobile, domain, actions, locationLabel]);
+  }, [
+    showDesktop,
+    showMobile,
+    showCompetitors,
+    domain,
+    actions,
+    locationLabel,
+  ]);
 }

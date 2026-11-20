@@ -128,6 +128,17 @@ const rankTrackerDeviceSchema = z.looseObject({
   previousPosition: z.number().nullable(),
   rankingUrl: z.string().nullable(),
   serpFeatures: z.array(z.string()),
+  // Absent from a server deployed before competitors were tracked.
+  competitors: z
+    .array(
+      z.looseObject({
+        domain: z.string(),
+        position: z.number().nullable(),
+        previousPosition: z.number().nullable(),
+        url: z.string().nullable(),
+      }),
+    )
+    .default([]),
   checkedAt: z.string().nullable(),
 });
 

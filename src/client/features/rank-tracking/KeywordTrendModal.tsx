@@ -328,6 +328,7 @@ export function KeywordTrendModal({
                                     previousPosition: r.previousPosition,
                                     rankingUrl: null,
                                     serpFeatures: [],
+                                    competitors: [],
                                     checkedAt: r.checkedAt,
                                   }}
                                 />

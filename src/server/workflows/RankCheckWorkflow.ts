@@ -12,7 +12,10 @@ import {
 } from "@/server/billing/subscription";
 import { RankTrackingRepository } from "@/server/features/rank-tracking/repositories/RankTrackingRepository";
 import { failRunIfActive } from "@/server/features/rank-tracking/services/rankCheckRunGuards";
-import { runQueuedCheck } from "@/server/workflows/rankCheckPaths";
+import {
+  loadCompetitorDomains,
+  runQueuedCheck,
+} from "@/server/workflows/rankCheckPaths";
 import {
   READ_WINDOW_MS,
   retryRankChecks,
@@ -59,6 +62,8 @@ interface RankCheckParams {
 async function prepareRankCheckKeywords(input: {
   runId: string;
   configId: string;
+  projectId: string;
+  domain: string;
   billingCustomer: BillingCustomerContext;
   devices: RankCheckParams["devices"];
   serpDepth: number;
@@ -130,6 +135,7 @@ async function prepareRankCheckKeywords(input: {
       id: kw.id,
       keyword: kw.keyword,
     })),
+    competitorDomains: await loadCompetitorDomains(input),
     readsEndAt: Date.now() + READ_WINDOW_MS,
   };
 }
@@ -372,6 +378,8 @@ export class RankCheckWorkflow extends WorkflowEntrypoint<
           prepareRankCheckKeywords({
             runId,
             configId,
+            projectId,
+            domain,
             billingCustomer,
             devices,
             serpDepth,
@@ -395,6 +403,7 @@ export class RankCheckWorkflow extends WorkflowEntrypoint<
           devices,
           serpDepth,
           domain,
+          competitorDomains: prepareResult.competitorDomains ?? [], // none in a replayed older prepare
           locationCode,
           languageCode,
           locationName,

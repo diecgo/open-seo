@@ -21,6 +21,32 @@ import {
 import { projectIdSchema } from "@/server/mcp/schemas";
 import { googleSerpUrl } from "@/shared/google-serp-url";
 
+/**
+ * Each competitor's position on the same results page, per device, with the
+ * comparison position: "rival.com desktop 3 (prev 5), mobile — (prev 4)".
+ * A dash is a competitor that was not on the page the check read.
+ */
+function formatCompetitors(row: unknown): string | null {
+  const byDomain = new Map<string, string[]>();
+  for (const device of ["desktop", "mobile"] as const) {
+    const competitors = readPath(row, device, "competitors");
+    if (!Array.isArray(competitors)) continue;
+    for (const c of competitors) {
+      const domain = readPath(c, "domain");
+      if (typeof domain !== "string") continue;
+      const parts = byDomain.get(domain) ?? [];
+      parts.push(
+        `${device} ${formatMcpCell(readPath(c, "position"))} (prev ${formatMcpCell(readPath(c, "previousPosition"))})`,
+      );
+      byDomain.set(domain, parts);
+    }
+  }
+  if (byDomain.size === 0) return null;
+  return [...byDomain]
+    .map(([domain, parts]) => `${domain} ${parts.join(", ")}`)
+    .join("; ");
+}
+
 const RANK_RESULT_COLUMNS: McpTableColumn<unknown>[] = [
   // Put the removal id before provider text that may be truncated.
   {
@@ -49,6 +75,10 @@ const RANK_RESULT_COLUMNS: McpTableColumn<unknown>[] = [
     value: (row) =>
       readPath(row, "desktop", "rankingUrl") ??
       readPath(row, "mobile", "rankingUrl"),
+  },
+  {
+    header: "competitors",
+    value: formatCompetitors,
   },
   { header: "google serp", value: (row) => readPath(row, "googleSerpUrl") },
 ];
@@ -163,7 +193,7 @@ export const getRankTrackerTool = {
   config: {
     title: "Get rank tracker",
     description:
-      "Read a project's rank trackers and their latest Google positions. Without trackerId, lists every tracker in the project. With trackerId, returns its config and a page of the latest keyword positions, pinned keywords first, each with the trackingKeywordId used for removals and pins and a googleSerpUrl that opens a live Google search for the keyword in its market; use offset and limit for more keywords. lastCheckedAt shows how fresh a position is. A null position means the domain was not found in the results the check returned, which can be fewer than serpDepth, so it does not prove the domain ranks below serpDepth. Uses no credits. When no tracker exists, use create_rank_tracker; to manage one, use add_rank_tracking_keywords, remove_rank_tracking_keywords, pin_rank_tracking_keywords, or run_rank_tracker; for positions over time, use get_rank_history.",
+      "Read a project's rank trackers and their latest Google positions. Without trackerId, lists every tracker in the project. With trackerId, returns its config and a page of the latest keyword positions, pinned keywords first, each with the trackingKeywordId used for removals and pins and a googleSerpUrl that opens a live Google search for the keyword in its market; use offset and limit for more keywords. lastCheckedAt shows how fresh a position is. A null position means the domain was not found in the results the check returned, which can be fewer than serpDepth, so it does not prove the domain ranks below serpDepth. Each keyword also lists the project's competitors (from project context) with their positions on the same results page, read at no extra cost; a competitor appears after the first check that ran while it was in project context. Uses no credits. When no tracker exists, use create_rank_tracker; to manage one, use add_rank_tracking_keywords, remove_rank_tracking_keywords, pin_rank_tracking_keywords, or run_rank_tracker; for positions over time, use get_rank_history.",
     inputSchema,
     outputSchema: z
       .object({

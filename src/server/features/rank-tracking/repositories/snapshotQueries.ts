@@ -238,6 +238,7 @@ export async function getSnapshotsForConfig(
       position: rankSnapshots.position,
       url: rankSnapshots.url,
       serpFeatures: rankSnapshots.serpFeatures,
+      competitorPositions: rankSnapshots.competitorPositions,
       checkedAt: rankSnapshots.checkedAt,
     })
     .from(rankSnapshots)
@@ -314,6 +315,7 @@ export async function getEarliestSnapshotsForKeywords(
         position: rankSnapshots.position,
         url: rankSnapshots.url,
         serpFeatures: rankSnapshots.serpFeatures,
+        competitorPositions: rankSnapshots.competitorPositions,
         checkedAt: rankSnapshots.checkedAt,
       })
       .from(rankSnapshots)

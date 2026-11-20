@@ -94,6 +94,10 @@ export function RankTrackingTable({
   const columns = useRankTrackingColumns({
     showDesktop,
     showMobile,
+    showCompetitors: rows.some(
+      (row) =>
+        row.desktop.competitors.length > 0 || row.mobile.competitors.length > 0,
+    ),
     domain,
     actions,
     locationName,

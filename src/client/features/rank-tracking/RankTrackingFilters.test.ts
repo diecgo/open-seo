@@ -31,6 +31,7 @@ function makeRow(
       previousPosition: null,
       rankingUrl: null,
       serpFeatures: [],
+      competitors: [],
       checkedAt: null,
     },
     mobile: {
@@ -38,6 +39,7 @@ function makeRow(
       previousPosition: null,
       rankingUrl: null,
       serpFeatures: [],
+      competitors: [],
       checkedAt: null,
     },
   };

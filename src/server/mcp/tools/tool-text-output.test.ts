@@ -159,8 +159,20 @@ describe("MCP tool text output (service-backed tools)", () => {
         rows: [
           {
             keyword: "seo tools",
-            desktop: { position: 3, previousPosition: 5 },
-            mobile: { position: 7, previousPosition: null },
+            desktop: {
+              position: 3,
+              previousPosition: 5,
+              competitors: [
+                { domain: "rival.com", position: 2, previousPosition: 4 },
+              ],
+            },
+            mobile: {
+              position: 7,
+              previousPosition: null,
+              competitors: [
+                { domain: "rival.com", position: null, previousPosition: 6 },
+              ],
+            },
           },
         ],
       },
@@ -176,6 +188,7 @@ describe("MCP tool text output (service-backed tools)", () => {
       "keyword | desktop | prev (desktop) | mobile | prev (mobile)",
     );
     expect(out).toContain("seo tools | 3 | 5 | 7 | —");
+    expect(out).toContain("rival.com desktop 2 (prev 4), mobile — (prev 6)");
   });
 
   it("get_rank_tracker pages through every removal id in a large tracker", async () => {

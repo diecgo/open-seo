@@ -1,5 +1,6 @@
 import type { WorkflowStep } from "cloudflare:workers";
 import { RankTrackingRepository } from "@/server/features/rank-tracking/repositories/RankTrackingRepository";
+import { ProjectContextRepository } from "@/server/features/project-context/repositories/ProjectContextRepository";
 import {
   fetchRankCheckTaskResult,
   MAX_TASKS_PER_POST,
@@ -36,6 +37,8 @@ export function mapResultsToSnapshotRows(
     url: r.url,
     serpFeatures:
       r.serpFeatures.length > 0 ? JSON.stringify(r.serpFeatures) : null,
+    competitorPositions:
+      r.competitors.length > 0 ? JSON.stringify(r.competitors) : null,
   }));
 }
 
@@ -45,10 +48,35 @@ export interface CheckContext {
   devices: RankTrackingConfig["devices"];
   serpDepth: number;
   domain: string;
+  /** The project's competitors, looked for on the same pages as `domain`. */
+  competitorDomains: string[];
   locationCode: number;
   languageCode: string;
   locationName?: string;
   runId: string;
+}
+
+/**
+ * The project's competitors, minus the tracked domain itself and its parent
+ * or subdomains: a tracker of a competitor's site would otherwise report that
+ * site as its own competitor.
+ */
+export async function loadCompetitorDomains(input: {
+  projectId: string;
+  domain: string;
+}): Promise<string[]> {
+  const tracked = input.domain.toLowerCase();
+  const competitors = await ProjectContextRepository.listCompetitors(
+    input.projectId,
+  );
+  return competitors
+    .map((c) => c.domain.toLowerCase())
+    .filter(
+      (domain) =>
+        domain !== tracked &&
+        !domain.endsWith(`.${tracked}`) &&
+        !tracked.endsWith(`.${domain}`),
+    );
 }
 
 /** Expand keywords into one task input per keyword/device pair. */
@@ -153,6 +181,7 @@ async function fetchQueuedRound(
             keywordId: task.keywordId,
             keyword: task.keyword,
             targetDomain: ctx.domain,
+            competitorDomains: ctx.competitorDomains,
           }),
         ),
       ),

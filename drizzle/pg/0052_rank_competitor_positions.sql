@@ -1,0 +1,1 @@
+ALTER TABLE "rank_snapshots" ADD COLUMN "competitor_positions" text;

@@ -31,11 +31,22 @@ export type RankCheckTriggerResult =
       blockingRunId: string | null;
     };
 
+/** A project competitor's position on the same results page as the tracked domain. */
+export interface RankTrackingCompetitorResult {
+  domain: string;
+  /** null when it was not on the page the check read. */
+  position: number | null;
+  previousPosition: number | null;
+  url: string | null;
+}
+
 export interface RankTrackingDeviceResult {
   position: number | null;
   previousPosition: number | null;
   rankingUrl: string | null;
   serpFeatures: string[];
+  /** Empty before competitors were tracked or when the project has none. */
+  competitors: RankTrackingCompetitorResult[];
   /** When the shown position was checked; null before the first result. */
   checkedAt: string | null;
 }

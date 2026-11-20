@@ -101,6 +101,9 @@ function TrackerTable({
   const columns = useRankTrackingColumns({
     showDesktop: device === "desktop",
     showMobile: device === "mobile",
+    showCompetitors: results.rows.some(
+      (row) => row[device].competitors.length > 0,
+    ),
     domain: config.domain,
     locationName: config.locationName,
   });

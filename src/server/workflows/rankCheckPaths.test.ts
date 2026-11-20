@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { WorkflowStep } from "cloudflare:workers";
 import type { RankCheckTaskInput } from "@/server/lib/dataforseo";
 import { retryRankChecks } from "./rankCheckRetries";
+import { loadCompetitorDomains } from "./rankCheckPaths";
 
 const mocks = vi.hoisted(() => ({
   getSnapshotsForRun: vi.fn(),
@@ -11,7 +12,15 @@ const mocks = vi.hoisted(() => ({
   fetchRankCheckTaskResult: vi.fn(),
   rankCheckTaskPost:
     vi.fn<(input: { tasks: RankCheckTaskInput[] }) => Promise<unknown>>(),
+  listCompetitors: vi.fn(),
 }));
+
+vi.mock(
+  "@/server/features/project-context/repositories/ProjectContextRepository",
+  () => ({
+    ProjectContextRepository: { listCompetitors: mocks.listCompetitors },
+  }),
+);
 
 vi.mock(
   "@/server/features/rank-tracking/repositories/RankTrackingRepository",
@@ -44,6 +53,7 @@ function checkContext(
     devices,
     serpDepth: 10,
     domain: "openseo.so",
+    competitorDomains: [],
     locationCode: 2840,
     languageCode: "en",
     runId: "run_1",
@@ -60,7 +70,13 @@ function queuedResults(...positions: Array<number | null>) {
     mocks.fetchRankCheckTaskResult.mockImplementationOnce(
       async (task: RankCheckTaskInput) => ({
         status: "completed",
-        result: { ...task, position, url: null, serpFeatures: [] },
+        result: {
+          ...task,
+          position,
+          url: null,
+          serpFeatures: [],
+          competitors: [],
+        },
       }),
     );
   }
@@ -92,7 +108,13 @@ beforeEach(() => {
   mocks.fetchRankCheckTaskResult.mockImplementation(
     async (task: RankCheckTaskInput) => ({
       status: "completed",
-      result: { ...task, position: null, url: null, serpFeatures: [] },
+      result: {
+        ...task,
+        position: null,
+        url: null,
+        serpFeatures: [],
+        competitors: [],
+      },
     }),
   );
   mocks.getBestPositionsForKeywords.mockResolvedValue([
@@ -223,5 +245,20 @@ describe("retryRankChecks", () => {
     expect(vi.mocked(step.sleep).mock.calls).toEqual([
       ["read-2-wait-0", "4 minutes"],
     ]);
+  });
+});
+
+describe("loadCompetitorDomains", () => {
+  it("leaves out the tracked domain, so a competitor's tracker doesn't list its own site", async () => {
+    mocks.listCompetitors.mockResolvedValue([
+      { domain: "rival.com" },
+      { domain: "Example.com" },
+      { domain: "shop.example.com" },
+      { domain: "other.net" },
+    ]);
+
+    await expect(
+      loadCompetitorDomains({ projectId: "project_1", domain: "example.com" }),
+    ).resolves.toEqual(["rival.com", "other.net"]);
   });
 });

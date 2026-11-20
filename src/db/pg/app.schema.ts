@@ -425,6 +425,11 @@ export const rankSnapshots = pgTable(
     position: integer("position"), // null = not found in top 20
     url: text("url"),
     serpFeatures: text("serp_features"), // JSON array of feature type strings
+    // JSON array of { domain, position, url }: where each of the project's
+    // competitors sat on the same results page. A measurement of this snapshot,
+    // written and replaced with it, never joined on. Null before competitors
+    // were tracked or when the project had none.
+    competitorPositions: text("competitor_positions"),
     checkedAt: timestampColumn("checked_at").notNull().default(isoNow),
   },
   (table) => [
