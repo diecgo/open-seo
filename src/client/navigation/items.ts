@@ -19,7 +19,7 @@ import { GoogleGlyphMuted } from "@/client/features/gsc/GoogleGlyph";
 const projectNavItems = [
   {
     to: "/p/$projectId" as const,
-    label: "Dashboard",
+    label: "Panel",
     icon: LayoutDashboard,
     // Without exact matching, the index path is a prefix of every project
     // route and the Dashboard item would render active everywhere.
@@ -27,68 +27,68 @@ const projectNavItems = [
   },
   {
     to: "/p/$projectId/keywords" as const,
-    label: "Keyword Research",
+    label: "Palabras clave",
     icon: Search,
   },
   {
     to: "/p/$projectId/saved" as const,
-    label: "Saved Keywords",
+    label: "Palabras guardadas",
     icon: Bookmark,
   },
   {
     to: "/p/$projectId/rank-tracking" as const,
-    label: "Rank Tracking",
+    label: "Seguimiento de posiciones",
     icon: TrendingUp,
   },
   {
     to: "/p/$projectId/local-seo" as const,
-    label: "Local SEO",
+    label: "SEO local",
     icon: MapPin,
   },
   {
     to: "/p/$projectId/search-performance" as const,
-    label: "GSC Insights",
+    label: "Search Console",
     icon: GoogleGlyphMuted,
   },
   {
     to: "/p/$projectId/domain" as const,
-    label: "Domain Overview",
+    label: "Análisis de dominio",
     icon: Globe,
   },
   {
     to: "/p/$projectId/backlinks" as const,
-    label: "Backlinks",
+    label: "Enlaces entrantes",
     icon: Link2,
   },
   {
     to: "/p/$projectId/audit" as const,
-    label: "Site Audit",
+    label: "Auditoría del sitio",
     icon: ClipboardCheck,
   },
   {
     to: "/p/$projectId/ai-visibility" as const,
-    label: "Prompt Tracking",
+    label: "Seguimiento de prompts",
     icon: ChartLine,
     activeOptions: { exact: true, includeSearch: false },
   },
   {
     to: "/p/$projectId/ai-visibility/research" as const,
-    label: "Prompt Research",
+    label: "Investigación de prompts",
     icon: Search,
   },
   {
     to: "/p/$projectId/prompt-explorer" as const,
-    label: "Prompt Explorer",
+    label: "Explorador de prompts",
     icon: MessageSquare,
   },
   {
     to: "/p/$projectId/reports" as const,
-    label: "Reports",
+    label: "Informes",
     icon: FileText,
   },
   {
     to: "/p/$projectId/context" as const,
-    label: "Context",
+    label: "Contexto",
     icon: Brain,
   },
 ] as const;
@@ -97,14 +97,14 @@ const projectNavItems = [
 // is selected, and on its own (connectNavGroup) when none is.
 const aiNavItem = linkOptions({
   to: "/ai" as const,
-  label: "Agent setup",
+  label: "Configurar agente",
   icon: Bot,
 });
 
 // Shown only when no project is selected; with a project, Agent setup lives in
 // the "AI Tools" group below.
 export const connectNavGroup = {
-  label: "AI Tools",
+  label: "Herramientas de IA",
   items: [aiNavItem],
 };
 
@@ -127,11 +127,11 @@ export function getProjectNavGroups(projectId: string) {
 
   return [
     {
-      label: "Overview",
+      label: "Resumen",
       items: [byPath("/p/$projectId")],
     },
     {
-      label: "Research",
+      label: "Investigación",
       items: [
         byPath("/p/$projectId/keywords"),
         byPath("/p/$projectId/domain"),
@@ -139,7 +139,7 @@ export function getProjectNavGroups(projectId: string) {
       ],
     },
     {
-      label: "AI Visibility",
+      label: "Visibilidad en IA",
       items: [
         byPath("/p/$projectId/ai-visibility/research"),
         byPath("/p/$projectId/prompt-explorer"),
@@ -147,7 +147,7 @@ export function getProjectNavGroups(projectId: string) {
       ],
     },
     {
-      label: "My Site",
+      label: "Mi web",
       items: [
         byPath("/p/$projectId/search-performance"),
         byPath("/p/$projectId/rank-tracking"),
@@ -157,7 +157,7 @@ export function getProjectNavGroups(projectId: string) {
       ],
     },
     {
-      label: "AI Tools",
+      label: "Herramientas de IA",
       items: [
         byPath("/p/$projectId/reports"),
         byPath("/p/$projectId/context"),

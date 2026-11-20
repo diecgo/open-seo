@@ -178,7 +178,7 @@ export function Sidebar({
           )
         ) : (
           <nav
-            aria-label="Main navigation"
+            aria-label="Navegación principal"
             aria-busy={navPlaceholder || undefined}
           >
             {navGroups.map((group) => (
@@ -228,7 +228,7 @@ function EveryAppLink() {
   return (
     <a
       href={gatewayUrl ?? undefined}
-      aria-label="Back to Every App"
+      aria-label="Volver a Every App"
       className={cn(
         "mb-1 inline-flex h-7 w-fit items-center gap-0.5 rounded-md pl-0.5 pr-2 text-sm text-sidebar-foreground/60 transition-colors hover:text-sidebar-foreground",
         accountQuery.isPending && "invisible",
@@ -280,13 +280,13 @@ function AccountFooter({ ready }: { ready: boolean }) {
       <SidebarMenu>
         <SidebarNavLink
           icon={CircleHelp}
-          label="Help & Community"
+          label="Ayuda y comunidad"
           linkProps={{ to: "/support" }}
         />
         {everyApp ? (
           <SidebarNavLink
             icon={Settings}
-            label="Settings"
+            label="Ajustes"
             linkProps={{ to: "/settings" }}
           />
         ) : email ? (
@@ -296,7 +296,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
                 render={
                   <SidebarMenuButton
                     className={navButtonClass}
-                    aria-label="Open account menu"
+                    aria-label="Abrir menú de la cuenta"
                   />
                 }
               >
@@ -311,7 +311,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
                     <DropdownMenuGroup>
                       <DropdownMenuLabel className="flex items-center gap-1.5">
                         <ArrowLeftRight className="size-3" />
-                        Organization
+                        Organización
                       </DropdownMenuLabel>
                       {organizations.map((organization) => (
                         <DropdownMenuItem
@@ -342,7 +342,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
                   }
                 >
                   <Settings className="size-4" />
-                  Settings
+                  Ajustes
                 </DropdownMenuItem>
                 {isHostedClientAuthMode() ? (
                   <DropdownMenuItem
@@ -354,11 +354,11 @@ function AccountFooter({ ready }: { ready: boolean }) {
                     }
                   >
                     <CreditCard className="size-4" />
-                    Billing
+                    Facturación
                   </DropdownMenuItem>
                 ) : null}
                 <DropdownMenuGroup>
-                  <DropdownMenuLabel>Theme</DropdownMenuLabel>
+                  <DropdownMenuLabel>Tema</DropdownMenuLabel>
                   <div className="px-1 pb-1">
                     <ThemePreferenceRadio />
                   </div>
@@ -369,7 +369,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
                   onClick={() => signOutAndRedirect()}
                 >
                   <LogOut className="size-4" />
-                  Sign out
+                  Cerrar sesión
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -377,7 +377,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
         ) : ready ? (
           <SidebarNavLink
             icon={Settings}
-            label="Settings"
+            label="Ajustes"
             linkProps={{ to: "/settings" }}
           />
         ) : (
