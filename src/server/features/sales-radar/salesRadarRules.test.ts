@@ -58,6 +58,7 @@ describe("evaluateSalesRadar", () => {
           issues: [
             { issueType: "server-error", severity: "critical", pages: 3 },
             { issueType: "missing-title", severity: "critical", pages: 2 },
+            { issueType: "crawl-page-limit", severity: "warning", pages: 1 },
           ],
         },
       },
@@ -70,6 +71,7 @@ describe("evaluateSalesRadar", () => {
     expect(weight("organic-near-top-ten")).toBe(12);
     expect(weight("maps-reviews")).toBe(20);
     expect(weight("technical-serious")).toBe(25);
+    expect(weight("technical-issues")).toBeUndefined();
     expect(result.score).toBe(100);
     expect(result.signals[0].weight).toBe(30);
   });

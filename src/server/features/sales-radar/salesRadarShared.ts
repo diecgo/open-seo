@@ -64,6 +64,14 @@ export const ON_PAGE_ISSUES = new Set([
   "images-missing-alt",
 ]);
 export const ERROR_PAGE_ISSUES = new Set(["server-error", "broken-page"]);
+// Limits of our own crawler, not problems with the site.
+export const CRAWLER_ISSUES = new Set([
+  "rate-limited-page",
+  "crawl-rate-limited",
+  "crawl-time-limit",
+  "crawl-credits-exhausted",
+  "crawl-page-limit",
+]);
 export const label = (i: { issueType: string; pages: number }) =>
   `${i.issueType} (${i.pages} pág.)`;
 

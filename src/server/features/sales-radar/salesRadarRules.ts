@@ -8,6 +8,7 @@
 
 import {
   capped,
+  CRAWLER_ISSUES,
   ERROR_PAGE_ISSUES,
   examples,
   label,
@@ -209,7 +210,8 @@ function auditSignals(
     ];
   }
   const signals: SalesSignal[] = [];
-  const critical = audit.issues.filter((i) => i.severity === "critical");
+  const issues = audit.issues.filter((i) => !CRAWLER_ISSUES.has(i.issueType));
+  const critical = issues.filter((i) => i.severity === "critical");
   if (critical.length) {
     const base = capped(critical.length, 10, 25);
     signals.push({
@@ -221,7 +223,7 @@ function auditSignals(
       weight: Math.min(base + (tracksKeywords ? 5 : 0), 30),
     });
   }
-  const errorPages = audit.issues
+  const errorPages = issues
     .filter((i) => ERROR_PAGE_ISSUES.has(i.issueType))
     .reduce((sum, i) => sum + i.pages, 0);
   if (errorPages) {
@@ -234,7 +236,7 @@ function auditSignals(
       weight: capped(errorPages, 2, 10),
     });
   }
-  const warnings = audit.issues.filter(
+  const warnings = issues.filter(
     (i) => i.severity === "warning" && !ON_PAGE_ISSUES.has(i.issueType),
   );
   if (warnings.length) {
@@ -247,7 +249,7 @@ function auditSignals(
       weight: capped(warnings.length, 2, 15),
     });
   }
-  const onPage = audit.issues.filter((i) => ON_PAGE_ISSUES.has(i.issueType));
+  const onPage = issues.filter((i) => ON_PAGE_ISSUES.has(i.issueType));
   if (onPage.length) {
     signals.push({
       id: "technical-on-page",
