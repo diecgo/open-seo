@@ -68,6 +68,7 @@ import {
   setSearchConsoleSiteTool,
 } from "@/server/mcp/tools/google-connection-tools";
 import { listProjectsTool } from "@/server/mcp/tools/list-projects";
+import { getSalesRadarTool } from "@/server/mcp/tools/get-sales-radar";
 import {
   researchProjectWebsiteTool,
   saveProjectWebsiteSetupTool,
@@ -261,6 +262,7 @@ export function registerOpenSeoTools(
 ) {
   register(whoamiTool);
   register(listProjectsTool);
+  register(getSalesRadarTool);
   register(createProjectTool);
   register(researchProjectWebsiteTool);
   register(saveProjectWebsiteSetupTool);

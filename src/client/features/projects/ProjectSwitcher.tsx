@@ -3,7 +3,7 @@ import { projectsQueryOptions } from "@/client/features/projects/projectQueries"
 import { Link, useRouter } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { findLast } from "remeda";
-import { FolderCog, Plus, Settings } from "lucide-react";
+import { FolderCog, Plus, Radar, Settings } from "lucide-react";
 import { setLastProjectId } from "@/client/lib/active-project";
 import { CreateProjectModal } from "@/client/features/projects/CreateProjectModal";
 import {
@@ -221,6 +221,23 @@ export function ProjectSwitcher({
             >
               <FolderCog className="size-4" />
               Manage projects
+            </Button>
+            <Button
+              nativeButton={false}
+              render={
+                <Link
+                  to="/radar"
+                  onClick={() => {
+                    setOpen(false);
+                    onCloseDrawer?.();
+                  }}
+                />
+              }
+              variant="ghost"
+              className="justify-start"
+            >
+              <Radar className="size-4" />
+              Radar de ventas
             </Button>
           </div>
         </ComboboxContent>
