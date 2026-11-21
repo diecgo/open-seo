@@ -5,7 +5,7 @@ import { usesBetterAuthClient } from "@/lib/auth-mode";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/settings")({
-  head: () => pageHead("Settings"),
+  head: () => pageHead("Ajustes"),
   component: SettingsLayout,
 });
 
@@ -26,7 +26,7 @@ function SettingsLayout() {
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="space-y-4">
-          <PageHeader title="Settings" />
+          <PageHeader title="Ajustes" />
           <NavTabs label="Settings sections">
             {tabs.map((tab) => (
               <NavTab

@@ -202,11 +202,11 @@ export function KeywordResearchPage(input: Props) {
     <div className="px-4 py-4 md:px-6 md:py-6 pb-24 md:pb-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-4">
         <PageHeader
-          title="Keyword Research"
+          title="Palabras clave"
           description={
             controller.hasSearched
               ? undefined
-              : "Discover keyword ideas, search demand, and ranking opportunities."
+              : "Descubre ideas de palabras clave, demanda de búsqueda y oportunidades para posicionar."
           }
           backLink={
             controller.hasSearched ? (

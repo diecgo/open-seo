@@ -250,8 +250,8 @@ export function SearchPerformancePage({
     <div className="overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-4">
         <PageHeader
-          title="Search Performance"
-          description="See your site's clicks, impressions, CTR, and position from Google Search Console."
+          title="Search Console"
+          description="Clics, impresiones, CTR y posición de tu web según Google Search Console."
           actions={
             report?.connected ? (
               <Button

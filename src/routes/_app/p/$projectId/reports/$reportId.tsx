@@ -43,7 +43,7 @@ import { pageHead } from "@/client/lib/pageHead";
 const reportDetailSearchSchema = z.object({ full: z.boolean().optional() });
 
 export const Route = createFileRoute("/_app/p/$projectId/reports/$reportId")({
-  head: () => pageHead("Reports"),
+  head: () => pageHead("Informes"),
   validateSearch: reportDetailSearchSchema,
   component: ReportDetailPage,
 });

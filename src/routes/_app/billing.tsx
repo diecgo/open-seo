@@ -50,7 +50,7 @@ import {
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/billing")({
-  head: () => pageHead("Billing"),
+  head: () => pageHead("Facturación"),
   validateSearch: z.object({
     tab: z
       .enum(BILLING_TABS.map((item) => item.value))
@@ -143,7 +143,7 @@ function BillingPage() {
 
   return (
     <div className="mx-auto box-content max-w-7xl space-y-6 px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
-      <PageHeader title="Billing" />
+      <PageHeader title="Facturación" />
 
       {accountQuery.isPending ? (
         <BillingSummarySkeleton />

@@ -9,7 +9,7 @@ import { pageHead } from "@/client/lib/pageHead";
 export const Route = createFileRoute(
   "/_app/p/$projectId/ai-visibility/research",
 )({
-  head: () => pageHead("Prompt Research"),
+  head: () => pageHead("Investigación de prompts"),
   validateSearch: z.object({ q: z.string().trim().max(100).optional() }),
   component: AiResearchRoute,
 });

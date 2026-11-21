@@ -19,7 +19,7 @@ import { CreateProjectModal } from "@/client/features/projects/CreateProjectModa
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/projects")({
-  head: () => pageHead("Projects"),
+  head: () => pageHead("Proyectos"),
   component: ProjectsPage,
 });
 
@@ -38,8 +38,8 @@ function ProjectsPage() {
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-6">
         <PageHeader
-          title="Projects"
-          description="Each project has its own Search Console, rank tracking, and audits."
+          title="Proyectos"
+          description="Cada proyecto tiene su propio Search Console, seguimiento de posiciones y auditorías."
           actions={
             <Button onClick={() => setCreating(true)}>
               <Plus data-icon="inline-start" />

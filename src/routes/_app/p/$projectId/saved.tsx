@@ -62,7 +62,7 @@ import {
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/saved")({
-  head: () => pageHead("Saved Keywords"),
+  head: () => pageHead("Palabras guardadas"),
   validateSearch: savedKeywordsSearchSchema,
   // The project switcher keeps this page; filter drafts must not follow.
   remountDeps: ({ params }) => params.projectId,

@@ -29,8 +29,8 @@ export function SavedKeywordsHeader({
   return (
     <>
       <PageHeader
-        title="Saved Keywords"
-        description="Save keyword ideas from research, organize them with tags, and revisit when you're ready to act."
+        title="Palabras guardadas"
+        description="Guarda ideas de palabras clave, organízalas con etiquetas y vuelve a ellas cuando quieras actuar."
         actions={
           <>
             <ImportKeywordsButton projectId={projectId} />

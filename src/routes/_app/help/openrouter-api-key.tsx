@@ -9,7 +9,7 @@ import { pageHead } from "@/client/lib/pageHead";
 const OPENROUTER_KEYS_URL = "https://openrouter.ai/settings/keys";
 
 export const Route = createFileRoute("/_app/help/openrouter-api-key")({
-  head: () => pageHead("OpenRouter API key"),
+  head: () => pageHead("Clave API de OpenRouter"),
   component: OpenrouterApiKeyHelpPage,
 });
 
@@ -44,7 +44,7 @@ function OpenrouterApiKeyHelpPage() {
   );
   return (
     <SecretHelpPage
-      title="Set up your OpenRouter API key"
+      title="Configura tu clave API de OpenRouter"
       intro={
         <>
           OpenSEO needs the <code>OPENROUTER_API_KEY</code> secret before AI

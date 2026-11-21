@@ -177,8 +177,8 @@ function PromptTrackingContent({
   return (
     <div className="space-y-4">
       <PageHeader
-        title="Prompt Tracking"
-        description="Track the prompts your customers use with AI. Inspect where your business is mentioned or cited."
+        title="Seguimiento de prompts"
+        description="Sigue los prompts que tus clientes usan con la IA y mira dónde se menciona o cita tu negocio."
       />
       {!state.configured ? (
         <EmptyState

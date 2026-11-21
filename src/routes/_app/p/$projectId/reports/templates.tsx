@@ -22,7 +22,7 @@ import type { ReportTemplate } from "@/types/schemas/report-templates";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/reports/templates")({
-  head: () => pageHead("Report templates"),
+  head: () => pageHead("Plantillas de informe"),
   component: ReportTemplatesPage,
 });
 

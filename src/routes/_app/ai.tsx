@@ -72,7 +72,7 @@ const aiSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/_app/ai")({
-  head: () => pageHead("Agent setup"),
+  head: () => pageHead("Configurar agente"),
   validateSearch: aiSearchSchema,
   component: AiPage,
 });
@@ -90,8 +90,8 @@ function AiPage() {
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl">
         <PageHeader
-          title="Agent setup"
-          description="The most powerful way to use OpenSEO is through the AI agent you already use. Set it up once, then ask it anything."
+          title="Configurar agente"
+          description="La forma más potente de usar OpenSEO es a través del agente de IA que ya usas. Configúralo una vez y pregúntale lo que quieras."
         />
 
         <Tabs

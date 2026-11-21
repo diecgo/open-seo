@@ -203,8 +203,8 @@ export function BrandLookupPage({
 
   return (
     <ResearchPageShell
-      title="Brand Lookup"
-      description="See how AI search cites any brand name or domain."
+      title="Búsqueda de marca"
+      description="Mira cómo cita la búsqueda con IA cualquier marca o dominio."
       gate={{
         feature: "Brand Lookup",
         description:

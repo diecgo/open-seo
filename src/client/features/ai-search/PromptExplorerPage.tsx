@@ -182,8 +182,8 @@ export function PromptExplorerPage({
   return (
     <ResearchPageShell
       contained
-      title="Prompt Explorer"
-      description="Ask any prompt across ChatGPT, Claude, Gemini, and Perplexity side-by-side."
+      title="Explorador de prompts"
+      description="Lanza cualquier prompt en ChatGPT, Claude, Gemini y Perplexity y compara las respuestas."
       gate={{
         feature: "Prompt Explorer",
         description:

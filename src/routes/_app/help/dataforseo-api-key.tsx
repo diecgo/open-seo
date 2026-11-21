@@ -10,7 +10,7 @@ const DATAFORSEO_API_ACCESS_URL = "https://app.dataforseo.com/api-access";
 const TREG_URL = "https://treg.to";
 
 export const Route = createFileRoute("/_app/help/dataforseo-api-key")({
-  head: () => pageHead("DataForSEO API key"),
+  head: () => pageHead("Clave API de DataForSEO"),
   component: DataforseoApiKeyHelpPage,
 });
 
@@ -37,7 +37,7 @@ function DataforseoApiKeyHelpPage() {
   );
   return (
     <SecretHelpPage
-      title="Set up your DataForSEO API key"
+      title="Configura tu clave API de DataForSEO"
       intro={
         <>
           OpenSEO needs the <code>DATAFORSEO_API_KEY</code> secret before

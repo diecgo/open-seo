@@ -48,8 +48,8 @@ export function PromptResearchPage({
   return (
     <div className="space-y-4">
       <PageHeader
-        title="Prompt Research"
-        description="Find the questions people ask AI about your market, and the sites the answers cite."
+        title="Investigación de prompts"
+        description="Descubre qué preguntan a la IA sobre tu mercado y qué webs citan las respuestas."
         backLink={
           keyword && state?.configured ? (
             <BackLink

@@ -15,7 +15,7 @@ import { REPORT_APP_LIST_LIMIT } from "@/types/schemas/reports";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/reports/")({
-  head: () => pageHead("Reports"),
+  head: () => pageHead("Informes"),
   component: ReportsPage,
 });
 
@@ -42,8 +42,8 @@ function ReportsPage() {
     <div className="overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-4">
         <PageHeader
-          title="Reports"
-          description="HTML reports your agents saved to this project."
+          title="Informes"
+          description="Informes HTML que tus agentes han guardado en este proyecto."
           actions={
             <Button
               variant="ghost"

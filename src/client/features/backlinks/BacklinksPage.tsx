@@ -115,8 +115,8 @@ export function BacklinksPage({
     <div className="px-4 py-4 pb-24 overflow-auto md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-4">
         <PageHeader
-          title="Backlinks"
-          description="Understand who links to a site, what changed recently, and which pages attract links."
+          title="Enlaces entrantes"
+          description="Mira quién enlaza a una web, qué ha cambiado últimamente y qué páginas atraen enlaces."
           backLink={
             searchState.target ? (
               <BackLink
