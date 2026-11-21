@@ -24,13 +24,13 @@ export function TopicField({
   const [creating, setCreating] = useState(!topics.includes(value));
   const items = [
     ...topics.map((name) => ({ value: name, label: name })),
-    { value: "", label: "New topic" },
+    { value: "", label: "Nuevo tema" },
   ];
   return (
     <>
       {topics.length > 0 && (
         <Field>
-          <FieldLabel>Topic</FieldLabel>
+          <FieldLabel>Tema</FieldLabel>
           <Select
             items={items}
             value={creating ? "" : value}
@@ -39,7 +39,7 @@ export function TopicField({
               onChange(name ?? "");
             }}
           >
-            <SelectTrigger className="w-full" aria-label="Topic">
+            <SelectTrigger className="w-full" aria-label="Tema">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -54,12 +54,12 @@ export function TopicField({
       )}
       {creating && (
         <Field>
-          <FieldLabel htmlFor={topicId}>Topic name</FieldLabel>
+          <FieldLabel htmlFor={topicId}>Nombre del tema</FieldLabel>
           <Input
             id={topicId}
             required
             maxLength={100}
-            placeholder="e.g. SEO tools"
+            placeholder="p. ej., herramientas SEO"
             value={value}
             onChange={(event) => onChange(event.target.value)}
           />

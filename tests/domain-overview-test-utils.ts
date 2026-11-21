@@ -198,24 +198,24 @@ export async function openDomainOverview(page: Page, tab: DomainTab) {
 
   await page.goto(`/p/${match[1]}/domain?${params.toString()}`);
   await expect(
-    page.getByRole("heading", { name: "Domain Overview" }),
+    page.getByRole("heading", { name: "Análisis de dominio", exact: true }),
   ).toBeVisible();
   await dismissSetupModal(page);
-  await expect(page.getByRole("button", { name: /Filters/ })).toBeVisible({
+  await expect(page.getByRole("button", { name: /Filtros/ })).toBeVisible({
     timeout: 30_000,
   });
   await expectPageResponsive(page, "after opening Domain Overview");
 }
 
 async function dismissSetupModal(page: Page) {
-  const dismissButton = page.getByRole("button", { name: "Dismiss" });
+  const dismissButton = page.getByRole("button", { name: "Descartar" });
   if (await dismissButton.isVisible()) {
     await dismissButton.click();
   }
 }
 
 export async function waitForDomainRows(page: Page, label: string) {
-  const marker = label.includes("Pages")
+  const marker = label.includes("Páginas")
     ? page.getByRole("link", { name: /\/section-a\/page-001/ }).first()
     : page
         .getByRole("row", {
@@ -227,7 +227,8 @@ export async function waitForDomainRows(page: Page, label: string) {
 }
 
 export async function switchDomainTab(page: Page, tab: DomainTab) {
-  const label = tab === "keywords" ? "Top Keywords" : "Top Pages";
+  const label =
+    tab === "keywords" ? "Palabras clave principales" : "Páginas principales";
   await page.getByRole("tab", { name: label }).click();
   await expect(page.getByRole("tab", { name: label })).toHaveAttribute(
     "aria-selected",
@@ -237,22 +238,22 @@ export async function switchDomainTab(page: Page, tab: DomainTab) {
 }
 
 export async function openFilters(page: Page) {
-  await page.getByRole("button", { name: /Filters/ }).click();
-  await expect(page.getByText("Refine table results")).toBeVisible();
+  await page.getByRole("button", { name: /Filtros/ }).click();
+  await expect(page.getByText("Afinar resultados")).toBeVisible();
   await expectPageResponsive(page, "after opening filters");
 }
 
 export async function closeFilters(page: Page) {
-  await page.getByRole("button", { name: /Filters/ }).click();
-  await expect(page.getByText("Refine table results")).toBeHidden();
+  await page.getByRole("button", { name: /Filtros/ }).click();
+  await expect(page.getByText("Afinar resultados")).toBeHidden();
   await expectPageResponsive(page, "after closing filters");
 }
 
 export async function ensureFiltersOpen(page: Page, expectedLabel: string) {
-  if (!(await page.getByText(expectedLabel).isVisible())) {
+  if (!(await page.getByText(expectedLabel, { exact: true }).isVisible())) {
     await openFilters(page);
   }
-  await expect(page.getByText(expectedLabel)).toBeVisible();
+  await expect(page.getByText(expectedLabel, { exact: true })).toBeVisible();
 }
 
 export async function applyFilters(
@@ -260,11 +261,11 @@ export async function applyFilters(
   expectedParam = "minTraffic",
   expectedValue = "10",
 ) {
-  await page.getByRole("button", { name: /Apply filters/ }).click();
+  await page.getByRole("button", { name: /Aplicar filtros/ }).click();
   await expect
     .poll(() => new URL(page.url()).searchParams.get(expectedParam))
     .toBe(expectedValue);
-  await expect(page.getByRole("button", { name: /Filters/ })).toContainText(
+  await expect(page.getByRole("button", { name: /Filtros/ })).toContainText(
     "1",
   );
   await expectPageResponsive(page, "after applying filters");
@@ -336,7 +337,9 @@ export async function typeIntoDraftInput(
 
 export async function expectPageResponsive(page: Page, label: string) {
   await withTimeout(
-    page.evaluate(() => document.body.textContent?.includes("Domain Overview")),
+    page.evaluate(() =>
+      document.body.textContent?.includes("Análisis de dominio"),
+    ),
     RESPONSIVE_TIMEOUT_MS,
     `Page did not respond ${label}`,
   );

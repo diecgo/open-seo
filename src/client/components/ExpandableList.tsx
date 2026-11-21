@@ -30,7 +30,7 @@ export function ExpandableList<TItem>({
           aria-expanded={expanded}
           onClick={() => setExpanded((current) => !current)}
         >
-          {expanded ? "Show less" : `+${items.length - LIMIT} more`}
+          {expanded ? "Ver menos" : `+${items.length - LIMIT} más`}
         </Button>
       ) : null}
     </div>

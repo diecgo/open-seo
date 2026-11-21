@@ -32,15 +32,15 @@ export function ReportsList({
     return (
       <EmptyState
         illustration={<ReportIllustration />}
-        title="No reports yet"
-        description="Ask your AI agent for an SEO audit or a competitor analysis and its report is saved here."
+        title="Aún no hay informes"
+        description="Pide a tu agente de IA una auditoría SEO o un análisis de competidores y su informe se guardará aquí."
         action={
           <Button
             variant="outline"
             nativeButton={false}
             render={<Link to="/ai" />}
           >
-            Set up your agent
+            Configura tu agente
           </Button>
         }
       />
@@ -53,10 +53,10 @@ export function ReportsList({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Created by</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Updated</TableHead>
+              <TableHead>Título</TableHead>
+              <TableHead>Creado por</TableHead>
+              <TableHead>Tipo</TableHead>
+              <TableHead>Actualizado</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
@@ -85,13 +85,13 @@ export function ReportsList({
                   {formatRelativeTime(report.updatedAt)}
                 </TableCell>
                 <TableCell className="w-10 text-right">
-                  <RowActionsMenu label={`Actions for ${report.title}`}>
+                  <RowActionsMenu label={`Acciones de ${report.title}`}>
                     <DropdownMenuItem
                       variant="destructive"
                       onClick={() => onDelete(report)}
                     >
                       <Trash2 />
-                      Delete
+                      Eliminar
                     </DropdownMenuItem>
                   </RowActionsMenu>
                 </TableCell>
@@ -102,7 +102,7 @@ export function ReportsList({
       </TableCard>
       {reports.length === REPORT_APP_LIST_LIMIT ? (
         <p className="text-xs text-muted-foreground">
-          Showing the {REPORT_APP_LIST_LIMIT} most recent reports.
+          Se muestran los {REPORT_APP_LIST_LIMIT} informes más recientes.
         </p>
       ) : null}
     </div>

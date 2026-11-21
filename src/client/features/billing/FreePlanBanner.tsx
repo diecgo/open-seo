@@ -33,25 +33,27 @@ export function FreePlanBanner() {
   // Credits may be in the balance, but the budget holds them back; buying
   // more would not help, only raising it does.
   if (isPausedByBudget && autoReload) {
-    const until = refillDate ? ` until ${refillDate}` : "";
+    const until = refillDate ? ` hasta el ${refillDate}` : "";
     return (
       <AppBanner variant="warning">
         {canManageBilling ? (
           <>
-            You&rsquo;ve hit your ${autoReload.monthlyLimitUsd} monthly
-            auto-reload budget, so credits are paused{until}.{" "}
+            Has alcanzado tu presupuesto mensual de recarga automática de $
+            {autoReload.monthlyLimitUsd}, así que los créditos están en pausa
+            {until}.{" "}
             <Link
               to={BILLING_ROUTE}
               className="font-medium text-primary underline-offset-4 hover:underline"
             >
-              Raise your budget
+              Sube tu presupuesto
             </Link>{" "}
-            to keep going.
+            para seguir.
           </>
         ) : (
           <>
-            Your organization hit its monthly auto-reload budget, so credits are
-            paused{until}. Ask the owner to raise it.
+            Tu organización ha alcanzado su presupuesto mensual de recarga
+            automática, así que los créditos están en pausa{until}. Pide al
+            propietario que lo suba.
           </>
         )}
       </AppBanner>
@@ -63,8 +65,8 @@ export function FreePlanBanner() {
   if (!isFreePlan && isOutOfCredits && autoReloadState === "on" && autoReload) {
     return (
       <AppBanner variant="info">
-        You&rsquo;re out of credits. Auto-reload is adding $
-        {autoReload.amountUsd} now.
+        Te has quedado sin créditos. La recarga automática está añadiendo $
+        {autoReload.amountUsd} ahora.
       </AppBanner>
     );
   }
@@ -76,11 +78,11 @@ export function FreePlanBanner() {
       <AppBanner variant={isOutOfCredits ? "destructive" : "warning"}>
         {isOutOfCredits
           ? autoReloadState === "card_failed"
-            ? "Your organization is out of credits and its card was declined."
-            : "Your organization has used its credits."
-          : "Your organization is running low on credits."}{" "}
-        Ask your organization owner to{" "}
-        {autoReloadState === "card_failed" ? "update it" : "add more"}.
+            ? "Tu organización se ha quedado sin créditos y su tarjeta ha sido rechazada."
+            : "Tu organización ha gastado sus créditos."
+          : "A tu organización le quedan pocos créditos."}{" "}
+        Pide al propietario de tu organización que{" "}
+        {autoReloadState === "card_failed" ? "la actualice" : "añada más"}.
       </AppBanner>
     );
   }
@@ -91,14 +93,14 @@ export function FreePlanBanner() {
       search={{ upgrade: true }}
       className="font-medium text-primary underline-offset-4 hover:underline"
     >
-      Upgrade your plan
+      Mejora tu plan
     </Link>
   ) : (
     <Link
       to={BILLING_ROUTE}
       className="font-medium text-primary underline-offset-4 hover:underline"
     >
-      Buy more credits
+      Compra más créditos
     </Link>
   );
 
@@ -107,31 +109,31 @@ export function FreePlanBanner() {
       <AppBanner variant="destructive">
         {isFreePlan ? (
           <>
-            You&rsquo;ve used your free credits. {creditsActionLink} to get $
-            {BASE_PLAN_OFFER.monthlyCreditsUsd} of credits every month.
+            Has gastado tus créditos gratuitos. {creditsActionLink} para tener $
+            {BASE_PLAN_OFFER.monthlyCreditsUsd} en créditos cada mes.
           </>
         ) : autoReloadState === "card_failed" ? (
           <>
-            You&rsquo;re out of credits and auto-reload couldn&rsquo;t charge
-            your card.{" "}
+            Te has quedado sin créditos y la recarga automática no ha podido
+            cobrar en tu tarjeta.{" "}
             <Link
               to={BILLING_ROUTE}
               className="font-medium text-primary underline-offset-4 hover:underline"
             >
-              Update your card
+              Actualiza tu tarjeta
             </Link>{" "}
-            to keep going.
+            para seguir.
           </>
         ) : autoReloadState === "failed" ? (
           <>
-            You&rsquo;re out of credits and auto-reload couldn&rsquo;t buy more.{" "}
-            {creditsActionLink} to keep going.
+            Te has quedado sin créditos y la recarga automática no ha podido
+            comprar más. {creditsActionLink} para seguir.
           </>
         ) : (
           <>
-            You&rsquo;ve used this month&rsquo;s credits. {creditsActionLink} to
-            keep going
-            {refillDate ? `, or wait for them to refill on ${refillDate}` : ""}.
+            Has gastado los créditos de este mes. {creditsActionLink} para
+            seguir
+            {refillDate ? ` o espera a que se recarguen el ${refillDate}` : ""}.
           </>
         )}
       </AppBanner>
@@ -141,7 +143,7 @@ export function FreePlanBanner() {
   if (isLowCredits) {
     return (
       <AppBanner variant="warning">
-        You&rsquo;re running low on credits. {creditsActionLink} to keep using
+        Te quedan pocos créditos. {creditsActionLink} para seguir usando
         OpenSEO.
       </AppBanner>
     );
@@ -150,20 +152,20 @@ export function FreePlanBanner() {
   if (isFreePlan) {
     return (
       <AppBanner variant="info">
-        We hope you&rsquo;re enjoying OpenSEO!{" "}
+        ¡Esperamos que estés disfrutando de OpenSEO!{" "}
         <Link
           to={SUBSCRIBE_ROUTE}
           search={{ upgrade: true }}
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
-          Upgrade anytime
+          Mejora tu plan cuando quieras
         </Link>{" "}
-        or{" "}
+        o{" "}
         <Link
           to="/support"
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
-          reach out with questions
+          escríbenos si tienes dudas
         </Link>
         .
       </AppBanner>

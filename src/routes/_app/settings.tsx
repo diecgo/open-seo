@@ -18,7 +18,7 @@ function SettingsLayout() {
     // Access / no-auth self-host has no memberships — the organization tab
     // would 404.
     ...(usesBetterAuthClient()
-      ? [{ to: "/settings/organization" as const, label: "Organization" }]
+      ? [{ to: "/settings/organization" as const, label: "Organización" }]
       : []),
   ];
 
@@ -27,7 +27,7 @@ function SettingsLayout() {
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="space-y-4">
           <PageHeader title="Ajustes" />
-          <NavTabs label="Settings sections">
+          <NavTabs label="Secciones de ajustes">
             {tabs.map((tab) => (
               <NavTab
                 key={tab.to}

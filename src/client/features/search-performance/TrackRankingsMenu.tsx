@@ -69,10 +69,12 @@ export function TrackRankingsMenu({
       });
       const skipped = queries.length - result.added;
       toast.success(
-        `Tracking ${result.added} new keyword${result.added === 1 ? "" : "s"}${skipped > 0 ? ` (${skipped} already tracked, too long, or over the limit)` : ""}`,
+        `Siguiendo ${result.added} palabra${result.added === 1 ? "" : "s"} clave nueva${result.added === 1 ? "" : "s"}${skipped > 0 ? ` (${skipped} ya seguidas, demasiado largas o por encima del límite)` : ""}`,
       );
       if (result.checkScheduledSoon) {
-        toast.info("The scheduled check within the hour covers these keywords");
+        toast.info(
+          "La comprobación programada de la próxima hora incluye estas palabras clave",
+        );
       }
       onAdded?.();
     },
@@ -84,7 +86,7 @@ export function TrackRankingsMenu({
         render={<Button variant={variant} size="sm" pending={add.isPending} />}
       >
         {add.isPending ? null : <LineChart data-icon="inline-start" />}
-        Track rankings
+        Seguir posiciones
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="end" className="w-72">
         {configs.length === 0 ? (
@@ -95,12 +97,12 @@ export function TrackRankingsMenu({
             }
           >
             {configsQuery.isLoading
-              ? "Loading rank trackers…"
-              : "Set up rank tracking first"}
+              ? "Cargando rastreadores…"
+              : "Configura primero el seguimiento de posiciones"}
           </DropdownMenuItem>
         ) : (
           <>
-            <DropdownMenuLabel>Add to rank tracker</DropdownMenuLabel>
+            <DropdownMenuLabel>Añadir al rastreador</DropdownMenuLabel>
             {configs.map((config) => (
               <DropdownMenuItem
                 key={config.id}

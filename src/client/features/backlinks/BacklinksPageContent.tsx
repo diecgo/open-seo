@@ -102,8 +102,8 @@ export function BacklinksBody({
         loaded={historyLoaded}
         onRemove={onRemoveHistoryItem}
         emptyIllustration={<BacklinksIllustration />}
-        emptyTitle="Find sites that could link to you"
-        emptyDescription="Look up a competitor to see who links to them, or your own site to see links you gained and lost."
+        emptyTitle="Encuentra sitios que podrían enlazarte"
+        emptyDescription="Busca un competidor para ver quién lo enlaza, o tu propio sitio para ver los enlaces que has ganado y perdido."
         emptyAction={
           <SuggestedSites
             projectId={projectId}
@@ -156,10 +156,10 @@ export function BacklinksBody({
       <>
         {tabControls}
         <QueryError
-          title="Could not load backlinks"
+          title="No se han podido cargar los enlaces entrantes"
           cause={data.overviewQuery.error}
           fallback={
-            data.overviewErrorMessage ?? "Please try again in a moment."
+            data.overviewErrorMessage ?? "Vuelve a intentarlo en un momento."
           }
           onRetry={() => void data.overviewQuery.refetch()}
           isRetrying={data.overviewQuery.isFetching}

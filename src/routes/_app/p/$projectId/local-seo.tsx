@@ -25,7 +25,7 @@ function LocalSeoLayout() {
           backLink={
             projectId && trackerId ? (
               <BackLink to="/p/$projectId/local-seo" params={{ projectId }}>
-                Tracked businesses
+                Negocios seguidos
               </BackLink>
             ) : undefined
           }

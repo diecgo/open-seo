@@ -355,19 +355,19 @@ test("5. revocation in Settings: disconnecting the agent and revoking the key bl
     await page.goto("/settings");
 
     await test.step("Settings -> Connected agents -> Disconnect", async () => {
-      await expect(page.getByText("Connected agents").first()).toBeVisible();
-      // RowActionsMenu aria-label is `Actions for ${clientName}`
+      await expect(page.getByText("Agentes conectados").first()).toBeVisible();
+      // RowActionsMenu aria-label is `Acciones de ${clientName}`
       // (src/client/features/settings/McpConnectionsSettings.tsx); A has two
       // grants (CLIENT_A and CLIENT_A_IN_B), hence exact matching.
       const actions = page.getByRole("button", {
-        name: `Actions for ${CLIENT_A}`,
+        name: `Acciones de ${CLIENT_A}`,
         exact: true,
       });
       await actions.click();
-      await page.getByRole("menuitem", { name: "Disconnect" }).click();
+      await page.getByRole("menuitem", { name: "Desconectar" }).click();
       await page
         .getByRole("alertdialog")
-        .getByRole("button", { name: "Disconnect", exact: true })
+        .getByRole("button", { name: "Desconectar", exact: true })
         .click();
       await expect(actions).toHaveCount(0);
 
@@ -385,18 +385,18 @@ test("5. revocation in Settings: disconnecting the agent and revoking the key bl
     });
 
     await test.step("Settings -> API keys -> Revoke key", async () => {
-      await expect(page.getByText("API keys").first()).toBeVisible();
-      // aria-label `Actions for ${key.name}` and the "Revoke key" item/confirm
+      await expect(page.getByText("Claves API").first()).toBeVisible();
+      // aria-label `Acciones de ${key.name}` and the "Revocar clave" item/confirm
       // label come from ApiKeySettings.tsx.
       const actions = page.getByRole("button", {
-        name: `Actions for ${KEY_A}`,
+        name: `Acciones de ${KEY_A}`,
         exact: true,
       });
       await actions.click();
-      await page.getByRole("menuitem", { name: "Revoke key" }).click();
+      await page.getByRole("menuitem", { name: "Revocar clave" }).click();
       await page
         .getByRole("alertdialog")
-        .getByRole("button", { name: "Revoke key", exact: true })
+        .getByRole("button", { name: "Revocar clave", exact: true })
         .click();
       await expect(actions).toHaveCount(0);
 

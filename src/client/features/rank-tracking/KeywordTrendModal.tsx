@@ -51,8 +51,8 @@ const DEVICE_STYLE: Record<
   "desktop" | "mobile",
   { label: string; color: string }
 > = {
-  desktop: { label: "Desktop", color: "#2563eb" },
-  mobile: { label: "Mobile", color: "#e69f00" },
+  desktop: { label: "Escritorio", color: "#2563eb" },
+  mobile: { label: "Móvil", color: "#e69f00" },
 };
 
 export interface KeywordTrendTarget {
@@ -150,7 +150,7 @@ export function KeywordTrendModal({
     void navigator.clipboard.writeText(
       buildCsv(HISTORY_HEADERS, historyRows.map(historyExportRow)),
     );
-    toast.success("Copied to clipboard");
+    toast.success("Copiado al portapapeles");
     captureClientEvent("rank_tracking:keyword_trend_copy");
   };
 
@@ -181,7 +181,7 @@ export function KeywordTrendModal({
               {locationName
                 ? formatLocationLabel(locationName, 2)
                 : (LOCATIONS[locationCode] ?? "US")}{" "}
-              &middot; Position over time
+              &middot; Posición a lo largo del tiempo
             </DialogDescription>
           </div>
           <div className="flex items-center gap-2">
@@ -189,7 +189,7 @@ export function KeywordTrendModal({
               variant="outline"
               size="sm"
               nativeButton={false}
-              title="Search this keyword on Google with the tracked language, country, and city"
+              title="Busca esta palabra clave en Google con el idioma, el país y la ciudad que sigues"
               render={
                 <a
                   href={googleSerpUrl(target.keyword, {
@@ -203,7 +203,7 @@ export function KeywordTrendModal({
               }
             >
               <ExternalLink data-icon="inline-start" />
-              Open on Google
+              Abrir en Google
             </Button>
             <TrendRangeToggle value={sinceDays} onChange={setSinceDays} />
           </div>
@@ -211,7 +211,7 @@ export function KeywordTrendModal({
 
         <QueryState
           query={historyQuery}
-          errorFallback="Failed to load keyword history"
+          errorFallback="No se ha podido cargar el historial de la palabra clave"
           loading={<Skeleton className="h-56 w-full" />}
         >
           {() =>
@@ -237,7 +237,7 @@ export function KeywordTrendModal({
                       typeof item.dataKey === "string" &&
                       bottomBandKeys.has(`${checkedAt}:${item.dataKey}`) ? (
                       <span className="font-normal text-muted-foreground">
-                        Not found
+                        No encontrada
                       </span>
                     ) : (
                       String(value)
@@ -248,11 +248,11 @@ export function KeywordTrendModal({
                 <div className="flex items-center justify-end gap-2">
                   <Button variant="ghost" size="xs" onClick={handleCopy}>
                     <Copy data-icon="inline-start" />
-                    Copy
+                    Copiar
                   </Button>
                   <Button variant="ghost" size="xs" onClick={handleExport}>
                     <Download data-icon="inline-start" />
-                    Export CSV
+                    Exportar CSV
                   </Button>
                 </div>
 
@@ -260,10 +260,12 @@ export function KeywordTrendModal({
                   <Table containerClassName="max-h-64">
                     <TableHeader className="sticky top-0 z-10 bg-popover">
                       <TableRow>
-                        <TableHead>Date</TableHead>
-                        {devices.length > 1 && <TableHead>Device</TableHead>}
-                        <TableHead>Position</TableHead>
-                        <TableHead>Δ vs previous check</TableHead>
+                        <TableHead>Fecha</TableHead>
+                        {devices.length > 1 && (
+                          <TableHead>Dispositivo</TableHead>
+                        )}
+                        <TableHead>Posición</TableHead>
+                        <TableHead>Δ vs. comprobación anterior</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -295,10 +297,10 @@ export function KeywordTrendModal({
                                       <span className="cursor-help text-xs text-muted-foreground underline decoration-dotted underline-offset-2" />
                                     }
                                   >
-                                    Not found
+                                    No encontrada
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    Not ranking, or incomplete results
+                                    Sin posición o resultados incompletos
                                   </TooltipContent>
                                 </Tooltip>
                               ) : (
@@ -425,10 +427,10 @@ function slugify(value: string): string {
 }
 
 const HISTORY_HEADERS = [
-  "Date (UTC)",
-  "Device",
-  "Position",
-  "Change vs previous",
+  "Fecha (UTC)",
+  "Dispositivo",
+  "Posición",
+  "Cambio vs. anterior",
 ];
 
 function historyExportRow(row: HistoryRow): CsvValue[] {

@@ -511,7 +511,7 @@ export function DomainOverviewPage({
   // hostname plus subdomains, so anything narrower needs a label.
   const overviewMetricsHint =
     state.overview && state.overview.scope !== "subdomains"
-      ? "Whole domain incl. subdomains"
+      ? "Todo el dominio, subdominios incluidos"
       : undefined;
 
   const tabs = (
@@ -521,8 +521,8 @@ export function DomainOverviewPage({
         state.handleTabChange(value === "pages" ? "pages" : "keywords")
       }
     >
-      <TabsTrigger value="keywords">Top Keywords</TabsTrigger>
-      <TabsTrigger value="pages">Top Pages</TabsTrigger>
+      <TabsTrigger value="keywords">Palabras clave principales</TabsTrigger>
+      <TabsTrigger value="pages">Páginas principales</TabsTrigger>
     </DataTableTabs>
   );
 
@@ -531,7 +531,7 @@ export function DomainOverviewPage({
   const overviewError = state.overviewQuery.isError ? (
     <QueryError
       error={state.overviewQuery.error}
-      fallback="Lookup failed."
+      fallback="No se ha podido completar la búsqueda."
       onRetry={() => void state.overviewQuery.refetch()}
       isRetrying={state.overviewQuery.isFetching}
     />
@@ -562,7 +562,7 @@ export function DomainOverviewPage({
                   onShowRecentSearches();
                 }}
               >
-                Recent searches
+                Búsquedas recientes
               </BackButton>
             ) : undefined
           }
@@ -599,8 +599,8 @@ export function DomainOverviewPage({
               loaded={state.historyLoaded}
               onRemove={state.removeHistoryItem}
               emptyIllustration={<DomainProfileIllustration />}
-              emptyTitle="Look up your site or a competitor's"
-              emptyDescription="See how much search traffic they get, the keywords they rank for and their top pages."
+              emptyTitle="Analiza tu web o la de un competidor"
+              emptyDescription="Descubre cuánto tráfico de búsqueda recibe, para qué palabras clave posiciona y cuáles son sus páginas principales."
               emptyAction={
                 <SuggestedSites
                   projectId={projectId}
@@ -637,8 +637,8 @@ export function DomainOverviewPage({
               <Alert variant="info">
                 <Info />
                 <AlertDescription className="text-foreground">
-                  Not enough data for this scope yet. Try another domain or a
-                  broader scope.
+                  Aún no hay datos suficientes para este ámbito. Prueba con otro
+                  dominio o con un ámbito más amplio.
                 </AlertDescription>
               </Alert>
             ) : null}
@@ -659,11 +659,11 @@ export function DomainOverviewPage({
                       {
                         label: overviewMetricsHint ? (
                           <HelpLabel
-                            label="Estimated organic traffic"
+                            label="Tráfico orgánico estimado"
                             helpText={overviewMetricsHint}
                           />
                         ) : (
-                          "Estimated organic traffic"
+                          "Tráfico orgánico estimado"
                         ),
                         value: formatMetric(
                           state.overview.organicTraffic,
@@ -673,11 +673,11 @@ export function DomainOverviewPage({
                       {
                         label: overviewMetricsHint ? (
                           <HelpLabel
-                            label="Organic keywords"
+                            label="Palabras clave orgánicas"
                             helpText={overviewMetricsHint}
                           />
                         ) : (
-                          "Organic keywords"
+                          "Palabras clave orgánicas"
                         ),
                         value: formatMetric(
                           state.overview.organicKeywords,

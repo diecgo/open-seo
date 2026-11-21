@@ -71,48 +71,66 @@ function useCreditsOffer(surface: "card" | "button") {
   if (!accountQuery.data) {
     message = getStandardErrorMessage(new Error("INSUFFICIENT_CREDITS"));
     action = (
-      <CreditsButton link={<Link to={BILLING_ROUTE} />} label="Go to Billing" />
+      <CreditsButton
+        link={<Link to={BILLING_ROUTE} />}
+        label="Ir a Facturación"
+      />
     );
   } else if (isFreePlan) {
-    message = `You don't have enough credits for this. Upgrade to get $${BASE_PLAN_OFFER.monthlyCreditsUsd} of credits every month.`;
+    message = `No tienes créditos suficientes para esto. Mejora tu plan para tener $${BASE_PLAN_OFFER.monthlyCreditsUsd} en créditos cada mes.`;
     action = (
       <CreditsButton
         link={<Link to={SUBSCRIBE_ROUTE} search={{ upgrade: true }} />}
-        label="Upgrade plan"
+        label="Mejorar plan"
       />
     );
   } else if (autoReloadState === "on" && isOutOfCredits && autoReload) {
     // The refused call is what told Autumn to reload; the credits are coming.
     // A balance that is not out means this is an old refusal (a scheduled
     // run's stored skip reason), so it gets the general copy below.
-    message = `You're out of credits. Auto-reload is adding $${autoReload.amountUsd} now, so try again in a moment.`;
+    message = `Te has quedado sin créditos. La recarga automática está añadiendo $${autoReload.amountUsd} ahora, así que vuelve a intentarlo en un momento.`;
     action = (
-      <CreditsButton link={<Link to={BILLING_ROUTE} />} label="Go to Billing" />
+      <CreditsButton
+        link={<Link to={BILLING_ROUTE} />}
+        label="Ir a Facturación"
+      />
     );
   } else if (autoReloadState === "card_failed") {
     message =
-      "You're out of credits and auto-reload couldn't charge your card. Update your card to keep going.";
+      "Te has quedado sin créditos y la recarga automática no ha podido cobrar en tu tarjeta. Actualiza tu tarjeta para seguir.";
     action = (
-      <CreditsButton link={<Link to={BILLING_ROUTE} />} label="Update card" />
+      <CreditsButton
+        link={<Link to={BILLING_ROUTE} />}
+        label="Actualizar tarjeta"
+      />
     );
   } else if (autoReloadState === "failed") {
     message =
-      "You're out of credits and auto-reload couldn't buy more. Buy credits to keep going.";
+      "Te has quedado sin créditos y la recarga automática no ha podido comprar más. Compra créditos para seguir.";
     action = (
-      <CreditsButton link={<Link to={BILLING_ROUTE} />} label="Buy credits" />
+      <CreditsButton
+        link={<Link to={BILLING_ROUTE} />}
+        label="Comprar créditos"
+      />
     );
   } else if (autoReloadState === "budget_spent" && autoReload) {
     // Buying credits would not help: the budget counts those too.
-    message = `You've hit your $${autoReload.monthlyLimitUsd} monthly auto-reload budget, so credits are paused${refillDate ? ` until ${refillDate}` : ""}. Raise it to keep going.`;
+    message = `Has alcanzado tu presupuesto mensual de recarga automática de $${autoReload.monthlyLimitUsd}, así que los créditos están en pausa${refillDate ? ` hasta el ${refillDate}` : ""}. Súbelo para seguir.`;
     action = (
-      <CreditsButton link={<Link to={BILLING_ROUTE} />} label="Raise budget" />
+      <CreditsButton
+        link={<Link to={BILLING_ROUTE} />}
+        label="Subir presupuesto"
+      />
     );
   } else {
     message = refillDate
-      ? `You don't have enough credits for this. Buy more, or wait for your monthly refill on ${refillDate}. Auto-reload can buy them for you next time.`
-      : "You don't have enough credits for this. Buy more to keep going. Auto-reload can buy them for you next time.";
+      ? `No tienes créditos suficientes para esto. Compra más o espera a la recarga mensual del ${refillDate}. La recarga automática puede comprarlos por ti la próxima vez.`
+      : "No tienes créditos suficientes para esto. Compra más para seguir. La recarga automática puede comprarlos por ti la próxima vez.";
     action = (
-      <CreditsButton link={<Link to={BILLING_ROUTE} />} label="Buy credits" />
+      <CreditsButton
+        link={<Link to={BILLING_ROUTE} />}
+        label="Comprar créditos"
+      />
     );
   }
 

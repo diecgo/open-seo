@@ -8,9 +8,9 @@ import { TableCell, TableRow } from "@/client/components/ui/table";
 import { hasOrgPermission } from "@/lib/org-permissions";
 
 const ROLE_LABELS: Record<string, string> = {
-  owner: "Owner",
-  admin: "Admin",
-  member: "Member",
+  owner: "Propietario",
+  admin: "Administrador",
+  member: "Miembro",
 };
 
 function formatRole(role: string) {
@@ -67,7 +67,7 @@ export function MemberRow({
         <p className="truncate font-medium" data-ph-mask>
           {member.user.name || member.user.email}
           {isSelf ? (
-            <span className="font-normal text-muted-foreground"> (you)</span>
+            <span className="font-normal text-muted-foreground"> (tú)</span>
           ) : null}
         </p>
         <p className="truncate text-xs text-muted-foreground" data-ph-mask>
@@ -77,14 +77,14 @@ export function MemberRow({
       <TableCell>
         <Badge variant="secondary">{formatRole(member.role)}</Badge>
       </TableCell>
-      <TableCell className="text-xs text-muted-foreground">Active</TableCell>
+      <TableCell className="text-xs text-muted-foreground">Activo</TableCell>
       <TableCell>
         {canRemove ? (
-          <RowActionsMenu label={`Actions for ${member.user.email}`}>
+          <RowActionsMenu label={`Acciones de ${member.user.email}`}>
             {canTransferOwnership ? (
               <DropdownMenuItem onClick={onTransferOwnership}>
                 <Crown />
-                Transfer ownership
+                Transferir la propiedad
               </DropdownMenuItem>
             ) : null}
             <DropdownMenuItem
@@ -93,14 +93,14 @@ export function MemberRow({
               onClick={() => setIsConfirmingRemove(true)}
             >
               <Trash2 />
-              Remove member
+              Quitar miembro
             </DropdownMenuItem>
           </RowActionsMenu>
         ) : null}
         {isConfirmingRemove ? (
           <ConfirmDialog
-            title={`Remove ${member.user.email} from this organization?`}
-            confirmLabel="Remove member"
+            title={`¿Quitar a ${member.user.email} de esta organización?`}
+            confirmLabel="Quitar miembro"
             destructive
             onClose={() => setIsConfirmingRemove(false)}
             onConfirm={() => {
@@ -108,8 +108,8 @@ export function MemberRow({
               onRemove();
             }}
           >
-            They lose access immediately. Search Console and Google Analytics
-            connections made with their Google account are disconnected.
+            Perderá el acceso al momento. Se desconectarán las conexiones de
+            Search Console y Google Analytics hechas con su cuenta de Google.
           </ConfirmDialog>
         ) : null}
       </TableCell>
@@ -145,17 +145,17 @@ export function InvitationRow({
         </Badge>
       </TableCell>
       <TableCell className="text-xs text-muted-foreground">
-        Invited &middot; expires{" "}
+        Invitado &middot; caduca el{" "}
         {new Date(invitation.expiresAt).toLocaleDateString()}
       </TableCell>
       <TableCell>
         {canManageTeam ? (
           <RowActionsMenu
-            label={`Actions for the invitation to ${invitation.email}`}
+            label={`Acciones de la invitación a ${invitation.email}`}
           >
             <DropdownMenuItem disabled={isResending} onClick={onResend}>
               <Send />
-              Resend invitation
+              Reenviar invitación
             </DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
@@ -163,7 +163,7 @@ export function InvitationRow({
               onClick={onCancel}
             >
               <Trash2 />
-              Cancel invitation
+              Cancelar invitación
             </DropdownMenuItem>
           </RowActionsMenu>
         ) : null}

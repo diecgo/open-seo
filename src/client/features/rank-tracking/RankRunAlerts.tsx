@@ -15,7 +15,7 @@ function ReadWhatChangedLink() {
       rel="noopener noreferrer"
       className="font-medium underline underline-offset-4"
     >
-      Read what changed
+      Lee qué ha cambiado
     </a>
   );
 }
@@ -33,7 +33,8 @@ export function RankRunAlerts({
       <Alert variant="warning">
         <AlertTriangle />
         <AlertDescription className="text-foreground">
-          This check stopped responding. You can start a new one to replace it.
+          Esta comprobación ha dejado de responder. Puedes iniciar una nueva
+          para sustituirla.
         </AlertDescription>
       </Alert>
     );
@@ -45,9 +46,11 @@ export function RankRunAlerts({
         <Clock />
         <AlertDescription className="text-foreground">
           <p>
-            <span className="font-medium">This check is delayed</span> because
-            our search data provider is slow. We'll keep waiting for up to 6
-            hours. You can leave this page.
+            <span className="font-medium">
+              Esta comprobación va con retraso
+            </span>{" "}
+            porque nuestro proveedor de datos de búsqueda va lento. Seguiremos
+            esperando hasta 6 horas. Puedes salir de esta página.
           </p>
         </AlertDescription>
       </Alert>
@@ -60,9 +63,11 @@ export function RankRunAlerts({
         <Clock />
         <AlertDescription className="text-foreground">
           <p>
-            <span className="font-medium">This check takes about an hour</span>{" "}
-            because Google's results have been unreliable lately. You can leave
-            this page while it's running. <ReadWhatChangedLink />
+            <span className="font-medium">
+              Esta comprobación tarda una hora
+            </span>{" "}
+            porque los resultados de Google no son fiables últimamente. Puedes
+            salir de esta página mientras se ejecuta. <ReadWhatChangedLink />
           </p>
         </AlertDescription>
       </Alert>
@@ -70,7 +75,9 @@ export function RankRunAlerts({
   }
 
   if (run.status === "failed" && isOutOfCreditsRunError(run.errorMessage)) {
-    return <InsufficientCreditsError title="Your last rank check didn't run" />;
+    return (
+      <InsufficientCreditsError title="Tu última comprobación de posiciones no se ha ejecutado" />
+    );
   }
 
   if (
@@ -83,10 +90,10 @@ export function RankRunAlerts({
         <AlertDescription className="text-foreground">
           <p>
             <span className="font-medium">
-              We couldn't finish your last check.
+              No hemos podido terminar tu última comprobación.
             </span>{" "}
-            Our search data provider didn't return Google's results within 6
-            hours. Please try again later.
+            Nuestro proveedor de datos de búsqueda no ha devuelto los resultados
+            de Google en 6 horas. Vuelve a intentarlo más tarde.
           </p>
         </AlertDescription>
       </Alert>
@@ -100,10 +107,11 @@ export function RankRunAlerts({
         <AlertDescription className="text-foreground">
           <p>
             <span className="font-medium">
-              We couldn't finish your last check.
+              No hemos podido terminar tu última comprobación.
             </span>{" "}
-            Google's results have been unreliable for all rank trackers lately.
-            Please try again later. <ReadWhatChangedLink />
+            Últimamente los resultados de Google no son fiables para ningún
+            rastreador de posiciones. Vuelve a intentarlo más tarde.{" "}
+            <ReadWhatChangedLink />
           </p>
         </AlertDescription>
       </Alert>
@@ -118,10 +126,11 @@ export function RankRunAlerts({
         <AlertDescription className="text-foreground">
           <p>
             <span className="font-medium">
-              Some keywords couldn't be checked.
+              No se han podido comprobar algunas palabras clave.
             </span>{" "}
-            Google's results have been unreliable for all rank trackers lately,
-            so these show their last known position. <ReadWhatChangedLink />
+            Últimamente los resultados de Google no son fiables para ningún
+            rastreador de posiciones, así que muestran su última posición
+            conocida. <ReadWhatChangedLink />
           </p>
         </AlertDescription>
       </Alert>

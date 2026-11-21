@@ -36,23 +36,23 @@ type Props = {
   ) => void;
 };
 
-const KEYWORD_SCOPE_REASON = "Scopes apply to domain lookups";
+const KEYWORD_SCOPE_REASON = "Los ámbitos se aplican a búsquedas de dominio";
 
 const BRAND_LOOKUP_BULLETS = [
   {
     icon: TrendingUp,
-    title: "Track AI visibility",
-    body: "See estimated counts for ChatGPT and Google AI Overview answers that cite your brand, and watch the trend month over month.",
+    title: "Sigue tu visibilidad en IA",
+    body: "Consulta el número estimado de respuestas de ChatGPT y Google AI Overview que citan tu marca y sigue la tendencia mes a mes.",
   },
   {
     icon: Quote,
-    title: "See the prompts",
-    body: "View sample user questions where LLMs reference your brand or domain.",
+    title: "Mira los prompts",
+    body: "Consulta ejemplos de preguntas de usuarios en las que los LLM mencionan tu marca o dominio.",
   },
   {
     icon: BarChart3,
-    title: "Map the competition",
-    body: "Spot the pages LLMs cite alongside you so you know who's competing for attention in AI answers.",
+    title: "Mapea la competencia",
+    body: "Detecta las páginas que los LLM citan junto a ti para saber quién compite por la atención en las respuestas de IA.",
   },
 ];
 
@@ -139,14 +139,14 @@ export function BrandLookupPage({
     if (trimmed.length === 0) {
       setValidationError({
         field: "query",
-        message: "Enter a brand name or domain",
+        message: "Introduce una marca o un dominio",
       });
       return;
     }
     if (trimmed.length > BRAND_LOOKUP_MAX_INPUT_LENGTH) {
       setValidationError({
         field: "query",
-        message: `Keep it under ${BRAND_LOOKUP_MAX_INPUT_LENGTH} characters`,
+        message: `Debe tener menos de ${BRAND_LOOKUP_MAX_INPUT_LENGTH} caracteres`,
       });
       return;
     }
@@ -161,7 +161,7 @@ export function BrandLookupPage({
     if (tooLong) {
       setValidationError({
         field: "competitors",
-        message: `Keep each competitor under ${BRAND_LOOKUP_MAX_INPUT_LENGTH} characters`,
+        message: `Cada competidor debe tener menos de ${BRAND_LOOKUP_MAX_INPUT_LENGTH} caracteres`,
       });
       return;
     }
@@ -173,7 +173,7 @@ export function BrandLookupPage({
     if (matchesTarget) {
       setValidationError({
         field: "competitors",
-        message: `"${matchesTarget}" matches the brand you're looking up — remove it from competitors`,
+        message: `"${matchesTarget}" coincide con la marca que estás buscando; quítalo de los competidores`,
       });
       return;
     }
@@ -184,7 +184,8 @@ export function BrandLookupPage({
     ) {
       setValidationError({
         field: "query",
-        message: "Add a path to use Subfolder (e.g. example.com/blog)",
+        message:
+          "Añade una ruta para usar Subcarpeta (p. ej., example.com/blog)",
       });
       return;
     }
@@ -206,9 +207,9 @@ export function BrandLookupPage({
       title="Búsqueda de marca"
       description="Mira cómo cita la búsqueda con IA cualquier marca o dominio."
       gate={{
-        feature: "Brand Lookup",
+        feature: "Búsqueda de marca",
         description:
-          "See how ChatGPT and Google AI Overview cite any brand or domain — total mentions, sample prompts where it appears, and the pages cited alongside it.",
+          "Mira cómo citan ChatGPT y Google AI Overview cualquier marca o dominio: menciones totales, ejemplos de prompts en los que aparece y las páginas citadas junto a ella.",
         features: BRAND_LOOKUP_BULLETS,
         alternative: (
           <PromptTrackingWithoutUpgradeButton projectId={projectId} />
@@ -236,7 +237,7 @@ export function BrandLookupPage({
       }
       query={lookupQuery}
       hasActiveQuery={hasActiveQuery}
-      errorFallback="Failed to load brand lookup"
+      errorFallback="No se pudo cargar la búsqueda de marca"
       // The form resets whenever the URL `q`/`c`/`scope` changes, including
       // browser back and history links. `competitorKey` is a stable string,
       // unlike the fresh-each-render `initialCompetitors` array.
@@ -263,7 +264,7 @@ export function BrandLookupPage({
           search={{ q: undefined, c: undefined, scope: undefined }}
           replace
         >
-          Recent searches
+          Búsquedas recientes
         </BackLink>
       }
       renderResults={(result) => (
@@ -275,7 +276,7 @@ export function BrandLookupPage({
           loaded={historyLoaded}
           onRemove={removeHistoryItem}
           emptyIcon={Sparkles}
-          emptyTitle="Search a brand name or domain to see how AI cites it"
+          emptyTitle="Busca una marca o un dominio para ver cómo lo cita la IA"
           getTitle={(item) => (
             <>
               {item.query}

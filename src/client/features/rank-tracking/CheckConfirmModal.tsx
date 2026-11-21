@@ -25,20 +25,20 @@ export function CheckConfirmModal({
 
   return (
     <ConfirmDialog
-      title={`Check ${keywordCount} keyword${keywordCount !== 1 ? "s" : ""}?`}
-      confirmLabel="Start check"
+      title={`¿Comprobar ${keywordCount} palabra${keywordCount !== 1 ? "s" : ""} clave?`}
+      confirmLabel="Iniciar comprobación"
       pending={isPending}
       onConfirm={onRunNow}
       onClose={onCancel}
     >
       <span className="flex flex-col gap-1">
         <span>
-          {keywordCount} keyword{keywordCount !== 1 ? "s" : ""} &times; {dc}{" "}
-          device{dc !== 1 ? "s" : ""}
+          {keywordCount} palabra{keywordCount !== 1 ? "s" : ""} clave &times;{" "}
+          {dc} dispositivo{dc !== 1 ? "s" : ""}
         </span>
         {costUsd != null ? (
           <span>
-            Costs up to{" "}
+            Cuesta hasta{" "}
             <span className="font-mono font-semibold text-foreground">
               ${costUsd.toFixed(2)}
             </span>
@@ -46,7 +46,7 @@ export function CheckConfirmModal({
         ) : null}
         <span>
           {RANK_CHECK_DURATION_COPY}
-          {isScheduled ? " Your scheduled tracking won't change." : null}
+          {isScheduled ? " Tu seguimiento programado no cambiará." : null}
         </span>
       </span>
     </ConfirmDialog>

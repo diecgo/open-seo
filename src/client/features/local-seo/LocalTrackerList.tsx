@@ -42,7 +42,7 @@ export function LocalTrackerList({
     onSuccess: async ({ deleted }, trackerId) => {
       if (!deleted) {
         toast.error(
-          "Wait for the current check to finish, then delete this business.",
+          "Espera a que termine la comprobación actual y luego elimina este negocio.",
         );
         return;
       }
@@ -55,26 +55,26 @@ export function LocalTrackerList({
         queryKey: ["localSeo", projectId, "trackers"],
       });
       setDeleteTarget(null);
-      toast.success("Business deleted");
+      toast.success("Negocio eliminado");
     },
   });
   return (
     <Card className="gap-0 py-0">
       <CardHeader className="px-5 pt-4 pb-3">
         <CardTitle>
-          <h2 className="text-sm font-semibold">Tracked Businesses</h2>
+          <h2 className="text-sm font-semibold">Negocios seguidos</h2>
         </CardTitle>
         <CardAction className="self-center">
           <Button size="sm" onClick={onAdd}>
             <Plus data-icon="inline-start" />
-            Add Business
+            Añadir negocio
           </Button>
         </CardAction>
       </CardHeader>
       <div className="divide-y divide-border border-t border-border">
         <QueryState
           query={query}
-          errorFallback="Failed to load tracked businesses"
+          errorFallback="No se han podido cargar los negocios seguidos"
           loading={
             <div className="space-y-3 p-5">
               <Skeleton className="h-4 w-48" />
@@ -87,8 +87,8 @@ export function LocalTrackerList({
               <EmptyState
                 variant="plain"
                 illustration={<LocalGridIllustration />}
-                title="See where you rank on Google Maps"
-                description="Rankings change from block to block. Add your business to check a keyword across the surrounding area."
+                title="Descubre en qué posición apareces en Google Maps"
+                description="Las posiciones cambian de una calle a otra. Añade tu negocio para comprobar una palabra clave en la zona de alrededor."
               />
             ) : (
               trackers.map((tracker) => (
@@ -101,7 +101,7 @@ export function LocalTrackerList({
                     params={{ projectId, trackerId: tracker.id }}
                     search={{}}
                     className="absolute inset-0 z-0"
-                    aria-label={`Open ${tracker.title}`}
+                    aria-label={`Abrir ${tracker.title}`}
                   />
                   <div className="pointer-events-none min-w-0 flex-1">
                     <p className="truncate font-medium">{tracker.title}</p>
@@ -109,15 +109,15 @@ export function LocalTrackerList({
                       {tracker.address}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {localAreaLabel(tracker)} · Mobile
+                      {localAreaLabel(tracker)} · Móvil
                     </p>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon-xs"
                     className="relative z-10 text-muted-foreground hover:text-destructive"
-                    title="Delete business"
-                    aria-label={`Delete ${tracker.title}`}
+                    title="Eliminar negocio"
+                    aria-label={`Eliminar ${tracker.title}`}
                     onClick={() => setDeleteTarget(tracker)}
                   >
                     <Trash2 className="size-4" />
@@ -131,15 +131,15 @@ export function LocalTrackerList({
       </div>
       {deleteTarget && (
         <ConfirmDialog
-          title={`Delete ${deleteTarget.title}?`}
-          confirmLabel="Delete"
+          title={`¿Eliminar ${deleteTarget.title}?`}
+          confirmLabel="Eliminar"
           destructive
           pending={remove.isPending}
           onConfirm={() => remove.mutate(deleteTarget.id)}
           onClose={() => setDeleteTarget(null)}
         >
-          Its keywords and ranking history are deleted too. This cannot be
-          undone.
+          También se eliminan sus palabras clave y su historial de posiciones.
+          No se puede deshacer.
         </ConfirmDialog>
       )}
     </Card>

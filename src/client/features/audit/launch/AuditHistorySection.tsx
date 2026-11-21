@@ -35,7 +35,7 @@ export function AuditHistorySection({
   return (
     <QueryState
       query={historyQuery}
-      errorFallback="Failed to load audit history"
+      errorFallback="No se ha podido cargar el historial de auditorías"
     >
       {(history) => (
         <AuditHistoryTable
@@ -61,8 +61,8 @@ function AuditHistoryTable({
     return (
       <EmptyState
         illustration={<AuditChecksIllustration />}
-        title="Find what's holding your site back"
-        description="An audit crawls your pages for broken links, missing titles and pages Google can't index."
+        title="Descubre qué está frenando tu sitio"
+        description="Una auditoría rastrea tus páginas en busca de enlaces rotos, títulos ausentes y páginas que Google no puede indexar."
       />
     );
   }
@@ -70,15 +70,15 @@ function AuditHistoryTable({
   return (
     <TableCard>
       <DataTableToolbar>
-        <h2 className="text-sm font-semibold">Previous Audits</h2>
+        <h2 className="text-sm font-semibold">Auditorías anteriores</h2>
       </DataTableToolbar>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Date</TableHead>
+            <TableHead>Fecha</TableHead>
             <TableHead>URL</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Pages</TableHead>
+            <TableHead>Estado</TableHead>
+            <TableHead className="text-right">Páginas</TableHead>
             <TableHead>Lighthouse</TableHead>
             <TableHead />
           </TableRow>
@@ -101,7 +101,7 @@ function AuditHistoryTable({
               <TableCell>
                 {audit.ranLighthouse ? (
                   <Badge variant="outline" size="sm">
-                    Yes
+                    Sí
                   </Badge>
                 ) : null}
               </TableCell>
@@ -142,15 +142,15 @@ function HistoryActions({
           />
         }
       >
-        View
+        Ver
       </Button>
-      <RowActionsMenu label="Audit actions">
+      <RowActionsMenu label="Acciones de la auditoría">
         <DropdownMenuItem
           variant="destructive"
           onClick={() => onDelete(auditId)}
         >
           <Trash2 />
-          Delete audit
+          Eliminar auditoría
         </DropdownMenuItem>
       </RowActionsMenu>
     </div>

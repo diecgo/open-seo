@@ -35,14 +35,14 @@ export function PaidPlanGate({
     <div className="grid min-h-[calc(100dvh-8rem)] place-items-center">
       <GateCard
         className="max-w-3xl"
-        title={`Unlock ${feature}`}
+        title={`Desbloquea ${feature}`}
         description={
           <>
             <p className="max-w-xl">{description}</p>
             <p className="max-w-xl">
-              It runs on costlier AI data, so it&apos;s part of the{" "}
-              {BASE_PLAN_OFFER.name}: ${BASE_PLAN_OFFER.priceUsd} a month, with
-              ${BASE_PLAN_OFFER.monthlyCreditsUsd} of usage credits included.
+              Funciona con datos de IA más caros, así que forma parte del{" "}
+              {BASE_PLAN_OFFER.name}: ${BASE_PLAN_OFFER.priceUsd} al mes, con $
+              {BASE_PLAN_OFFER.monthlyCreditsUsd} en créditos de uso incluidos.
             </p>
           </>
         }
@@ -53,7 +53,7 @@ export function PaidPlanGate({
               nativeButton={false}
               render={<Link to={SUBSCRIBE_ROUTE} search={{ upgrade: true }} />}
             >
-              View plan
+              Ver plan
             </Button>
             {alternative}
           </>

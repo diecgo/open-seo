@@ -68,7 +68,7 @@ test.describe("Domain Overview filter performance", () => {
 
     try {
       await openDomainOverview(page, "pages");
-      await waitForDomainRows(page, "Top Pages");
+      await waitForDomainRows(page, "Páginas principales");
       await resetDomainPerfMetrics(page);
       await captureCheckpoint("ready on Top Pages");
 
@@ -81,7 +81,7 @@ test.describe("Domain Overview filter performance", () => {
 
       await typeIntoDraftInput(
         page,
-        page.getByPlaceholder("Min").nth(0),
+        page.getByPlaceholder("Mín.").nth(0),
         "10",
         "Pages Traffic min",
         {
@@ -94,10 +94,10 @@ test.describe("Domain Overview filter performance", () => {
       await applyFilters(page, "pMinTraffic", "10");
       await captureCheckpoint("applied Pages Traffic min");
 
-      await ensureFiltersOpen(page, "Include Page Terms");
+      await ensureFiltersOpen(page, "Incluir términos en la página");
       await typeIntoDraftInput(
         page,
-        page.getByPlaceholder("Max").nth(1),
+        page.getByPlaceholder("Máx.").nth(1),
         "50",
         "Pages Keywords max",
         {
@@ -107,16 +107,16 @@ test.describe("Domain Overview filter performance", () => {
           recordPerf: true,
         },
       );
-      await expect(page.getByText("unapplied")).toBeVisible();
+      await expect(page.getByText("sin aplicar")).toBeVisible();
       await expectPageResponsive(page, "after editing Pages Keywords max");
       await captureCheckpoint("edited Pages Keywords max");
 
       await switchDomainTab(page, "keywords");
-      await waitForDomainRows(page, "Top Keywords");
+      await waitForDomainRows(page, "Palabras clave principales");
       await openFilters(page);
       await typeIntoDraftInput(
         page,
-        page.getByPlaceholder("Max").nth(1),
+        page.getByPlaceholder("Máx.").nth(1),
         "5000",
         "Keywords Volume max",
         {
@@ -126,7 +126,7 @@ test.describe("Domain Overview filter performance", () => {
           recordPerf: true,
         },
       );
-      await expect(page.getByText("unapplied")).toBeVisible();
+      await expect(page.getByText("sin aplicar")).toBeVisible();
       await expectPageResponsive(page, "after editing Keywords Volume max");
     } catch (error) {
       flowError = error;

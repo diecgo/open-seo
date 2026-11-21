@@ -45,15 +45,15 @@ export function LocalKeywordsDialog({
   });
   return (
     <FormDialog
-      title="Manage keywords"
+      title="Gestionar palabras clave"
       onClose={onClose}
       actions={
         <>
           <Button variant="outline" disabled={save.isPending} onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <Button type="submit" form="local-keywords" pending={save.isPending}>
-            Save keywords
+            Guardar palabras clave
           </Button>
         </>
       }
@@ -63,13 +63,13 @@ export function LocalKeywordsDialog({
           <form.Field name="keywords">
             {(field) => (
               <KeywordFields
-                label="Keywords to track"
-                placeholder="e.g. pizza delivery"
+                label="Palabras clave que seguir"
+                placeholder="p. ej. pizza a domicilio"
                 max={MAX_LOCAL_KEYWORDS}
                 maxLength={MAX_LOCAL_KEYWORD_LENGTH}
                 value={field.state.value}
                 onChange={field.handleChange}
-                description="Each check searches every keyword at every point. Results for removed keywords are kept."
+                description="Cada comprobación busca todas las palabras clave en todos los puntos. Los resultados de las palabras clave quitadas se conservan."
               />
             )}
           </form.Field>
@@ -78,7 +78,7 @@ export function LocalKeywordsDialog({
       {save.isError && (
         <QueryError
           error={save.error}
-          fallback="Could not save these keywords."
+          fallback="No se han podido guardar estas palabras clave."
         />
       )}
     </FormDialog>

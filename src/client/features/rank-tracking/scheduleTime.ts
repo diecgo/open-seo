@@ -5,13 +5,13 @@ import type {
 } from "@/types/schemas/rank-tracking";
 
 export const WEEKDAYS = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  "Domingo",
+  "Lunes",
+  "Martes",
+  "Miércoles",
+  "Jueves",
+  "Viernes",
+  "Sábado",
 ];
 
 /** A weekday and time as the user picks it, in the browser's timezone. */
@@ -89,11 +89,11 @@ export function describeSchedule(
       : "";
   const when =
     interval === "daily"
-      ? "daily"
+      ? "cada día"
       : interval === "weekly"
-        ? `weekly on ${WEEKDAYS[time.weekday]}s`
-        : "on the last day of each month";
-  return `Runs ${when} at ${localTime} (${utcWeekday}${utcTime} UTC)`;
+        ? `cada ${WEEKDAYS[time.weekday].toLowerCase()}`
+        : "el último día de cada mes";
+  return `Se ejecuta ${when} a las ${localTime} (${utcWeekday}${utcTime} UTC)`;
 }
 
 export function formatNextCheck(nextCheckAt: string): string {

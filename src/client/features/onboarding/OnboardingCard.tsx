@@ -25,12 +25,15 @@ export function OnboardingCard({
         OpenSEO
       </div>
       <main className="mt-8 rounded-2xl border border-border bg-card p-6 shadow-sm md:mt-12 md:p-10">
-        <nav className="-mt-3 mb-5 flex gap-2" aria-label="Onboarding steps">
+        <nav
+          className="-mt-3 mb-5 flex gap-2"
+          aria-label="Pasos de la bienvenida"
+        >
           {steps.map((label, index) => (
             <Tooltip key={label}>
               <TooltipTrigger
                 render={<button type="button" />}
-                aria-label={`Step ${index + 1}: ${label}`}
+                aria-label={`Paso ${index + 1}: ${label}`}
                 aria-current={index === step - 1 ? "step" : undefined}
                 disabled={disabled}
                 onClick={() => onStepChange(index)}

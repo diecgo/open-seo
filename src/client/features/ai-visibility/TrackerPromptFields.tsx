@@ -70,7 +70,7 @@ export function TrackerPromptFields({
     while (next.length < 3) next.push("");
     update({ prompts: next });
     if (accepted.length < prompts.length)
-      toast.info(`Added ${accepted.length} prompts`);
+      toast.info(`${accepted.length} prompts añadidos`);
   };
   return (
     <section className="space-y-4">
@@ -82,13 +82,13 @@ export function TrackerPromptFields({
       {topicPrompts.length > 0 &&
         topicPrompts.every((prompt) => prompt.paused) && (
           <p className="text-xs text-muted-foreground">
-            Every prompt in this topic is paused. Prompts you add here will
-            still run.
+            Todos los prompts de este tema están en pausa. Los prompts que
+            añadas aquí sí se ejecutarán.
           </p>
         )}
-      <Field aria-label="Prompts to track">
+      <Field aria-label="Prompts que seguir">
         <div className="flex items-center justify-between gap-3">
-          <FieldLabel htmlFor={`${promptsId}-0`}>Prompts to track</FieldLabel>
+          <FieldLabel htmlFor={`${promptsId}-0`}>Prompts que seguir</FieldLabel>
           <Button
             type="button"
             variant="outline"
@@ -105,7 +105,7 @@ export function TrackerPromptFields({
             ) : (
               <Sparkles className="size-4" />
             )}
-            {generate.isPending ? "Generating…" : "Generate"}
+            {generate.isPending ? "Generando…" : "Generar"}
           </Button>
         </div>
         <div className="space-y-2">
@@ -150,7 +150,7 @@ export function TrackerPromptFields({
           disabled={group.prompts.length >= MAX_PROMPTS_PER_ADDITION}
           onClick={() => update({ prompts: [...group.prompts, ""] })}
         >
-          <Plus /> Add prompt
+          <Plus /> Añadir prompt
         </Button>
       </Field>
       {generate.isError && <AiQueryError error={generate.error} />}

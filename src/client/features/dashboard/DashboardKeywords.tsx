@@ -18,10 +18,10 @@ const SOURCES = ["new", "top", "striking"] as const;
 type Source = (typeof SOURCES)[number];
 
 const DESCRIPTIONS: Record<Source, string> = {
-  new: "Searches where your website appeared in the latest week of Search Console data, but not in the previous four weeks.",
-  top: "Searches bringing the most clicks to your website over the last 28 days.",
+  new: "Búsquedas en las que tu sitio web apareció en la última semana de datos de Search Console, pero no en las cuatro semanas anteriores.",
+  top: "Búsquedas que más clics han traído a tu sitio web en los últimos 28 días.",
   striking:
-    "Keywords at positions 5–20 over the last 28 days. Improving the listed page could help them move higher.",
+    "Palabras clave en las posiciones 5–20 en los últimos 28 días. Mejorar la página indicada podría ayudarlas a subir.",
 };
 
 export function DashboardKeywords({
@@ -89,7 +89,7 @@ export function DashboardKeywords({
         query.isError ? (
           <QueryError
             error={query.error}
-            fallback="Could not load keywords"
+            fallback="No se han podido cargar las palabras clave"
             onRetry={() => void query.refetch()}
             isRetrying={query.isFetching}
           />
@@ -100,12 +100,15 @@ export function DashboardKeywords({
           ? {
               title:
                 emerging.data?.value.hasSearchData === false
-                  ? "No search data yet"
-                  : "No new keywords this week",
+                  ? "Aún no hay datos de búsqueda"
+                  : "No hay palabras clave nuevas esta semana",
             }
           : source === "striking"
-            ? { title: "No keywords at positions 5–20 in this period" }
-            : { title: "No keywords yet" }
+            ? {
+                title:
+                  "No hay palabras clave en las posiciones 5–20 en este periodo",
+              }
+            : { title: "Aún no hay palabras clave" }
       }
       tabs={
         <DataTableTabs
@@ -126,7 +129,7 @@ export function DashboardKeywords({
                 />
               }
             >
-              View full GSC insights →
+              Ver Search Console completo →
             </Button>
           }
           description={
@@ -136,9 +139,9 @@ export function DashboardKeywords({
             </>
           }
         >
-          <TabsTrigger value="new">New keywords</TabsTrigger>
-          <TabsTrigger value="top">Top keywords</TabsTrigger>
-          <TabsTrigger value="striking">Striking distance</TabsTrigger>
+          <TabsTrigger value="new">Palabras clave nuevas</TabsTrigger>
+          <TabsTrigger value="top">Mejores palabras clave</TabsTrigger>
+          <TabsTrigger value="striking">Cerca del top</TabsTrigger>
         </DataTableTabs>
       }
     />

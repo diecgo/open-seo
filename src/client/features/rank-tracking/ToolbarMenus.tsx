@@ -48,8 +48,8 @@ export function MoreMenu({
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label="More actions"
-              title="More actions"
+              aria-label="Más acciones"
+              title="Más acciones"
             />
           }
         >
@@ -59,8 +59,8 @@ export function MoreMenu({
           <DropdownMenuItem onClick={onCheckNow} disabled={checkBusy}>
             <Play />
             <ItemText
-              label={checkBusy ? "Running..." : "Check rankings"}
-              description="Fetch current Google positions"
+              label={checkBusy ? "Comprobando…" : "Comprobar ahora"}
+              description="Obtén las posiciones actuales en Google"
             />
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -70,27 +70,28 @@ export function MoreMenu({
             <RefreshCw className={metricsRefreshing ? "animate-spin" : ""} />
             <ItemText
               label={
-                metricsRefreshing ? "Refreshing..." : "Update keyword stats"
+                metricsRefreshing ? "Actualizando…" : "Actualizar métricas"
               }
-              description="Volume, difficulty & CPC — not rankings"
+              description="Volumen, dificultad y CPC (no posiciones)"
             />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       {confirmingRefresh ? (
         <ConfirmDialog
-          title="Update keyword stats?"
-          confirmLabel="Update stats"
+          title="¿Actualizar métricas de las palabras clave?"
+          confirmLabel="Actualizar métricas"
           onConfirm={() => {
             setConfirmingRefresh(false);
             onRefreshMetrics();
           }}
           onClose={() => setConfirmingRefresh(false)}
         >
-          This fetches new volume, difficulty, and CPC for all{" "}
-          {trackedKeywordCount} tracked keyword
-          {trackedKeywordCount !== 1 ? "s" : ""}. Each keyword uses credits.
-          Rankings do not change.
+          Obtiene de nuevo el volumen, la dificultad y el CPC de{" "}
+          {trackedKeywordCount !== 1 ? "las" : "la"} {trackedKeywordCount}{" "}
+          palabra{trackedKeywordCount !== 1 ? "s" : ""} clave seguida
+          {trackedKeywordCount !== 1 ? "s" : ""}. Cada palabra clave usa
+          créditos. Las posiciones no cambian.
         </ConfirmDialog>
       ) : null}
     </>

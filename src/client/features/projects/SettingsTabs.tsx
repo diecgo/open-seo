@@ -2,12 +2,15 @@ import { NavTab, NavTabs } from "@/client/components/NavTabs";
 
 const tabs = [
   { to: "/p/$projectId/settings" as const, label: "General", exact: true },
-  { to: "/p/$projectId/settings/integrations" as const, label: "Integrations" },
+  {
+    to: "/p/$projectId/settings/integrations" as const,
+    label: "Integraciones",
+  },
 ];
 
 export function SettingsTabs({ projectId }: { projectId: string }) {
   return (
-    <NavTabs label="Project settings sections">
+    <NavTabs label="Secciones de ajustes del proyecto">
       {tabs.map((tab) => (
         <NavTab
           key={tab.to}

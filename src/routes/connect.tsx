@@ -11,7 +11,7 @@ import { getSignInHref, OAUTH_AUTHORIZE_PATH } from "@/lib/auth-redirect";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/connect")({
-  head: () => pageHead("Connect"),
+  head: () => pageHead("Conectar"),
   // Reads the authorize params from window.location, which only the browser
   // has; the page has nothing worth server-rendering anyway.
   ssr: false,
@@ -68,13 +68,13 @@ function ConnectPage() {
   return (
     <AuthPageShell>
       <AuthPageCard
-        title="Connecting OpenSEO"
-        helperText="This takes a few seconds. You'll go back to your AI app when it's done."
+        title="Conectando OpenSEO"
+        helperText="Tarda unos segundos. Cuando termine, volverás a tu app de IA."
         footer={
           <p className="text-center text-sm text-muted-foreground">
-            Already have an OpenSEO account?{" "}
+            ¿Ya tienes cuenta de OpenSEO?{" "}
             <a href={signInHref} className="underline">
-              Sign in
+              Inicia sesión
             </a>
           </p>
         }

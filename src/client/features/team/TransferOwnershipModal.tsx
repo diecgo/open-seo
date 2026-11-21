@@ -35,7 +35,7 @@ export function TransferOwnershipModal({
     mutationFn: () => transferOwnership({ data: { memberId: member.id } }),
     onSuccess: () => {
       captureClientEvent("team:ownership_transfer");
-      toast.success(`${displayName} is now the owner`);
+      toast.success(`${displayName} es ahora el propietario`);
       onTransferred();
       onClose();
     },
@@ -43,8 +43,8 @@ export function TransferOwnershipModal({
       const teamChanged = isTeamChangedError(error);
       toast.error(
         teamChanged
-          ? "Your team changed while this was open. Ownership didn't change."
-          : "We couldn't transfer ownership. Ownership didn't change.",
+          ? "Tu equipo ha cambiado mientras esto estaba abierto. La propiedad no ha cambiado."
+          : "No hemos podido transferir la propiedad. La propiedad no ha cambiado.",
       );
       // Refresh either way so the list and the caller's role are current.
       onTransferred();
@@ -64,17 +64,19 @@ export function TransferOwnershipModal({
     >
       <DialogContent showCloseButton={false} className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Transfer ownership?</DialogTitle>
+          <DialogTitle>¿Transferir la propiedad?</DialogTitle>
           <DialogDescription>
             <span className="font-medium text-foreground" data-ph-mask>
               {displayName}
             </span>{" "}
-            becomes the owner of this organization and manages its billing. You
-            become an Admin and keep full access to each project.
+            pasa a ser el propietario de esta organización y gestiona su
+            facturación. Tú pasas a ser Administrador y mantienes el acceso
+            completo a todos los proyectos.
           </DialogDescription>
           <DialogDescription>
-            Projects, data, and the subscription stay with the organization.
-            Only the new owner can transfer ownership again.
+            Los proyectos, los datos y la suscripción se quedan en la
+            organización. Solo el nuevo propietario puede volver a transferir la
+            propiedad.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -83,13 +85,13 @@ export function TransferOwnershipModal({
             onClick={onClose}
             disabled={transferMutation.isPending}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             onClick={() => transferMutation.mutate()}
             pending={transferMutation.isPending}
           >
-            Transfer ownership
+            Transferir la propiedad
           </Button>
         </DialogFooter>
       </DialogContent>

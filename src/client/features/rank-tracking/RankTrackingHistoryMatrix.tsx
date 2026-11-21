@@ -44,11 +44,11 @@ export function RankTrackingHistoryMatrix({
     return (
       <EmptyState
         kind="filtered"
-        title="No keywords match these filters"
-        description="Change or clear the filters to see more keywords."
+        title="Ninguna palabra clave coincide con estos filtros"
+        description="Cambia o borra los filtros para ver más palabras clave."
         action={
           <Button variant="outline" size="sm" onClick={onClearFilters}>
-            Clear filters
+            Borrar filtros
           </Button>
         }
       />
@@ -63,7 +63,7 @@ export function RankTrackingHistoryMatrix({
             {/* Unconstrained keyword column absorbs the slack when only a few
                 check columns exist, so sparse history doesn't stretch oddly. */}
             <TableHead className="sticky left-0 z-10 w-full bg-card">
-              Keyword
+              Palabra clave
             </TableHead>
             {runs.map((r) => (
               <TableHead key={r.runId} className="w-24 text-right">
@@ -128,14 +128,16 @@ function NotCheckedCell() {
         render={
           // An icon fits the numeric column.
           <span
-            aria-label="Not checked"
+            aria-label="Sin comprobar"
             className="inline-flex cursor-help align-middle text-muted-foreground"
           />
         }
       >
         <CircleSlash className="size-3.5" aria-hidden />
       </TooltipTrigger>
-      <TooltipContent>No result from Google on this check.</TooltipContent>
+      <TooltipContent>
+        Google no devolvió resultado en esta comprobación.
+      </TooltipContent>
     </Tooltip>
   );
 }
@@ -200,7 +202,7 @@ function buildMatrix(cells: RankPositionMatrixCell[]): {
 }
 
 function formatDate(value: string): string {
-  return parseDbTimestamp(value).toLocaleDateString("en-US", {
+  return parseDbTimestamp(value).toLocaleDateString("es-ES", {
     month: "short",
     day: "numeric",
   });

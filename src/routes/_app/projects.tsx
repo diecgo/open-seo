@@ -43,14 +43,14 @@ function ProjectsPage() {
           actions={
             <Button onClick={() => setCreating(true)}>
               <Plus data-icon="inline-start" />
-              New project
+              Nuevo proyecto
             </Button>
           }
         />
 
         <QueryState
           query={projectsQuery}
-          errorFallback="Failed to load projects"
+          errorFallback="No se han podido cargar los proyectos"
         >
           {(data) => (
             <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
@@ -68,12 +68,12 @@ function ProjectsPage() {
                         </span>
                         {project.id === currentProjectId ? (
                           <Badge variant="secondary" size="sm">
-                            Current
+                            Actual
                           </Badge>
                         ) : null}
                       </span>
                       <span className="truncate text-xs text-muted-foreground">
-                        {project.domain ?? "No domain set"}
+                        {project.domain ?? "Sin dominio"}
                       </span>
                     </span>
                     <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
@@ -110,7 +110,7 @@ function ArchivedProjects() {
       await queryClient.invalidateQueries({
         queryKey: projectsQueryOptions().queryKey,
       });
-      toast.success("Project restored");
+      toast.success("Proyecto restaurado");
     },
   });
 
@@ -126,7 +126,7 @@ function ArchivedProjects() {
       await queryClient.invalidateQueries({
         queryKey: ["projects", "archived"],
       });
-      toast.success("Project deleted");
+      toast.success("Proyecto eliminado");
     },
   });
 
@@ -134,7 +134,7 @@ function ArchivedProjects() {
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="Archived" />
+      <SectionHeader title="Archivados" />
       <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
         {archived.map((project) => (
           <li
@@ -146,7 +146,7 @@ function ArchivedProjects() {
                 {project.name}
               </span>
               <span className="truncate text-xs text-muted-foreground">
-                {project.domain ?? "No domain set"}
+                {project.domain ?? "Sin dominio"}
               </span>
             </span>
             <span className="flex shrink-0 gap-1">
@@ -156,7 +156,7 @@ function ArchivedProjects() {
                 onClick={() => restoreMutation.mutate(project.id)}
                 disabled={restoreMutation.isPending}
               >
-                Restore
+                Restaurar
               </Button>
               <Button
                 variant="ghost"
@@ -164,7 +164,7 @@ function ArchivedProjects() {
                 className="text-destructive hover:text-destructive"
                 onClick={() => setDeleting(project)}
               >
-                Delete
+                Eliminar
               </Button>
             </span>
           </li>
@@ -172,16 +172,16 @@ function ArchivedProjects() {
       </ul>
       {deleting ? (
         <ConfirmDialog
-          title={`Permanently delete \u201c${deleting.name}\u201d?`}
-          confirmLabel="Delete permanently"
+          title={`¿Eliminar \u201c${deleting.name}\u201d para siempre?`}
+          confirmLabel="Eliminar para siempre"
           destructive
           pending={deleteMutation.isPending}
           onClose={() => setDeleting(null)}
           onConfirm={() => deleteMutation.mutate(deleting.id)}
         >
-          This deletes the project and all of its data: audits, rank tracking,
-          saved keywords, reports, AI visibility, and chats. It can&apos;t be
-          undone.
+          Se eliminará el proyecto y todos sus datos: auditorías, seguimiento de
+          posiciones, palabras guardadas, informes, visibilidad en IA y chats.
+          No se puede deshacer.
         </ConfirmDialog>
       ) : null}
     </section>

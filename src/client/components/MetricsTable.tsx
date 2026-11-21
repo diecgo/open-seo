@@ -19,9 +19,9 @@ export function MetricsTable({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Metric</TableHead>
-          <TableHead className="text-right">Value</TableHead>
-          {showChange && <TableHead className="text-right">Change</TableHead>}
+          <TableHead>Métrica</TableHead>
+          <TableHead className="text-right">Valor</TableHead>
+          {showChange && <TableHead className="text-right">Cambio</TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody>

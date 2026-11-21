@@ -76,7 +76,7 @@ export function TeamSettings() {
     mutationFn: (email: string) => sendTeamInvitation({ data: { email } }),
     onSuccess: (result) => {
       captureClientEvent("team:invitation_resend");
-      announceInvitation(result, "Invitation resent");
+      announceInvitation(result, "Invitación reenviada");
       void refreshTeam();
     },
     onError: (error: Error) => {
@@ -91,12 +91,14 @@ export function TeamSettings() {
         memberIdOrEmail: memberId,
       });
       if (result.error) {
-        throw new Error(result.error.message || "Failed to remove the member");
+        throw new Error(
+          result.error.message || "No se ha podido quitar al miembro",
+        );
       }
     },
     onSuccess: () => {
       captureClientEvent("team:member_remove");
-      toast.success("Member removed");
+      toast.success("Miembro quitado");
       void refreshTeam();
     },
   });
@@ -109,13 +111,13 @@ export function TeamSettings() {
       });
       if (result.error) {
         throw new Error(
-          result.error.message || "Failed to cancel the invitation",
+          result.error.message || "No se ha podido cancelar la invitación",
         );
       }
     },
     onSuccess: () => {
       captureClientEvent("team:invitation_cancel");
-      toast.success("Invitation canceled");
+      toast.success("Invitación cancelada");
       void refreshTeam();
     },
   });
@@ -142,7 +144,7 @@ export function TeamSettings() {
   const loadError = failedQuery ? (
     <QueryError
       error={failedQuery.error}
-      fallback="We couldn't load your team right now."
+      fallback="Ahora mismo no podemos cargar tu equipo."
       onRetry={() => void failedQuery.refetch()}
       isRetrying={failedQuery.isFetching}
     />
@@ -152,21 +154,21 @@ export function TeamSettings() {
   return (
     <section className="space-y-3">
       <SectionHeader
-        title="Members"
+        title="Miembros"
         action={
           canManageTeam ? (
             <Button size="sm" onClick={() => setIsInviteOpen(true)}>
-              Invite teammate
+              Invitar a un compañero
             </Button>
           ) : null
         }
       />
       <p className="text-sm text-muted-foreground">
-        Teammates join as Admins. Admins have full access to each project except
-        for billing.
+        Los compañeros se unen como Administradores, con acceso completo a todos
+        los proyectos salvo a la facturación.
       </p>
       {orgContextQuery.isSuccess && !canManageTeam ? (
-        <PermissionHint action="invite or remove teammates" />
+        <PermissionHint action="invitar o quitar compañeros" />
       ) : null}
       {loadError}
 
@@ -177,9 +179,9 @@ export function TeamSettings() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Member</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>Miembro</TableHead>
+                <TableHead>Rol</TableHead>
+                <TableHead>Estado</TableHead>
                 <TableHead className="w-10" />
               </TableRow>
             </TableHeader>

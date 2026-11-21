@@ -45,7 +45,7 @@ export function AuthErrorCard({
 
   const message = getStandardErrorMessage(
     error,
-    "Something went wrong. Please try again.",
+    "Algo ha fallado. Vuelve a intentarlo.",
   );
   return (
     <div className="flex h-full min-w-0 flex-1 items-center justify-center p-4">
@@ -68,7 +68,7 @@ function AuthConfigErrorCard({ message, onRetry }: CardProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ShieldAlert className="size-5 text-destructive" />
-          Authentication setup required
+          Falta configurar la autenticación
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -78,32 +78,34 @@ function AuthConfigErrorCard({ message, onRetry }: CardProps) {
 
         {clientAuthMode === "hosted" ? (
           <p className="text-muted-foreground">
-            Hosted mode requires{" "}
+            El modo alojado necesita{" "}
             <code className="mx-1">BETTER_AUTH_SECRET</code>
-            (32+ characters), <code className="mx-1">BETTER_AUTH_URL</code>, and
-            Google OAuth credentials on the deployment.
+            (32 caracteres o más), <code className="mx-1">
+              BETTER_AUTH_URL
+            </code>{" "}
+            y credenciales de Google OAuth en la instalación.
           </p>
         ) : null}
         {clientAuthMode === "everyapp" ? (
           <p className="text-muted-foreground">
-            OpenSEO runs behind an Every App gateway, which signs people in.
-            Install it with <code className="mx-1">pnpm everyapp install</code>{" "}
-            so it gets the gateway&apos;s identity keys, and open it through the
-            gateway.
+            OpenSEO funciona detrás de un gateway de Every App, que es el que
+            inicia la sesión. Instálalo con{" "}
+            <code className="mx-1">pnpm everyapp install</code> para que reciba
+            las claves de identidad del gateway y ábrelo a través del gateway.
           </p>
         ) : null}
         {clientAuthMode === "cloudflare_access" ? (
           <p className="text-muted-foreground">
-            Cloudflare Access mode requires
-            <code className="mx-1">TEAM_DOMAIN</code> (a full https URL) and
-            <code className="mx-1">POLICY_AUD</code> set on the deployment, with
-            an Access application protecting this hostname.
+            El modo Cloudflare Access necesita
+            <code className="mx-1">TEAM_DOMAIN</code> (una URL https completa) y
+            <code className="mx-1">POLICY_AUD</code> configurados en la
+            instalación, con una aplicación de Access que proteja este dominio.
           </p>
         ) : null}
       </CardContent>
       <CardFooter className="justify-end gap-2">
         <Button variant="ghost" onClick={onRetry}>
-          Try Again
+          Reintentar
         </Button>
         <Button
           nativeButton={false}
@@ -115,7 +117,7 @@ function AuthConfigErrorCard({ message, onRetry }: CardProps) {
             />
           }
         >
-          Open Setup Guide
+          Abrir la guía de configuración
         </Button>
       </CardFooter>
     </Card>
@@ -145,17 +147,17 @@ function UnauthenticatedErrorCard({ message, onRetry }: CardProps) {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Authentication required</CardTitle>
+        <CardTitle>Necesitas autenticarte</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 text-muted-foreground">
         <p>{message}</p>
         <p>
-          This deployment uses external authentication. Refresh your access
-          session, then try again.
+          Esta instalación usa autenticación externa. Renueva tu sesión de
+          acceso y vuelve a intentarlo.
         </p>
       </CardContent>
       <CardFooter className="justify-end">
-        <Button onClick={onRetry}>Try Again</Button>
+        <Button onClick={onRetry}>Reintentar</Button>
       </CardFooter>
     </Card>
   );

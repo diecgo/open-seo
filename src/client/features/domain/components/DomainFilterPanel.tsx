@@ -162,19 +162,20 @@ export function DomainFilterPanel<TValues extends FilterValues>({
           <Alert variant="warning">
             <AlertTriangle />
             <AlertDescription className="text-foreground">
-              Too many filter conditions ({meta.conditionCount} of{" "}
-              {maxConditions} max). Remove some terms or ranges before applying.
+              Demasiadas condiciones de filtro ({meta.conditionCount} de{" "}
+              {maxConditions} como máximo). Quita algunos términos o rangos
+              antes de aplicar.
             </AlertDescription>
           </Alert>
         ) : null}
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground tabular-nums">
-              {meta.conditionCount} / {maxConditions} conditions
+              {meta.conditionCount} / {maxConditions} condiciones
             </span>
             {meta.dirtyCount > 0 ? (
               <Badge size="sm" variant="warning">
-                {meta.dirtyCount} unapplied
+                {meta.dirtyCount} sin aplicar
               </Badge>
             ) : null}
           </div>
@@ -185,7 +186,7 @@ export function DomainFilterPanel<TValues extends FilterValues>({
               onClick={cancelFilterEdits}
               disabled={!meta.isDirty}
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               size="sm"
@@ -193,11 +194,11 @@ export function DomainFilterPanel<TValues extends FilterValues>({
               disabled={!meta.isDirty || meta.overLimit}
               title={
                 meta.overLimit
-                  ? `This scope leaves room for at most ${maxConditions} filter conditions per request`
+                  ? `Este ámbito admite como máximo ${maxConditions} condiciones de filtro por solicitud`
                   : undefined
               }
             >
-              Apply filters
+              Aplicar filtros
               {meta.isDirty ? (
                 <Badge size="sm" variant="secondary">
                   {meta.dirtyCount}

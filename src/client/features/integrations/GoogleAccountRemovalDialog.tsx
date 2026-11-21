@@ -61,7 +61,7 @@ export function GoogleAccountRemovalDialog({
       await Promise.all(
         keys.map((key) => queryClient.invalidateQueries({ queryKey: [key] })),
       );
-      toast.success("Google account removed");
+      toast.success("Cuenta de Google quitada");
       onRemoved();
     },
   });
@@ -75,38 +75,38 @@ export function GoogleAccountRemovalDialog({
     >
       <DialogContent className="sm:max-w-md" showCloseButton={false}>
         <DialogHeader>
-          <DialogTitle>Remove Google account?</DialogTitle>
+          <DialogTitle>¿Quitar la cuenta de Google?</DialogTitle>
           <DialogDescription>
-            This removes the account’s {name} connection from OpenSEO. You can
-            reconnect it anytime.
+            Se quitará de OpenSEO la conexión de esta cuenta con {name}. Puedes
+            volver a conectarla cuando quieras.
           </DialogDescription>
         </DialogHeader>
         <p className="break-all text-sm font-medium">{label}</p>
         {impact.isPending ? (
           <p role="status" className="text-sm text-muted-foreground">
-            Checking connected projects…
+            Comprobando los proyectos conectados…
           </p>
         ) : impact.isError ? (
           <div role="alert" className="text-sm">
             <p className="text-destructive">
-              Couldn't check connected projects.
+              No se han podido comprobar los proyectos conectados.
             </p>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => void impact.refetch()}
             >
-              Try again
+              Reintentar
             </Button>
           </div>
         ) : impact.data.projectCount > 0 ? (
           <p className="text-sm font-medium">
-            This will also disconnect {name} from {impact.data.projectCount}{" "}
-            project{impact.data.projectCount === 1 ? "" : "s"}.
+            También se desconectará {name} de {impact.data.projectCount}{" "}
+            {impact.data.projectCount === 1 ? "proyecto" : "proyectos"}.
           </p>
         ) : (
           <p className="text-sm text-muted-foreground">
-            No projects will be affected.
+            No afectará a ningún proyecto.
           </p>
         )}
         {removal.isError ? (
@@ -121,7 +121,7 @@ export function GoogleAccountRemovalDialog({
             disabled={removal.isPending}
             onClick={onClose}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             variant="destructive"
@@ -131,7 +131,7 @@ export function GoogleAccountRemovalDialog({
             }
             onClick={() => removal.mutate()}
           >
-            {removal.isPending ? "Removing…" : "Remove account"}
+            {removal.isPending ? "Quitando…" : "Quitar cuenta"}
           </Button>
         </DialogFooter>
       </DialogContent>

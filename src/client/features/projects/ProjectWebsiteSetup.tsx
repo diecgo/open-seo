@@ -55,7 +55,7 @@ export function ProjectWebsiteSetup({ projectId }: { projectId: string }) {
           queryKey: ["aiVisibility", projectId],
         }),
       ]);
-      toast.success("Project context saved");
+      toast.success("Contexto del proyecto guardado");
     },
   });
   if (research)
@@ -98,33 +98,33 @@ export function ProjectWebsiteSetup({ projectId }: { projectId: string }) {
               <Sparkles className="size-5" />
             </div>
             <h1 className="text-2xl font-semibold tracking-tight">
-              Set up AI visibility
+              Configura la visibilidad en IA
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              We’ll research your brand and find the most relevant topics to
-              monitor.
+              Investigaremos tu marca y encontraremos los temas más relevantes
+              que seguir.
             </p>
           </div>
           <Field>
-            <FieldLabel htmlFor="project-website">Website URL</FieldLabel>
+            <FieldLabel htmlFor="project-website">URL de la web</FieldLabel>
             <Input
               id="project-website"
               inputMode="url"
               autoComplete="url"
-              placeholder="Enter your website URL"
+              placeholder="Introduce la URL de tu web"
               value={website}
               onChange={(event) => setWebsite(event.target.value)}
               required
             />
           </Field>
           {getErrorCode(researchMutation.error) === "INSUFFICIENT_CREDITS" ? (
-            <InsufficientCreditsError title="We couldn’t research this website" />
+            <InsufficientCreditsError title="No hemos podido investigar esta web" />
           ) : (
             researchMutation.isError && (
               <Alert variant="destructive">
                 <AlertDescription>
-                  We couldn’t research this website. Check the URL and provider
-                  settings, then try again.
+                  No hemos podido investigar esta web. Revisa la URL y los
+                  ajustes del proveedor y vuelve a intentarlo.
                 </AlertDescription>
               </Alert>
             )
@@ -136,12 +136,12 @@ export function ProjectWebsiteSetup({ projectId }: { projectId: string }) {
               disabled={!website.trim()}
               className="w-full"
             >
-              Start research
+              Empezar investigación
             </Button>
             <p className="text-xs leading-relaxed text-muted-foreground">
               {isEveryAppClientAuthMode()
-                ? "Research and a first run of your prompts use the DataForSEO and OpenRouter keys on your Every App gateway."
-                : "Research and a first run of your prompts use a small amount of usage credits."}
+                ? "La investigación y la primera ejecución de tus prompts usan las claves de DataForSEO y OpenRouter de tu gateway de Every App."
+                : "La investigación y la primera ejecución de tus prompts consumen unos pocos créditos."}
             </p>
           </div>
         </form>

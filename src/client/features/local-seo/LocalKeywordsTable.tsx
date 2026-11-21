@@ -16,6 +16,14 @@ type KeywordRow = TrackerData["keywords"][number] & {
 
 const NO_SORTING: SortingState = [];
 
+const SCAN_STATUS_LABELS: Record<LocalScanStatus, string> = {
+  [LocalScanStatus.Queued]: "En cola",
+  [LocalScanStatus.Running]: "Comprobando",
+  [LocalScanStatus.Completed]: "Completada",
+  [LocalScanStatus.Partial]: "Parcial",
+  [LocalScanStatus.Failed]: "Fallida",
+};
+
 /** A keyword's newest scan with results, or its newest scan. */
 export function latestKeywordScan(
   scans: TrackerData["scans"],
@@ -61,11 +69,11 @@ export function LocalKeywordsTable({
       accessorKey: "keyword",
       header: ({ column }) =>
         history ? (
-          "Keyword"
+          "Palabra clave"
         ) : (
           <SortableHeader
             column={column}
-            label="Keyword"
+            label="Palabra clave"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -75,7 +83,7 @@ export function LocalKeywordsTable({
           type="button"
           className="text-left font-medium decoration-dotted underline-offset-2 hover:underline"
           aria-pressed={row.id === selectedKeywordId}
-          title="View ranking map"
+          title="Ver mapa de posiciones"
           onClick={(event) => {
             event.stopPropagation();
             onSelect(row.id);
@@ -121,14 +129,14 @@ export function LocalKeywordsTable({
                   type="button"
                   className="font-mono text-xs decoration-dotted underline-offset-2 hover:underline aria-pressed:text-primary"
                   aria-pressed={scan.id === selectedScanId}
-                  title={`View map for ${row.original.keyword}, ${new Date(check.createdAt).toLocaleString()}`}
+                  title={`Ver mapa de ${row.original.keyword}, ${new Date(check.createdAt).toLocaleString()}`}
                   onClick={(event) => {
                     event.stopPropagation();
                     onSelect(row.id, scan.id);
                   }}
                 >
                   {scan.status === LocalScanStatus.Failed
-                    ? "Failed"
+                    ? "Fallida"
                     : (scan.summary?.averageRank ?? "—")}
                 </button>
               );
@@ -144,7 +152,7 @@ export function LocalKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Avg. rank"
+            label="Posición media"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -158,7 +166,7 @@ export function LocalKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Top-3 coverage"
+            label="Cobertura top 3"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -175,7 +183,7 @@ export function LocalKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Points found"
+            label="Puntos encontrados"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -192,7 +200,7 @@ export function LocalKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Last checked"
+            label="Última comprobación"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -217,12 +225,12 @@ export function LocalKeywordsTable({
       activeRowId={selectedKeywordId}
       onRowClick={(row) => onSelect(row.id)}
       empty={{
-        title: "Add keywords to start tracking",
+        title: "Añade palabras clave para empezar el seguimiento",
         description:
-          "Enter the searches customers use to find this business. Then check its rankings across the map.",
+          "Escribe las búsquedas que usan los clientes para encontrar este negocio. Después comprueba sus posiciones en el mapa.",
         action: (
           <Button size="sm" onClick={onManage}>
-            Add keywords
+            Añadir palabras clave
           </Button>
         ),
       }}
@@ -231,7 +239,7 @@ export function LocalKeywordsTable({
 }
 
 function LastChecked({ scan }: { scan: KeywordRow["latest"] }) {
-  if (!scan) return "Not checked";
+  if (!scan) return "Sin comprobar";
   return (
     <span className="flex flex-wrap items-center gap-2">
       {new Date(scan.createdAt).toLocaleString()}
@@ -241,7 +249,7 @@ function LastChecked({ scan }: { scan: KeywordRow["latest"] }) {
             scan.status === LocalScanStatus.Failed ? "destructive" : "secondary"
           }
         >
-          {scan.status === LocalScanStatus.Running ? "Checking" : scan.status}
+          {SCAN_STATUS_LABELS[scan.status]}
         </Badge>
       )}
     </span>

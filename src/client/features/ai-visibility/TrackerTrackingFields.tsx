@@ -51,7 +51,7 @@ export function TrackerTrackingFields({
             render={
               <button
                 type="button"
-                aria-label={`About ${title.toLowerCase()}`}
+                aria-label={`Sobre ${title.toLowerCase()}`}
                 className="text-muted-foreground"
               />
             }
@@ -105,7 +105,7 @@ export function TrackerTrackingFields({
                 )}
               </TooltipTrigger>
               <TooltipContent>
-                {capability.label} can't collect answers in {country}.
+                {capability.label} no puede recopilar respuestas en {country}.
               </TooltipContent>
             </Tooltip>
           );
@@ -116,13 +116,13 @@ export function TrackerTrackingFields({
   return (
     <section className="space-y-5">
       {engineGroup(
-        "Scraped responses",
-        "Answers as users see them in each AI app.",
+        "Respuestas extraídas",
+        "Respuestas tal y como las ven los usuarios en cada app de IA.",
         state.capabilities.filter((capability) => !capability.modelApi),
       )}
       {engineGroup(
-        "API responses",
-        "Answers from each model's API, with web search.",
+        "Respuestas por API",
+        "Respuestas de la API de cada modelo, con búsqueda web.",
         state.capabilities.filter((capability) => capability.modelApi),
       )}
       <ProjectMarketFields

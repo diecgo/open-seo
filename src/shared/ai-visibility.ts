@@ -366,16 +366,22 @@ function liveUnsupportedLocations(engine: AiModelApiEngine): number[] {
   ).map((option) => option.code);
 }
 
-/** "In progress" while a collection is unfinished. */
+const AI_OBSERVATION_STATUS_LABELS: Record<AiObservationStatus, string> = {
+  pending: "En curso",
+  completed: "Completada",
+  failed: "Fallida",
+};
+
+/** "En curso" while a collection is unfinished. */
 export function aiObservationStatusLabel(status: AiObservationStatus): string {
-  return status === "pending" ? "In progress" : status;
+  return AI_OBSERVATION_STATUS_LABELS[status];
 }
 
 /** An empty AI Overviews result means Google showed no overview. */
 export function aiNoAnswerLabel(engine: AiEngine): string {
   return engine === "google_ai_overview"
-    ? "No AI Overview shown"
-    : "No substantive answer";
+    ? "Google no mostró AI Overview"
+    : "Sin respuesta útil";
 }
 
 /** The selected engines that cannot collect in this country. */

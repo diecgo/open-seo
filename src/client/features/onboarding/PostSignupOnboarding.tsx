@@ -36,10 +36,10 @@ export function PostSignupOnboarding({
       <OnboardingCard
         step={step + 1}
         steps={[
-          "Website",
+          "Web",
           "Google Search Console",
-          "Preferences",
-          "Agent setup",
+          "Preferencias",
+          "Configuración del agente",
         ]}
         onStepChange={onStepChange}
         disabled={isSaving}

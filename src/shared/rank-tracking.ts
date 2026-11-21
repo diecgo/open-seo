@@ -30,7 +30,7 @@ export const MAX_READS_PER_CHECK = 2;
 
 /** How long a check takes, shown before and during one. */
 export const RANK_CHECK_DURATION_COPY =
-  "Usually takes about an hour, up to 2 hours.";
+  "Suele tardar alrededor de una hora, como mucho 2 horas.";
 
 /** A failed run's error when DataForSEO never returned any of its results. */
 export const RANK_CHECK_DELAYED_ERROR =
@@ -430,16 +430,16 @@ export function computeNextCheckAt(
 // ---------------------------------------------------------------------------
 
 export function devicesLabel(devices: RankTrackingConfig["devices"]): string {
-  if (devices === "both") return "Desktop + Mobile";
-  return devices === "desktop" ? "Desktop" : "Mobile";
+  if (devices === "both") return "Escritorio + Móvil";
+  return devices === "desktop" ? "Escritorio" : "Móvil";
 }
 
 export function scheduleLabel(
   interval: RankTrackingConfig["scheduleInterval"],
 ): string {
-  if (interval === "daily") return "Daily";
-  if (interval === "weekly") return "Weekly";
-  if (interval === "monthly") return "Monthly";
+  if (interval === "daily") return "Diaria";
+  if (interval === "weekly") return "Semanal";
+  if (interval === "monthly") return "Mensual";
   return "Manual";
 }
 

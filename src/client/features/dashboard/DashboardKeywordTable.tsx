@@ -14,7 +14,9 @@ type Keyword = {
 const columns: ColumnDef<Keyword>[] = [
   {
     accessorKey: "query",
-    header: ({ column }) => <SortableHeader column={column} label="Keyword" />,
+    header: ({ column }) => (
+      <SortableHeader column={column} label="Palabra clave" />
+    ),
     filterFn: "includesString",
   },
   ...(["impressions", "clicks", "position"] as const).map(
@@ -26,10 +28,10 @@ const columns: ColumnDef<Keyword>[] = [
             column={column}
             label={
               id === "position"
-                ? "Avg. position"
+                ? "Posición media"
                 : id === "clicks"
-                  ? "Clicks"
-                  : "Impressions"
+                  ? "Clics"
+                  : "Impresiones"
             }
             align="right"
           />
@@ -61,7 +63,7 @@ export function DashboardKeywordTable({
 >) {
   const pageColumn: ColumnDef<Keyword> = {
     accessorKey: "page",
-    header: "Page",
+    header: "Página",
     filterFn: "includesString",
     cell: ({ row }) => <ExternalPage url={row.original.page ?? null} />,
   };
@@ -74,13 +76,13 @@ export function DashboardKeywordTable({
       }
       initialSorting={[{ id: sortBy, desc: true }]}
       filters={[
-        { id: "query", label: "Keyword", kind: "text" },
+        { id: "query", label: "Palabra clave", kind: "text" },
         ...(showPages
-          ? [{ id: "page", label: "Page", kind: "text" as const }]
+          ? [{ id: "page", label: "Página", kind: "text" as const }]
           : []),
-        { id: "impressions", label: "Impressions", kind: "number" },
-        { id: "clicks", label: "Clicks", kind: "number" },
-        { id: "position", label: "Average position", kind: "number" },
+        { id: "impressions", label: "Impresiones", kind: "number" },
+        { id: "clicks", label: "Clics", kind: "number" },
+        { id: "position", label: "Posición media", kind: "number" },
       ]}
     />
   );

@@ -17,18 +17,18 @@ export const Route = createFileRoute(
 const PROMPT_RESEARCH_FEATURES = [
   {
     icon: MessagesSquare,
-    title: "Questions about your market",
-    body: "See the questions people ask about a keyword, most common first, with ChatGPT's answer to each.",
+    title: "Preguntas sobre tu mercado",
+    body: "Mira las preguntas que la gente hace sobre una palabra clave, de la más habitual a la menos, con la respuesta de ChatGPT a cada una.",
   },
   {
     icon: Link2,
-    title: "Who gets cited",
-    body: "See which sites ChatGPT cited when it answered, and whether yours is one of them.",
+    title: "Quién sale citado",
+    body: "Mira qué sitios citó ChatGPT al responder y si el tuyo es uno de ellos.",
   },
   {
     icon: ListPlus,
-    title: "Track the ones that matter",
-    body: "Pick the questions worth watching and add them to Prompt Tracking in one step.",
+    title: "Sigue las que importan",
+    body: "Elige las preguntas que merece la pena vigilar y añádelas a Seguimiento de prompts en un paso.",
   },
 ];
 
@@ -37,8 +37,8 @@ function AiResearchRoute() {
   const { q } = Route.useSearch();
   return (
     <PaidPlanGate
-      feature="Prompt Research"
-      description="Find questions people ask about your market, see how ChatGPT answers them, and check which sites the answers cite."
+      feature="Investigación de prompts"
+      description="Encuentra las preguntas que la gente hace sobre tu mercado, mira cómo las responde ChatGPT y comprueba qué sitios citan las respuestas."
       features={PROMPT_RESEARCH_FEATURES}
       alternative={<PromptTrackingWithoutUpgradeButton projectId={projectId} />}
     >

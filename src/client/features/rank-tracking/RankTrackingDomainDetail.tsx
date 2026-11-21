@@ -170,23 +170,25 @@ export function RankTrackingDomainDetail({
     captureClientEvent("rank_tracking:keywords_add");
     if (result.added > 0 || !result.overLimit) {
       toast.success(
-        `${result.added} keyword${result.added !== 1 ? "s" : ""} added`,
+        `${result.added} palabra${result.added !== 1 ? "s" : ""} clave añadida${result.added !== 1 ? "s" : ""}`,
       );
     }
     if (result.overLimit) {
       const { notAdded, limit } = result.overLimit;
       toast.warning(
-        `${notAdded} keyword${notAdded !== 1 ? "s" : ""} not added. ${keywordLimitMessage(limit)}`,
+        `${notAdded} palabra${notAdded !== 1 ? "s" : ""} clave sin añadir. ${keywordLimitMessage(limit)}`,
       );
     }
     if (result.checkScheduledSoon) {
-      toast.info("The scheduled check within the hour covers these keywords");
+      toast.info(
+        "La comprobación programada de la próxima hora incluye estas palabras clave",
+      );
     } else if (
       !result.checkTriggered &&
       result.added > 0 &&
       planStatus === "paid"
     ) {
-      toast.info("Use 'Check rankings' to check these keywords");
+      toast.info("Usa «Comprobar ahora» para comprobar estas palabras clave");
     }
   };
 
@@ -309,7 +311,7 @@ export function RankTrackingDomainDetail({
             void navigator.clipboard.writeText(
               filtered.map((r) => r.keyword).join("\n"),
             );
-            toast.success("Keywords copied to clipboard");
+            toast.success("Palabras clave copiadas al portapapeles");
           }}
           onCheckNow={() => {
             if (trackedKeywordCount > 0) requestCheck(trackedKeywordCount);
@@ -346,7 +348,7 @@ export function RankTrackingDomainDetail({
           ) : (
             <QueryState
               query={resultsQuery}
-              errorFallback="Failed to load rank data"
+              errorFallback="No se han podido cargar los datos de posiciones"
               loading={<SkeletonCard />}
             >
               {(results) => (

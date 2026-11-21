@@ -125,7 +125,7 @@ function FixPaymentPage() {
       setError(
         getStandardErrorMessage(
           err,
-          "We couldn't open the billing portal. Please try again.",
+          "No hemos podido abrir el portal de facturación. Inténtalo de nuevo.",
         ),
       );
       setIsOpeningPortal(false);
@@ -139,10 +139,10 @@ function FixPaymentPage() {
   // A failed refetch keeps the loaded page; only a failed first read stops.
   if (!isLoaded) {
     return (
-      <Page title="Billing unavailable">
+      <Page title="Facturación no disponible">
         <QueryError
           cause={accountQuery.error}
-          fallback="We couldn't load your billing details right now. Please try again."
+          fallback="No hemos podido cargar tus datos de facturación. Inténtalo de nuevo."
           onRetry={() => void accountQuery.refetch()}
           isRetrying={accountQuery.isFetching}
         />
@@ -152,11 +152,11 @@ function FixPaymentPage() {
 
   if (isChecking) {
     return (
-      <Page title="Checking your payment…">
+      <Page title="Comprobando tu pago…">
         <Spinner />
         <p className="text-sm text-muted-foreground">
-          Stripe is retrying the charge with your updated card. This usually
-          takes a few seconds.
+          Stripe está reintentando el cobro con tu tarjeta actualizada. Suele
+          tardar unos segundos.
         </p>
       </Page>
     );
@@ -164,16 +164,16 @@ function FixPaymentPage() {
 
   if (!isPastDue) {
     return (
-      <Page title={returned ? "You're all set" : "Your billing is up to date"}>
+      <Page title={returned ? "Todo listo" : "Tu facturación está al día"}>
         <p className="text-sm text-muted-foreground">
           {returned
-            ? "The payment went through and your subscription is active again."
-            : "There's nothing outstanding on your account."}{" "}
+            ? "El pago se ha completado y tu suscripción vuelve a estar activa."
+            : "No tienes nada pendiente en tu cuenta."}{" "}
           <Link
             to={BILLING_ROUTE}
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
-            Back to billing
+            Volver a facturación
           </Link>
         </p>
       </Page>
@@ -182,29 +182,32 @@ function FixPaymentPage() {
 
   if (!canManageBilling) {
     return (
-      <Page title="Fix your payment">
+      <Page title="Soluciona tu pago">
         <p className="text-sm text-muted-foreground">
-          A payment for this organization didn&rsquo;t go through. Only the
-          organization owner can update the card, so please ask them to visit
-          this page.
+          Un pago de esta organización no se ha completado. Solo el propietario
+          de la organización puede actualizar la tarjeta, así que pídele que
+          entre en esta página.
         </p>
       </Page>
     );
   }
 
   return (
-    <Page title={returned ? "Still showing as unpaid" : "Fix your payment"}>
+    <Page
+      title={returned ? "Sigue apareciendo como impagado" : "Soluciona tu pago"}
+    >
       <p className="text-sm text-muted-foreground">
         {returned
-          ? "Your subscription is still marked past due. Stripe can take a few minutes to retry the charge. If you added a new card but the invoice is still listed as open in the portal, you can pay it there directly."
-          : "Your last payment didn't go through. This usually means the card expired or the bank declined the charge. Nothing has been turned off yet."}
+          ? "Tu suscripción sigue marcada como vencida. Stripe puede tardar unos minutos en reintentar el cobro. Si has añadido una tarjeta nueva pero la factura sigue abierta en el portal, puedes pagarla allí directamente."
+          : "Tu último pago no se ha completado. Suele pasar porque la tarjeta ha caducado o el banco ha rechazado el cobro. Todavía no se ha desactivado nada."}
       </p>
 
       <div className="rounded-lg border border-border bg-card p-4">
-        <p className="text-sm font-semibold">Update your payment method</p>
+        <p className="text-sm font-semibold">Actualiza tu método de pago</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Add a working card in the billing portal. It becomes your default for
-          future renewals, and the open invoice can be paid on the same screen.
+          Añade una tarjeta válida en el portal de facturación. Será la
+          predeterminada para las próximas renovaciones y podrás pagar la
+          factura abierta en la misma pantalla.
         </p>
         <Button
           size="sm"
@@ -212,7 +215,7 @@ function FixPaymentPage() {
           pending={isOpeningPortal}
           onClick={() => void openPortal()}
         >
-          {isOpeningPortal ? "Opening Stripe..." : "Open billing portal"}
+          {isOpeningPortal ? "Abriendo Stripe…" : "Abrir portal de facturación"}
         </Button>
       </div>
 
@@ -229,12 +232,12 @@ function Page({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="mx-auto box-content max-w-7xl space-y-5 px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div>
-        <p className="text-sm font-medium text-muted-foreground">Billing</p>
+        <p className="text-sm font-medium text-muted-foreground">Facturación</p>
         <h1 className="mt-1 text-2xl font-bold tracking-tight">{title}</h1>
       </div>
       {children}
       <p className="text-xs text-muted-foreground">
-        Something look wrong? Email {SUPPORT_EMAIL}.
+        ¿Algo no cuadra? Escribe a {SUPPORT_EMAIL}.
       </p>
     </div>
   );

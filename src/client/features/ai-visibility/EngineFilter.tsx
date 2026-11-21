@@ -29,9 +29,9 @@ export function EngineFilter({
         {value.length === 1 ? (
           <EngineLabel engine={value[0]} />
         ) : value.length ? (
-          `${value.length} engines`
+          `${value.length} motores`
         ) : (
-          "No engines"
+          "Ningún motor"
         )}
         <ChevronDown className="size-4 text-muted-foreground" />
       </DropdownMenuTrigger>

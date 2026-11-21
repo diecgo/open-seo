@@ -17,21 +17,22 @@ export const Route = createFileRoute("/_app/help/dataforseo-api-key")({
 function DataforseoApiKeyHelpPage() {
   const requestStep = (
     <li>
-      Go to{" "}
+      Ve a{" "}
       <a
         className={helpLinkClassName}
         href={DATAFORSEO_API_ACCESS_URL}
         target="_blank"
         rel="noreferrer"
       >
-        DataForSEO API Access
+        Acceso a la API de DataForSEO
       </a>{" "}
-      and request API credentials by email.
+      y pide credenciales de API por email.
     </li>
   );
   const encodeStep = (
     <li>
-      Base64 encode your DataForSEO login and API password in this format:
+      Codifica en Base64 tu usuario de DataForSEO y la contraseña de la API con
+      este formato:
       <CommandBlock command="printf '%s' 'YOUR_LOGIN:YOUR_PASSWORD' | base64" />
     </li>
   );
@@ -40,19 +41,19 @@ function DataforseoApiKeyHelpPage() {
       title="Configura tu clave API de DataForSEO"
       intro={
         <>
-          OpenSEO needs the <code>DATAFORSEO_API_KEY</code> secret before
-          keyword, domain, and SEO data workflows can run.
+          OpenSEO necesita el secreto <code>DATAFORSEO_API_KEY</code> para que
+          funcionen las palabras clave, los dominios y los datos SEO.
         </>
       }
-      everyAppIntro="OpenSEO's keyword, domain, backlink and rank data comes from DataForSEO. On Every App the gateway holds the key once, for every app."
+      everyAppIntro="Los datos de palabras clave, dominios, enlaces entrantes y posiciones de OpenSEO vienen de DataForSEO. En Every App la pasarela guarda la clave una sola vez, para todas las apps."
       secretName="DATAFORSEO_API_KEY"
       steps={
         <>
           {requestStep}
           {encodeStep}
           <li>
-            Save the output as the <code>DATAFORSEO_API_KEY</code> secret in
-            your environment.
+            Guarda el resultado como secreto <code>DATAFORSEO_API_KEY</code> en
+            tu entorno.
           </li>
         </>
       }
@@ -61,13 +62,13 @@ function DataforseoApiKeyHelpPage() {
           {requestStep}
           {encodeStep}
           <li>
-            An owner or admin runs this from the Every App checkout and pastes
-            the value:
+            Un propietario o administrador ejecuta esto desde la copia de Every
+            App y pega el valor:
             <CommandBlock command="pnpm everyapp secret set DATAFORSEO_API_KEY" />
           </li>
-          <li>Reload OpenSEO: it uses the key on its next request.</li>
+          <li>Recarga OpenSEO: usará la clave en la siguiente petición.</li>
           <li>
-            No DataForSEO account? Create a team at{" "}
+            ¿No tienes cuenta de DataForSEO? Crea un equipo en{" "}
             <a
               className={helpLinkClassName}
               href={TREG_URL}
@@ -76,16 +77,16 @@ function DataforseoApiKeyHelpPage() {
             >
               treg
             </a>
-            , which sells DataForSEO calls from a prepaid balance, and set its
-            API token instead:
+            , que vende llamadas a DataForSEO con saldo prepago, y configura su
+            token de API en su lugar:
             <CommandBlock command="pnpm everyapp secret set TREG_API_TOKEN" />
           </li>
         </>
       }
-      dashboardPasteStep="Paste the base64 value from the terminal command above and save."
+      dashboardPasteStep="Pega el valor base64 del comando de terminal de arriba y guarda."
       terminalPromptHint={
         <>
-          Use the base64 value of <code>login:password</code> when prompted.
+          Cuando te lo pida, usa el valor base64 de <code>login:password</code>.
         </>
       }
     />

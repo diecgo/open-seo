@@ -33,7 +33,7 @@ type Props = {
 };
 
 const DOMAIN_LEVEL_TIP =
-  "AI search providers report mentions per domain, not per page. This number covers the whole domain — the cited pages below are limited to your scope.";
+  "Los proveedores de búsqueda con IA informan de las menciones por dominio, no por página. Esta cifra cubre todo el dominio; las páginas citadas de abajo se limitan a tu ámbito.";
 
 export function BrandLookupResults({ result, projectId }: Props) {
   if (!result.hasData) {
@@ -49,8 +49,9 @@ export function BrandLookupResults({ result, projectId }: Props) {
         <Alert variant="warning">
           <TriangleAlert aria-hidden />
           <AlertTitle className="font-normal">
-            AI mention data is temporarily unavailable for{" "}
-            <strong>{result.resolvedTarget}</strong>. Please try again shortly.
+            Los datos de menciones en IA no están disponibles temporalmente para{" "}
+            <strong>{result.resolvedTarget}</strong>. Vuelve a intentarlo en un
+            rato.
           </AlertTitle>
         </Alert>
       );
@@ -60,17 +61,20 @@ export function BrandLookupResults({ result, projectId }: Props) {
         <Alert variant="info">
           <Info aria-hidden />
           <AlertTitle className="font-normal">
-            No AI mentions found for <strong>{result.resolvedTarget}</strong>.
+            No se han encontrado menciones en IA de{" "}
+            <strong>{result.resolvedTarget}</strong>.
           </AlertTitle>
         </Alert>
         {erroredPlatforms.length > 0 ? (
           <p className="text-xs text-muted-foreground">
-            Note:{" "}
+            Nota:{" "}
             {erroredPlatforms
               .map((p) => formatPlatformLabel(p.platform))
-              .join(" and ")}{" "}
-            {erroredPlatforms.length === 1 ? "was" : "were"} unavailable — some
-            mentions may be missing.
+              .join(" y ")}{" "}
+            {erroredPlatforms.length === 1
+              ? "no estaba disponible"
+              : "no estaban disponibles"}
+            ; puede que falten algunas menciones.
           </p>
         ) : null}
       </div>
@@ -126,7 +130,7 @@ function BrandHeader({ result }: { result: BrandLookupResult }) {
         ) : null}
       </div>
       <p className="ml-auto text-xs text-muted-foreground">
-        Updated {formatRelative(result.fetchedAt)}
+        Actualizado {formatRelative(result.fetchedAt)}
       </p>
     </section>
   );
@@ -143,17 +147,17 @@ function StatsCard({ result }: { result: BrandLookupResult }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Platform</TableHead>
+            <TableHead>Plataforma</TableHead>
             <TableHead className="text-right">
               <span className="inline-flex items-center gap-1">
-                Mentions
-                <InfoTooltip text="AI answers that mention your brand or cite your website." />
+                Menciones
+                <InfoTooltip text="Respuestas de IA que mencionan tu marca o citan tu web." />
               </span>
             </TableHead>
             <TableHead className="text-right">
               <span className="inline-flex items-center gap-1">
-                AI search volume
-                <InfoTooltip text="Estimated monthly searches for prompts where your brand appears in AI answers." />
+                Volumen de búsqueda en IA
+                <InfoTooltip text="Búsquedas mensuales estimadas de prompts en los que tu marca aparece en respuestas de IA." />
               </span>
             </TableHead>
           </TableRow>
@@ -177,10 +181,10 @@ function StatsCard({ result }: { result: BrandLookupResult }) {
                   />
                   {formatPlatformLabel(row.platform)}
                   {row.platform === "chat_gpt" && (
-                    <InfoTooltip text="ChatGPT data covers US English only." />
+                    <InfoTooltip text="Los datos de ChatGPT solo cubren inglés de EE. UU." />
                   )}
                   {row.status === "error" && (
-                    <span className="text-destructive">Unavailable</span>
+                    <span className="text-destructive">No disponible</span>
                   )}
                 </span>
               </TableCell>
@@ -204,7 +208,9 @@ function MentionTrendCard({ result }: { result: BrandLookupResult }) {
   return (
     <div className="rounded-lg border border-border">
       <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-3">
-        <h3 className="text-sm font-medium">Mention trend (last 12 months)</h3>
+        <h3 className="text-sm font-medium">
+          Tendencia de menciones (últimos 12 meses)
+        </h3>
         {result.aggregatesAreDomainLevel ? (
           <DomainLevelBadge tooltip={DOMAIN_LEVEL_TIP} />
         ) : null}
@@ -221,7 +227,7 @@ function InfoTooltip({ text }: { text: string }) {
     <Tooltip>
       <TooltipTrigger
         delay={150}
-        aria-label="More info"
+        aria-label="Más información"
         className="inline-flex rounded-sm text-muted-foreground/70 outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
       >
         <Info className="size-3" />
@@ -235,15 +241,15 @@ function InfoTooltip({ text }: { text: string }) {
 
 function formatRelative(iso: string): string {
   const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "just now";
+  if (Number.isNaN(date.getTime())) return "ahora mismo";
 
   const diffMs = Date.now() - date.getTime();
   const diffMin = Math.floor(diffMs / 60_000);
 
-  if (diffMin < 1) return "just now";
-  if (diffMin < 60) return `${diffMin}m ago`;
+  if (diffMin < 1) return "ahora mismo";
+  if (diffMin < 60) return `hace ${diffMin} min`;
   const diffHr = Math.floor(diffMin / 60);
-  if (diffHr < 24) return `${diffHr}h ago`;
+  if (diffHr < 24) return `hace ${diffHr} h`;
   const diffDay = Math.floor(diffHr / 24);
-  return `${diffDay}d ago`;
+  return `hace ${diffDay} d`;
 }

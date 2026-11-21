@@ -36,7 +36,10 @@ export function DashboardNewQueries({
   });
   if (!connected) return null;
   return (
-    <QueryState query={query} errorFallback="Could not load new keywords">
+    <QueryState
+      query={query}
+      errorFallback="No se han podido cargar las palabras clave nuevas"
+    >
       {(data) =>
         !data.value.connected ? (
           <GoogleConnectionCard
@@ -46,14 +49,17 @@ export function DashboardNewQueries({
           />
         ) : (
           <CardShell
-            title="New keywords"
+            title="Palabras clave nuevas"
             icon={<Tag className="size-5" />}
             titleInfo={
-              <DashboardInfo label="About new keywords">
-                <p>Searches where your website recently appeared on Google.</p>
+              <DashboardInfo label="Sobre las palabras clave nuevas">
+                <p>
+                  Búsquedas en las que tu sitio web ha aparecido hace poco en
+                  Google.
+                </p>
                 <p className="mt-2">
-                  We saw these in the latest week of Search Console data, but
-                  not in the previous four weeks.
+                  Las vimos en la última semana de datos de Search Console, pero
+                  no en las cuatro semanas anteriores.
                 </p>
               </DashboardInfo>
             }
@@ -63,9 +69,9 @@ export function DashboardNewQueries({
                 params={{ projectId }}
                 search={{ tab: "keywords" }}
                 className={moreDetailsClass}
-                aria-label="View all new keywords"
+                aria-label="Ver todas las palabras clave nuevas"
               >
-                View all
+                Ver todas
               </Link>
             }
           >
@@ -74,9 +80,9 @@ export function DashboardNewQueries({
               <Table className={cardTableClass}>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Keyword</TableHead>
-                    <TableHead className="text-right">Impressions</TableHead>
-                    <TableHead className="text-right">Clicks</TableHead>
+                    <TableHead>Palabra clave</TableHead>
+                    <TableHead className="text-right">Impresiones</TableHead>
+                    <TableHead className="text-right">Clics</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -99,13 +105,13 @@ export function DashboardNewQueries({
                 icon={Search}
                 title={
                   data.value.hasSearchData
-                    ? "No new keywords this week"
-                    : "No search data yet"
+                    ? "No hay palabras clave nuevas esta semana"
+                    : "Aún no hay datos de búsqueda"
                 }
                 description={
                   data.value.hasSearchData
-                    ? "Your existing queries can still be gaining clicks. See how they're performing."
-                    : "Google hasn't reported searches for your website yet. Check your connected property in Search Console."
+                    ? "Tus consultas actuales pueden seguir ganando clics. Mira cómo están funcionando."
+                    : "Google aún no ha registrado búsquedas de tu sitio web. Revisa la propiedad conectada en Search Console."
                 }
                 action={
                   <Button
@@ -118,7 +124,7 @@ export function DashboardNewQueries({
                       />
                     }
                   >
-                    View full GSC insights
+                    Ver Search Console completo
                   </Button>
                 }
               />

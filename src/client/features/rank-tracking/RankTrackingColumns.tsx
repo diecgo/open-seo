@@ -27,18 +27,18 @@ const RIGHT_ALIGNED = {
 } as const;
 
 const HEADER_TOOLTIPS: Record<string, string> = {
-  keyword: "The search term being tracked in Google",
-  volume: "Estimated monthly search volume from Google",
-  kd: "Keyword difficulty score (0-100) — higher means harder to rank",
-  cpc: "Average cost per click in Google Ads (USD)",
+  keyword: "El término de búsqueda que sigues en Google",
+  volume: "Volumen de búsqueda mensual estimado según Google",
+  kd: "Dificultad de la palabra clave (0-100): cuanto más alta, más cuesta posicionar",
+  cpc: "Coste medio por clic en Google Ads (USD)",
   desktopPosition:
-    "Current Google ranking position, showing change from the comparison period",
+    "Posición actual en Google, con el cambio respecto al periodo de comparación",
   mobilePosition:
-    "Current Google ranking position, showing change from the comparison period",
-  url: "The page on your site that ranks for this keyword",
+    "Posición actual en Google, con el cambio respecto al periodo de comparación",
+  url: "La página de tu sitio que posiciona para esta palabra clave",
   competitors:
-    "Where the project's competitors rank on the same Google results page, with their change from the comparison period",
-  serp: "Special result features appearing on the search results page (e.g. AI Overview, People Also Ask)",
+    "Dónde posicionan los competidores del proyecto en la misma página de resultados de Google, con su cambio respecto al periodo de comparación",
+  serp: "Elementos especiales que aparecen en la página de resultados (p. ej., AI Overview, People Also Ask)",
 };
 
 // Local configs fetch volume scoped to the tracked city, so the header must
@@ -51,10 +51,10 @@ function makeVolumeColumn(locationLabel?: string): ColumnDef<RankTrackingRow> {
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label={locationLabel ? "Local volume" : "Volume"}
+        label={locationLabel ? "Volumen local" : "Volumen"}
         title={
           locationLabel
-            ? `Estimated monthly searches in ${locationLabel} from Google Ads`
+            ? `Búsquedas mensuales estimadas en ${locationLabel} según Google Ads`
             : HEADER_TOOLTIPS.volume
         }
         className={RANK_TRACKING_HEADER_CLASS}
@@ -134,7 +134,7 @@ function makeKeywordColumn(
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Keyword"
+        label="Palabra clave"
         title={HEADER_TOOLTIPS.keyword}
         className={RANK_TRACKING_HEADER_CLASS}
       />
@@ -156,7 +156,7 @@ function makeKeywordColumn(
               type="button"
               className="text-left font-medium decoration-dotted underline-offset-2 hover:underline"
               onClick={() => actions.onKeywordClick(row.original)}
-              title="View position history"
+              title="Ver historial de posiciones"
             >
               {row.original.keyword}
             </button>
@@ -169,7 +169,7 @@ function makeKeywordColumn(
             variant="secondary"
             size="sm"
             className="cursor-help"
-            title="Tracked exactly as typed, not lowercased"
+            title="Se sigue tal como se escribió, sin pasar a minúsculas"
           >
             Aa
           </Badge>
@@ -187,7 +187,9 @@ function PinButton({
   pinned: boolean;
   onClick: () => void;
 }) {
-  const label = pinned ? "Unpin keyword" : "Pin keyword to top";
+  const label = pinned
+    ? "Dejar de fijar palabra clave"
+    : "Fijar palabra clave arriba";
   return (
     <Button
       variant="ghost"
@@ -215,7 +217,7 @@ function makeDeviceColumn(
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Position"
+        label="Posición"
         title={HEADER_TOOLTIPS[id]}
         className={RANK_TRACKING_HEADER_CLASS}
       />
@@ -260,7 +262,7 @@ function makeCompetitorsColumn(
         className="cursor-help text-xs font-medium tracking-wide uppercase text-muted-foreground"
         title={HEADER_TOOLTIPS.competitors}
       >
-        Competitors
+        Competidores
       </span>
     ),
     size: 240,
@@ -281,7 +283,7 @@ function makeSerpColumn(
         className="cursor-help text-xs font-medium tracking-wide uppercase text-muted-foreground"
         title={HEADER_TOOLTIPS.serp}
       >
-        SERP Features
+        Elementos de la SERP
       </span>
     ),
     cell: ({ row }) => {

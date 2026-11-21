@@ -21,7 +21,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
 
   const message = getStandardErrorMessage(
     error,
-    "Something went wrong. Please try again.",
+    "Algo ha fallado. Vuelve a intentarlo.",
   );
   const errorCode = getErrorCode(error);
 
@@ -49,7 +49,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
             }}
             size="sm"
           >
-            Try Again
+            Reintentar
           </Button>
           {isRoot ? (
             <Button
@@ -58,7 +58,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
               size="sm"
               variant="outline"
             >
-              Home
+              Inicio
             </Button>
           ) : (
             <Button
@@ -75,7 +75,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
               size="sm"
               variant="outline"
             >
-              Go Back
+              Volver
             </Button>
           )}
         </CardFooter>

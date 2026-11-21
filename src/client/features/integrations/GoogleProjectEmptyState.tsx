@@ -25,15 +25,15 @@ export function GoogleProjectEmptyState({
   children?: ReactNode;
 }) {
   const description = hasGrant
-    ? `Choose a ${name} property to finish connecting this project.`
-    : `Connect ${name} to see this project’s data.`;
+    ? `Elige una propiedad de ${name} para terminar de conectar este proyecto.`
+    : `Conecta ${name} para ver los datos de este proyecto.`;
   const label = disabled
-    ? "Opening Google…"
+    ? "Abriendo Google…"
     : canManage
       ? hasGrant
-        ? "Choose property"
-        : "Connect"
-      : "Manage Google accounts";
+        ? "Elegir propiedad"
+        : "Conectar"
+      : "Gestionar cuentas de Google";
   const canAct = canManage || hasGrant;
   const onClick = hasGrant ? onChoose : onLink;
   const showGlyph = !disabled && !hasGrant;

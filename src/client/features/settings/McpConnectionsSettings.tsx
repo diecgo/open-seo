@@ -52,7 +52,7 @@ export function McpConnectionsSettings() {
       }),
     onSuccess: (_, connection) => {
       captureClientEvent("mcp:connection_revoked", { kind: connection.kind });
-      toast.success("Agent disconnected");
+      toast.success("Agente desconectado");
       setDisconnecting(null);
       void queryClient.invalidateQueries({ queryKey: ["mcpConnections"] });
     },
@@ -60,31 +60,31 @@ export function McpConnectionsSettings() {
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="Connected agents" />
+      <SectionHeader title="Agentes conectados" />
       <p className="text-sm">
-        AI clients signed in to OpenSEO with OAuth or added through Stripe
-        Projects.
+        Clientes de IA que han iniciado sesión en OpenSEO con OAuth o se han
+        añadido con Stripe Projects.
       </p>
 
       <QueryState
         query={connectionsQuery}
-        errorFallback="We couldn't load your connected agents."
+        errorFallback="No hemos podido cargar tus agentes conectados."
       >
         {(connections) =>
           connections.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              No agents connected yet.
+              Aún no hay agentes conectados.
             </p>
           ) : (
             <TableCard>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Client</TableHead>
+                    <TableHead>Cliente</TableHead>
                     {showOrganization ? (
-                      <TableHead>Organization</TableHead>
+                      <TableHead>Organización</TableHead>
                     ) : null}
-                    <TableHead>Connected</TableHead>
+                    <TableHead>Conectado</TableHead>
                     <TableHead className="w-10" />
                   </TableRow>
                 </TableHeader>
@@ -104,14 +104,14 @@ export function McpConnectionsSettings() {
                       </TableCell>
                       <TableCell>
                         <RowActionsMenu
-                          label={`Actions for ${connection.clientName}`}
+                          label={`Acciones de ${connection.clientName}`}
                         >
                           <DropdownMenuItem
                             variant="destructive"
                             onClick={() => setDisconnecting(connection)}
                           >
                             <Unplug />
-                            Disconnect
+                            Desconectar
                           </DropdownMenuItem>
                         </RowActionsMenu>
                       </TableCell>
@@ -126,16 +126,16 @@ export function McpConnectionsSettings() {
 
       {disconnecting ? (
         <ConfirmDialog
-          title={`Disconnect “${disconnecting.clientName}”?`}
-          confirmLabel="Disconnect"
+          title={`¿Desconectar “${disconnecting.clientName}”?`}
+          confirmLabel="Desconectar"
           destructive
           pending={disconnectMutation.isPending}
           onClose={() => setDisconnecting(null)}
           onConfirm={() => disconnectMutation.mutate(disconnecting)}
         >
           {disconnecting.kind === "oauth"
-            ? "It will have to sign in to OpenSEO again."
-            : "Stripe can't create new keys, and the keys it created stop working. Run stripe projects add openseo/api to connect again."}
+            ? "Tendrá que volver a iniciar sesión en OpenSEO."
+            : "Stripe no podrá crear claves nuevas y las que creó dejarán de funcionar. Ejecuta stripe projects add openseo/api para volver a conectarlo."}
         </ConfirmDialog>
       ) : null}
     </section>

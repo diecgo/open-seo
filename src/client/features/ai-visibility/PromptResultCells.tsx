@@ -44,14 +44,14 @@ export function PromptRate({
       className="flex flex-col text-sm tabular-nums"
       title={
         rows
-          ? `${count} of ${eligible.length} eligible answers`
-          : "No results available"
+          ? `${count} de ${eligible.length} respuestas válidas`
+          : "No hay resultados disponibles"
       }
     >
       {aiRate(count, eligible.length)}
       {eligible.length > 0 && (
         <span className="text-xs text-muted-foreground">
-          {count} of {eligible.length}
+          {count} de {eligible.length}
         </span>
       )}
     </span>
@@ -81,20 +81,20 @@ function ResultList({
           <span className="tabular-nums opacity-80">{value}</span>
         </div>
       ))}
-      {more > 0 && <span className="pl-6 opacity-80">+{more} more</span>}
+      {more > 0 && <span className="pl-6 opacity-80">+{more} más</span>}
     </div>
   );
 }
 
 function engineResult(engine: AiEngine, row: AiObservationRow | undefined) {
-  if (!row) return "No result available";
-  if (row.status === "failed") return "Failed";
-  if (row.status === "pending") return "Running";
+  if (!row) return "No hay resultado disponible";
+  if (row.status === "failed") return "Fallida";
+  if (row.status === "pending") return "En curso";
   if (row.answerStatus === "no_answer") return aiNoAnswerLabel(engine);
-  if (row.answerStatus !== "answered") return "Answer unavailable";
+  if (row.answerStatus !== "answered") return "Respuesta no disponible";
   return row.brands.find((brand) => brand.own)?.mentioned
-    ? "Mentioned"
-    : "Not mentioned";
+    ? "Mencionada"
+    : "No mencionada";
 }
 
 /** Each engine's logo, colored by its result, with one hover list for them all. */
@@ -129,9 +129,9 @@ export function EngineResults({
             aria-hidden="true"
             className={cn(
               "size-4",
-              result === "Mentioned"
+              result === "Mencionada"
                 ? "text-success"
-                : result === "Failed"
+                : result === "Fallida"
                   ? "text-destructive"
                   : "text-muted-foreground/60",
             )}
@@ -182,7 +182,7 @@ export function CompetitorStack({
     <Tooltip>
       <TooltipTrigger
         delay={100}
-        aria-label={`Competitors named: ${named
+        aria-label={`Competidores nombrados: ${named
           .map((brand) => brand.name)
           .join(", ")}`}
         className="flex items-center"
@@ -207,7 +207,7 @@ export function CompetitorStack({
             key: brand.domain,
             icon: <DomainFavicon domain={brand.domain} />,
             label: brand.name,
-            value: `${brand.mentions} of ${brand.answers}`,
+            value: `${brand.mentions} de ${brand.answers}`,
           }))}
           more={more}
         />

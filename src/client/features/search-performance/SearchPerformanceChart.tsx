@@ -35,28 +35,28 @@ const METRICS: {
 }[] = [
   {
     key: "clicks",
-    label: "Clicks",
+    label: "Clics",
     bgClass: "bg-chart-1",
     borderClass: "border-chart-1",
     format: formatCount,
   },
   {
     key: "impressions",
-    label: "Impressions",
+    label: "Impresiones",
     bgClass: "bg-chart-2",
     borderClass: "border-chart-2",
     format: formatCount,
   },
   {
     key: "ctr",
-    label: "Click-through rate",
+    label: "CTR",
     bgClass: "bg-chart-3",
     borderClass: "border-chart-3",
     format: formatCtr,
   },
   {
     key: "position",
-    label: "Average position",
+    label: "Posición media",
     bgClass: "bg-chart-4",
     borderClass: "border-chart-4",
     format: formatPosition,
@@ -64,11 +64,11 @@ const METRICS: {
 ];
 
 const chartConfig = {
-  clicks: { label: "Clicks", color: "var(--chart-1)" },
-  impressions: { label: "Impressions", color: "var(--chart-2)" },
-  ctr: { label: "Click-through rate", color: "var(--chart-3)" },
-  position: { label: "Average position", color: "var(--chart-4)" },
-  previous: { label: "Previous period" },
+  clicks: { label: "Clics", color: "var(--chart-1)" },
+  impressions: { label: "Impresiones", color: "var(--chart-2)" },
+  ctr: { label: "CTR", color: "var(--chart-3)" },
+  position: { label: "Posición media", color: "var(--chart-4)" },
+  previous: { label: "Periodo anterior" },
 } satisfies ChartConfig;
 
 /** Change against the previous period. Position falls as rankings improve, so
@@ -307,7 +307,7 @@ export function SearchPerformanceChart({
               aria-hidden
               className={cn("h-0.5 w-4 rounded-full", single.bgClass)}
             />
-            This period
+            Este periodo
           </span>
           <span className="flex items-center gap-1.5">
             <span
@@ -317,7 +317,7 @@ export function SearchPerformanceChart({
                 single.borderClass,
               )}
             />
-            Previous period
+            Periodo anterior
           </span>
         </p>
       ) : null}

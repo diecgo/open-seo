@@ -234,14 +234,14 @@ export async function authorizeOAuth(
     await page.goto(`/api/auth/oauth2/authorize?${authorizeQuery.toString()}`);
     await expect(page).toHaveURL(/\/oauth-consent\?/);
     const authorize = page.getByRole("button", {
-      name: "Authorize",
+      name: "Permitir",
       exact: true,
     });
     await expect(authorize).toBeVisible();
-    // The "Signed in as" and "Workspace" rows of the consent card
+    // The signed-in account and "Espacio de trabajo" rows of the consent card
     // (src/routes/_authenticated.oauth-consent.tsx).
     await expect(page.getByText(account.email).first()).toBeVisible();
-    const workspaceRow = page.getByText("Workspace", { exact: true });
+    const workspaceRow = page.getByText("Espacio de trabajo", { exact: true });
     if (options.expectedWorkspace) {
       await expect(workspaceRow).toBeVisible();
       await expect(
@@ -251,7 +251,9 @@ export async function authorizeOAuth(
       await expect(workspaceRow).toBeHidden();
     }
     if (options.switchToWorkspace) {
-      const switcher = page.getByRole("combobox", { name: "Workspace" });
+      const switcher = page.getByRole("combobox", {
+        name: "Espacio de trabajo",
+      });
       await switcher.click();
       await page
         .getByRole("option", { name: options.switchToWorkspace, exact: true })

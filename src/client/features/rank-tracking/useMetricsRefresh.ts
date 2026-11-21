@@ -13,7 +13,9 @@ export function useMetricsRefresh(projectId: string, configId: string) {
       void queryClient.invalidateQueries({
         queryKey: ["rankTrackingResults", projectId, configId],
       });
-      toast.success(`Metrics updated for ${result.updated} keywords`);
+      toast.success(
+        `Métricas actualizadas de ${result.updated} palabras clave`,
+      );
     },
   });
   return { refresh: mutation.mutate, isRefreshing: mutation.isPending };

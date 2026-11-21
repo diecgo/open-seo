@@ -92,13 +92,13 @@ export function PromptAnalysis({
         <div className="space-y-3 rounded-lg border border-border bg-card p-8 text-center">
           <h2 className="text-sm font-medium">
             {history.rows.length
-              ? "No executions in this period"
-              : "No answers yet"}
+              ? "No hay ejecuciones en este periodo"
+              : "Aún no hay respuestas"}
           </h2>
           <p className="text-sm text-muted-foreground">
             {history.rows.length
-              ? "Choose another date range to see this prompt’s answers."
-              : "Choose Run now to collect answers, brand mentions, and citations."}
+              ? "Elige otro periodo para ver las respuestas de este prompt."
+              : "Pulsa Ejecutar ahora para recopilar respuestas, menciones de marca y citas."}
           </p>
           {history.rows.length > 0 && (
             <Button
@@ -106,15 +106,15 @@ export function PromptAnalysis({
               variant="outline"
               onClick={() => setPeriod(promptPeriod(PromptRange.All))}
             >
-              Show all available history
+              Ver todo el historial disponible
             </Button>
           )}
         </div>
       )}
       {history.truncated && (
         <p className="text-xs text-muted-foreground">
-          History covers the latest 50 project runs. Older executions are not
-          included in this period’s metrics.
+          El historial cubre las últimas 50 ejecuciones del proyecto. Las
+          ejecuciones anteriores no se incluyen en las métricas de este periodo.
         </p>
       )}
     </div>
@@ -164,7 +164,7 @@ function ExecutionSelects({
           if (match) onSelect(match.observation.id);
         }}
       >
-        <SelectTrigger size="sm" aria-label="AI provider">
+        <SelectTrigger size="sm" aria-label="Proveedor de IA">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -182,7 +182,7 @@ function ExecutionSelects({
           if (id) onSelect(id);
         }}
       >
-        <SelectTrigger size="sm" aria-label="Answer date">
+        <SelectTrigger size="sm" aria-label="Fecha de la respuesta">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

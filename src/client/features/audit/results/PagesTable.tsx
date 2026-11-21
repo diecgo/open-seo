@@ -82,29 +82,29 @@ function buildPagesColumns(canonicalHost: string): ColumnDef<PageRow>[] {
       meta: { cellClassName: "max-w-[240px] truncate" },
     }),
     pageColumnHelper.accessor("statusCode", {
-      header: ({ column }) => <SortableHeader column={column} label="Status" />,
+      header: ({ column }) => <SortableHeader column={column} label="Estado" />,
       // A failed fetch or render has no HTTP status to show.
       cell: ({ getValue, row }) =>
         row.original.fetchClass === "error" ? (
           <Badge
             variant="destructive"
             size="sm"
-            title="Fetching or rendering failed, so this page was not checked for content issues."
+            title="La descarga o el renderizado ha fallado, así que no se han comprobado los problemas de contenido de esta página."
           >
-            Failed
+            Fallida
           </Badge>
         ) : (
           <HttpStatusBadge code={getValue()} />
         ),
     }),
     pageColumnHelper.accessor("title", {
-      header: ({ column }) => <SortableHeader column={column} label="Title" />,
+      header: ({ column }) => <SortableHeader column={column} label="Título" />,
       cell: ({ getValue, row }) => {
         if (isRedirect(row.original)) {
           const target = row.original.redirectUrl;
           return (
             <span className="text-xs text-muted-foreground">
-              → {target ? displayPath(target, canonicalHost) : "redirect"}
+              → {target ? displayPath(target, canonicalHost) : "redirección"}
             </span>
           );
         }
@@ -115,7 +115,7 @@ function buildPagesColumns(canonicalHost: string): ColumnDef<PageRow>[] {
         // Red only when the engine flagged it — a 200 that isn't an HTML
         // document (robots.txt, security.txt) legitimately has no title.
         return row.original.missingTitle ? (
-          <span className="text-destructive text-xs">missing</span>
+          <span className="text-destructive text-xs">ausente</span>
         ) : (
           <EmptyCell />
         );
@@ -128,13 +128,17 @@ function buildPagesColumns(canonicalHost: string): ColumnDef<PageRow>[] {
         hasAnalyzedContent(row.original) ? getValue() : <EmptyCell />,
     }),
     pageColumnHelper.accessor("wordCount", {
-      header: ({ column }) => <SortableHeader column={column} label="Words" />,
+      header: ({ column }) => (
+        <SortableHeader column={column} label="Palabras" />
+      ),
       cell: ({ getValue, row }) =>
         hasAnalyzedContent(row.original) ? getValue() : <EmptyCell />,
     }),
     pageColumnHelper.display({
       id: "images",
-      header: ({ column }) => <SortableHeader column={column} label="Images" />,
+      header: ({ column }) => (
+        <SortableHeader column={column} label="Imágenes" />
+      ),
       cell: ({ row }) => {
         if (!hasAnalyzedContent(row.original)) return <EmptyCell />;
         return row.original.imagesMissingAlt > 0 ? (
@@ -148,7 +152,9 @@ function buildPagesColumns(canonicalHost: string): ColumnDef<PageRow>[] {
       enableSorting: true,
     }),
     pageColumnHelper.accessor("responseTimeMs", {
-      header: ({ column }) => <SortableHeader column={column} label="Speed" />,
+      header: ({ column }) => (
+        <SortableHeader column={column} label="Velocidad" />
+      ),
       cell: ({ getValue }) => {
         const value = getValue();
         return value ? (
@@ -245,13 +251,13 @@ export function PagesTable({
       error={
         pagesQuery.isError ? (
           <QueryError
-            fallback="Could not load the pages"
+            fallback="No se han podido cargar las páginas"
             onRetry={() => void pagesQuery.refetch()}
             isRetrying={pagesQuery.isFetching}
           />
         ) : undefined
       }
-      empty={{ title: "No pages crawled" }}
+      empty={{ title: "No se ha rastreado ninguna página" }}
       isFiltered={activeFilterCount > 0}
       onClearFilters={resetFilters}
       toolbar={

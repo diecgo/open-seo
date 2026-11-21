@@ -77,7 +77,7 @@ export function KeywordResearchTable({
         header: () => (
           <SortableHeader
             column={sortColumn("keyword")}
-            label="Keyword"
+            label="Palabra clave"
             className="min-w-48 md:min-w-0"
           />
         ),
@@ -89,7 +89,7 @@ export function KeywordResearchTable({
               className={`block min-w-0 whitespace-normal break-words md:truncate ${row.original.parentKeyword ? "font-normal" : "font-medium"}`}
               title={
                 row.original.parentKeyword
-                  ? `${row.original.keyword}: matching reported volume with ${row.original.parentKeyword}. Shared volumes may overlap.`
+                  ? `${row.original.keyword}: mismo volumen declarado que ${row.original.parentKeyword}. Los volúmenes compartidos pueden solaparse.`
                   : row.original.keyword
               }
             >
@@ -98,7 +98,7 @@ export function KeywordResearchTable({
             {row.original.keyword === serpLoadingKeyword ? (
               <Spinner
                 className="size-3.5 shrink-0 text-muted-foreground"
-                aria-label="Loading SERP results"
+                aria-label="Cargando resultados de la SERP"
               />
             ) : null}
           </div>
@@ -114,7 +114,7 @@ export function KeywordResearchTable({
         header: () => (
           <SortableHeader
             column={sortColumn("searchVolume")}
-            label="Volume"
+            label="Volumen"
             align="right"
           />
         ),
@@ -131,7 +131,7 @@ export function KeywordResearchTable({
           <SortableHeader
             column={sortColumn("cpc")}
             label="CPC"
-            helpText="Cost per click in USD."
+            helpText="Coste por clic en USD."
             align="right"
           />
         ),
@@ -151,7 +151,7 @@ export function KeywordResearchTable({
           <SortableHeader
             column={sortColumn("competition")}
             label="Comp."
-            helpText="Paid-search competition from Google Ads (0-1): higher means more advertisers bidding."
+            helpText="Competencia en búsqueda de pago según Google Ads (0-1): cuanto más alta, más anunciantes pujan."
             align="right"
           />
         ),
@@ -170,8 +170,8 @@ export function KeywordResearchTable({
         header: () => (
           <SortableHeader
             column={sortColumn("keywordDifficulty")}
-            label="Score"
-            helpText="Organic ranking difficulty (0-100): higher means harder to reach Google's top 10."
+            label="Dificultad"
+            helpText="Dificultad de posicionamiento orgánico (0-100): cuanto más alta, más cuesta entrar en el top 10 de Google."
             align="right"
           />
         ),
@@ -179,7 +179,7 @@ export function KeywordResearchTable({
         meta: { headerClassName: "text-right", cellClassName: "text-right" },
       }),
       keywordColumnHelper.accessor("intent", {
-        header: "Intent",
+        header: "Intención",
         cell: ({ getValue }) => <IntentBadge intent={getValue()} />,
         meta: {
           headerClassName: "text-center",
@@ -213,7 +213,7 @@ export function KeywordResearchTable({
       className="flex flex-1 flex-col"
       toolbar={toolbar}
       footer={footer}
-      empty={{ title: "No keywords" }}
+      empty={{ title: "No hay palabras clave" }}
       isFiltered={isFiltered}
       onClearFilters={resetFilters}
       onRowClick={(row) => handleRowClick(row.original)}

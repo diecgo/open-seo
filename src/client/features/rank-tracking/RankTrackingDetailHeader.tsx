@@ -25,10 +25,10 @@ import {
 import { parseDbTimestamp } from "@/client/lib/db-timestamp";
 
 const COMPARE_ITEMS: { value: ComparePeriod; label: string }[] = [
-  { value: "1d", label: "vs yesterday" },
-  { value: "7d", label: "vs last week" },
-  { value: "30d", label: "vs last month" },
-  { value: "90d", label: "vs 90 days ago" },
+  { value: "1d", label: "vs. ayer" },
+  { value: "7d", label: "vs. la semana pasada" },
+  { value: "30d", label: "vs. el mes pasado" },
+  { value: "90d", label: "vs. hace 90 días" },
 ];
 
 export function RankTrackingDetailHeader({
@@ -76,24 +76,25 @@ export function RankTrackingDetailHeader({
                 {devicesLabel(config.devices)}
               </TooltipTrigger>
               <TooltipContent>
-                Mobile results often differ from desktop. Search Console
-                averages both, so its positions may not match.
+                Los resultados en móvil suelen diferir de los de escritorio.
+                Search Console promedia ambos, así que sus posiciones pueden no
+                coincidir.
               </TooltipContent>
             </Tooltip>
           )}{" "}
           &middot; {scheduleLabel(config.scheduleInterval)}
           {config.scheduleInterval !== "manual" && config.nextCheckAt && (
-            <> &middot; Next: {formatNextCheck(config.nextCheckAt)}</>
+            <> &middot; Próxima: {formatNextCheck(config.nextCheckAt)}</>
           )}
           {run?.lastCheckedAt && (
             <>
               {" "}
-              &middot; Last:{" "}
+              &middot; Última:{" "}
               {parseDbTimestamp(run.lastCheckedAt).toLocaleDateString()}
             </>
           )}
           {costEstimate && costEstimate.keywordCount > 0 && (
-            <> &middot; up to ${costEstimate.costUsd.toFixed(2)}/check</>
+            <> &middot; hasta ${costEstimate.costUsd.toFixed(2)}/comprobación</>
           )}
         </p>
       </div>
@@ -104,12 +105,12 @@ export function RankTrackingDetailHeader({
               {
                 value: "desktop" as const,
                 icon: <Monitor className="size-3.5" />,
-                label: "Desktop",
+                label: "Escritorio",
               },
               {
                 value: "mobile" as const,
                 icon: <Smartphone className="size-3.5" />,
-                label: "Mobile",
+                label: "Móvil",
               },
             ]}
             value={activeDevice}
@@ -126,8 +127,8 @@ export function RankTrackingDetailHeader({
         >
           <SelectTrigger
             size="sm"
-            aria-label="Comparison period"
-            title="Comparison period"
+            aria-label="Periodo de comparación"
+            title="Periodo de comparación"
             className="text-xs"
           >
             <SelectValue />
@@ -143,11 +144,11 @@ export function RankTrackingDetailHeader({
         <div className="hidden h-6 w-px bg-border sm:block" />
         <Button variant="outline" size="sm" onClick={onEdit}>
           <Settings data-icon="inline-start" />
-          Configure
+          Configurar
         </Button>
         <Button size="sm" onClick={onToggleAddKeywords}>
           <Plus data-icon="inline-start" />
-          Add Keywords
+          Añadir palabras clave
         </Button>
       </div>
     </div>

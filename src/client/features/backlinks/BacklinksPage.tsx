@@ -133,7 +133,7 @@ export function BacklinksPage({
                 }}
                 replace
               >
-                Recent searches
+                Búsquedas recientes
               </BackLink>
             ) : undefined
           }

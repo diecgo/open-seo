@@ -28,12 +28,12 @@ export function AnnualPlanDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>
-            Switching to yearly is set up by email for now
+            De momento, el cambio a anual se gestiona por email
           </DialogTitle>
           <DialogDescription>
-            Email {SUPPORT_EMAIL} and we&rsquo;ll move you to the {planName} at
-            ${annualPriceUsd.toLocaleString()}/year. We&rsquo;ll credit the rest
-            of your month toward it.
+            Escribe a {SUPPORT_EMAIL} y te pasaremos al {planName} por $
+            {annualPriceUsd.toLocaleString()}/año. Te descontaremos lo que quede
+            de tu mes.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -42,12 +42,12 @@ export function AnnualPlanDialog({
             render={
               <a
                 href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(
-                  `Yearly ${planName}`,
+                  `${planName} anual`,
                 )}`}
               />
             }
           >
-            Email us
+            Escríbenos
           </Button>
         </DialogFooter>
       </DialogContent>

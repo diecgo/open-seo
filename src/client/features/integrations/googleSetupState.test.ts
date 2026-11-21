@@ -100,9 +100,9 @@ describe.each(["gsc", "ga4", "onboarding"] as const)(
   (surface) => {
     it("opens property selection without a browser resume flag after authorization", () => {
       const html = renderSetup(surface, true);
-      expect(html).toContain("Choose property");
-      expect(html).toContain("Add Google account");
-      expect(html).not.toContain("Connect with Google");
+      expect(html).toContain("Elegir propiedad");
+      expect(html).toContain("Añadir cuenta de Google");
+      expect(html).not.toContain("Conectar con Google");
     });
   },
 );
@@ -111,9 +111,9 @@ it.each(["gsc", "ga4"] as const)(
   "does not automatically open property editing for a %s viewer",
   (surface) => {
     const html = renderSetup(surface, true, false, false);
-    expect(html).not.toContain("Choose property");
-    expect(html).not.toContain("Save property");
-    expect(html).toContain("Manage Google accounts");
+    expect(html).not.toContain("Elegir propiedad");
+    expect(html).not.toContain("Guardar propiedad");
+    expect(html).toContain("Gestionar cuentas de Google");
   },
 );
 
@@ -122,11 +122,11 @@ describe("onboarding connection actions", () => {
     const html = renderSetup("onboarding", true, false, true, {
       connectionError: "refetch",
     });
-    expect(html).toContain("Choose property");
-    expect(html).not.toContain("check your Google connection.");
-    expect(html.match(/Save and continue/g)).toHaveLength(1);
-    expect(html.match(/Skip for now/g)).toHaveLength(1);
-    expect(html.match(/ Back<\/button>/g)).toHaveLength(1);
+    expect(html).toContain("Elegir propiedad");
+    expect(html).not.toContain("comprobar tu conexión con Google.");
+    expect(html.match(/Guardar y continuar/g)).toHaveLength(1);
+    expect(html.match(/Omitir por ahora/g)).toHaveLength(1);
+    expect(html.match(/ Volver<\/button>/g)).toHaveLength(1);
   });
 
   it("keeps a saved connection usable after a failed refetch", () => {
@@ -134,18 +134,18 @@ describe("onboarding connection actions", () => {
       connectionError: "refetch",
     });
     expect(html).toContain("https://example.com/");
-    expect(html).toMatch(/>Continue[ <]/);
-    expect(html).not.toContain("Save and continue");
+    expect(html).toMatch(/>Continuar[ <]/);
+    expect(html).not.toContain("Guardar y continuar");
   });
 
   it("offers retry and disables saving when the initial connection check fails", () => {
     const html = renderSetup("onboarding", false, false, true, {
       connectionError: "initial",
     });
-    expect(html).toContain("Couldn&#x27;t check your Google connection.");
-    expect(html).toContain("Try again");
-    expect(html).not.toContain("Choose property");
-    expect(html).toMatch(/disabled=""[^>]*>Save and continue/);
+    expect(html).toContain("No se ha podido comprobar tu conexión con Google.");
+    expect(html).toContain("Reintentar");
+    expect(html).not.toContain("Elegir propiedad");
+    expect(html).toMatch(/disabled=""[^>]*>Guardar y continuar/);
   });
 });
 
@@ -163,13 +163,13 @@ describe("Search Console website setup guidance", () => {
       const html = renderSetup(surface, true, false, true, {
         accounts: [emptyAccount],
       });
-      expect(html).toContain("We couldn’t find your website");
+      expect(html).toContain("No hemos encontrado tu sitio web");
       expect(html).toContain("owner@example.com");
-      expect(html).not.toContain("Choose property");
+      expect(html).not.toContain("Elegir propiedad");
       expect(html).toContain("/blogs/google-search-console-setup");
-      expect(html).toContain("Refresh");
-      expect(html).toContain("Use a different Google account");
-      if (surface === "onboarding") expect(html).toContain("Skip for now");
+      expect(html).toContain("Actualizar");
+      expect(html).toContain("Usar otra cuenta de Google");
+      if (surface === "onboarding") expect(html).toContain("Omitir por ahora");
     },
   );
 
@@ -187,8 +187,8 @@ describe("Search Console website setup guidance", () => {
       const html = renderSetup("gsc", true, false, true, {
         accounts: [{ ...emptyAccount, ...patch }],
       });
-      expect(html).toContain("Choose property");
-      expect(html).not.toContain("We couldn’t find your website");
+      expect(html).toContain("Elegir propiedad");
+      expect(html).not.toContain("No hemos encontrado tu sitio web");
     },
   );
 });

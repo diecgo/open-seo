@@ -28,12 +28,12 @@ export function ExcludePathsField({
           <Collapsible className="lg:col-span-12">
             <CollapsibleTrigger className="group inline-flex items-center gap-1.5 rounded-sm text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
               <ChevronRight className="size-4 transition-transform group-data-panel-open:rotate-90" />
-              Advanced
+              Avanzado
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-3">
               <Field className="max-w-xl">
                 <FieldLabel htmlFor="audit-exclude-paths">
-                  Exclude paths
+                  Excluir rutas
                 </FieldLabel>
                 <Textarea
                   id="audit-exclude-paths"
@@ -46,9 +46,10 @@ export function ExcludePathsField({
                   onChange={(event) => field.handleChange(event.target.value)}
                 />
                 <FieldDescription>
-                  One path per line. <code>/blog/</code> skips every page under
-                  /blog/, and <code>*</code> matches anything. Skipped pages
-                  aren't crawled and don't count toward Max pages.
+                  Una ruta por línea. <code>/blog/</code> omite todas las
+                  páginas de /blog/ y <code>*</code> coincide con cualquier
+                  cosa. Las páginas omitidas no se rastrean ni cuentan para
+                  Páginas máximas.
                 </FieldDescription>
               </Field>
             </CollapsibleContent>

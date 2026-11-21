@@ -199,7 +199,7 @@ export function SearchPerformancePage({
         isWeb,
       );
     } catch (error) {
-      toast.error(getStandardErrorMessage(error, "Export failed"));
+      toast.error(getStandardErrorMessage(error, "No se ha podido exportar"));
     } finally {
       setIsExporting(false);
     }
@@ -220,7 +220,7 @@ export function SearchPerformancePage({
   const reportError = (
     <QueryError
       error={reportQuery.error}
-      fallback="Failed to load Search Console data"
+      fallback="No se han podido cargar los datos de Search Console"
       onRetry={() => void reportQuery.refetch()}
       isRetrying={reportQuery.isFetching}
     />
@@ -266,7 +266,7 @@ export function SearchPerformancePage({
                 }
               >
                 <ArrowLeftRight data-icon="inline-start" />
-                Change property
+                Cambiar propiedad
               </Button>
             ) : null
           }
@@ -324,13 +324,13 @@ export function SearchPerformancePage({
                   <>
                     <TabsTrigger value="striking">
                       {reportQuery.isPlaceholderData
-                        ? "Striking distance"
-                        : `Striking distance (${report.strikingDistance.length})`}
+                        ? "Al alcance"
+                        : `Al alcance (${report.strikingDistance.length})`}
                     </TabsTrigger>
-                    <TabsTrigger value="queries">Queries</TabsTrigger>
+                    <TabsTrigger value="queries">Consultas</TabsTrigger>
                   </>
                 ) : null}
-                <TabsTrigger value="pages">Pages</TabsTrigger>
+                <TabsTrigger value="pages">Páginas</TabsTrigger>
               </DataTableTabs>
               <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
                 <Button
@@ -340,10 +340,10 @@ export function SearchPerformancePage({
                   aria-expanded={showFilters}
                   aria-controls="search-performance-filters"
                   onClick={() => setShowFilters((current) => !current)}
-                  title="Toggle table filters"
+                  title="Mostrar u ocultar filtros de la tabla"
                 >
                   <SlidersHorizontal data-icon="inline-start" />
-                  Filters
+                  Filtros
                   {activeFilterCount > 0 ? (
                     <Badge size="sm">{activeFilterCount}</Badge>
                   ) : null}
@@ -353,7 +353,7 @@ export function SearchPerformancePage({
               {showFilters ? filtersPanel : null}
               {reportQuery.isPlaceholderData ? (
                 <div className="p-8 text-sm" role="status">
-                  Loading matching results…
+                  Cargando resultados…
                 </div>
               ) : tab === "striking" ? (
                 <StrikingDistanceTable
@@ -374,7 +374,7 @@ export function SearchPerformancePage({
                 <DimensionSection
                   projectId={projectId}
                   tableQuery={tableQuery}
-                  keyLabel={tab === "queries" ? "Query" : "Page"}
+                  keyLabel={tab === "queries" ? "Consulta" : "Página"}
                   showPosition={isWeb}
                   page={page}
                   pageSize={pageSize}

@@ -19,7 +19,7 @@ export function ChangePlanButton({ planId }: { planId: string | null }) {
       nativeButton={false}
       render={<Link to={SUBSCRIBE_ROUTE} search={{ upgrade: true }} />}
     >
-      Change plan
+      Cambiar de plan
     </Button>
   );
 }
@@ -49,14 +49,14 @@ export function PlanChangeAction({
         variant={highlighted ? "default" : "outline"}
         onClick={onSwitchToYearly}
       >
-        Switch to yearly
+        Pasar a anual
       </Button>
     );
   }
   if (offer.planId === currentPlanId) {
     return (
       <Button className="w-full" variant="outline" disabled>
-        Current plan
+        Plan actual
       </Button>
     );
   }
@@ -67,7 +67,7 @@ export function PlanChangeAction({
         variant={highlighted ? "default" : "outline"}
         onClick={onUpgrade}
       >
-        Upgrade
+        Mejorar
       </Button>
     );
   }
@@ -79,12 +79,12 @@ export function PlanChangeAction({
       render={
         <a
           href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(
-            `Switch to the ${offer.name}`,
+            `Cambio al ${offer.name}`,
           )}`}
         />
       }
     >
-      Email us to switch
+      Escríbenos para cambiar
     </Button>
   );
 }

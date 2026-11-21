@@ -56,7 +56,7 @@ function IndexRedirect() {
       return (
         <StatusScreen
           pending
-          description="Redirecting you to billing so you can start a hosted subscription."
+          description="Te llevamos a facturación para que puedas empezar una suscripción alojada."
         />
       );
     }

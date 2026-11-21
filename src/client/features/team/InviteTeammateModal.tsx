@@ -18,18 +18,18 @@ import { isHostedClientAuthMode, usesBetterAuthClient } from "@/lib/auth-mode";
 import { sendTeamInvitation } from "@/serverFunctions/organization";
 
 const inviteSchema = z.object({
-  email: z.string().trim().email("Enter a valid email address."),
+  email: z.string().trim().email("Introduce un email válido."),
 });
 
 export function inviteErrorMessage(error: Error) {
   const code = getErrorCode(error);
   if (code === "RATE_LIMITED") {
-    return "Invitation limit reached for today. Try again tomorrow.";
+    return "Has alcanzado el límite de invitaciones de hoy. Vuelve a intentarlo mañana.";
   }
   if (code === "UPSTREAM_UNAVAILABLE") {
-    return "The invitation was saved but the email couldn't be sent. Use Resend in a moment to retry.";
+    return "La invitación se ha guardado, pero no se ha podido enviar el email. Usa Reenviar dentro de un momento para reintentarlo.";
   }
-  return "We couldn't send that invitation.";
+  return "No hemos podido enviar esa invitación.";
 }
 
 // Without an email transport (the standalone Docker edition) the server hands
@@ -46,9 +46,9 @@ export function announceInvitation(
   void (
     navigator.clipboard?.writeText(inviteUrl) ?? Promise.reject(new Error())
   ).then(
-    () => toast.success("Invitation link copied"),
+    () => toast.success("Enlace de invitación copiado"),
     () =>
-      toast.success("Invitation link", {
+      toast.success("Enlace de invitación", {
         description: inviteUrl,
         duration: 20000,
       }),
@@ -69,14 +69,14 @@ export function InviteTeammateModal({
       sendTeamInvitation({ data: { email: inviteeEmail } }),
     onSuccess: (result) => {
       captureClientEvent("team:invitation_send");
-      announceInvitation(result, "Invitation sent");
+      announceInvitation(result, "Invitación enviada");
       onInvited();
       onClose();
     },
     onError: (error: Error) => {
       if (getErrorCode(error) === "CONFLICT") {
         form.setErrorMap({
-          onSubmit: { fields: { email: "This person is already a member." } },
+          onSubmit: { fields: { email: "Esta persona ya es miembro." } },
         });
       } else {
         toast.error(inviteErrorMessage(error));
@@ -106,11 +106,11 @@ export function InviteTeammateModal({
         <form.AppForm>
           <form.Form className="flex flex-col gap-4">
             <DialogHeader>
-              <DialogTitle>Invite a teammate</DialogTitle>
+              <DialogTitle>Invitar a un compañero</DialogTitle>
               <DialogDescription>
                 {sharesLink
-                  ? "They'll join as an Admin with full access to each project. Share the invitation link with them; they create their account from it. It expires in 7 days."
-                  : "They'll join as an Admin with full access to each project except for billing. The invitation link expires in 7 days."}
+                  ? "Se unirá como Administrador con acceso completo a todos los proyectos. Compártele el enlace de invitación; desde ahí creará su cuenta. Caduca en 7 días."
+                  : "Se unirá como Administrador con acceso completo a todos los proyectos salvo a la facturación. El enlace de invitación caduca en 7 días."}
               </DialogDescription>
             </DialogHeader>
             <form.AppField name="email">
@@ -118,7 +118,7 @@ export function InviteTeammateModal({
                 <field.TextField
                   label="Email"
                   type="email"
-                  placeholder="teammate@company.com"
+                  placeholder="companero@empresa.com"
                   required
                   autoFocus
                 />
@@ -130,9 +130,9 @@ export function InviteTeammateModal({
                 onClick={onClose}
                 disabled={inviteMutation.isPending}
               >
-                Cancel
+                Cancelar
               </Button>
-              <form.SubmitButton>Send invite</form.SubmitButton>
+              <form.SubmitButton>Enviar invitación</form.SubmitButton>
             </DialogFooter>
           </form.Form>
         </form.AppForm>

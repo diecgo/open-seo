@@ -68,7 +68,7 @@ export function GooglePropertyPicker({
   onSelect,
   onSave,
   saving,
-  saveLabel = "Save property",
+  saveLabel = "Guardar propiedad",
   onRetry,
   onReconnect,
   secondaryAction,
@@ -141,15 +141,15 @@ export function GooglePropertyPicker({
       {!emptyGsc || readOnly ? (
         <div className="space-y-4">
           {readOnly ? (
-            <p className="text-sm font-medium">Manage Google accounts</p>
+            <p className="text-sm font-medium">Gestionar cuentas de Google</p>
           ) : (
             <div>
-              <p className="mb-2 text-sm font-medium">Choose property</p>
+              <p className="mb-2 text-sm font-medium">Elegir propiedad</p>
               {loading ? (
-                <Spinner size="sm" label="Loading properties…" />
+                <Spinner size="sm" label="Cargando propiedades…" />
               ) : error ? (
                 <QueryError
-                  fallback="Couldn't load properties."
+                  fallback="No se han podido cargar las propiedades."
                   onRetry={onRetry}
                 />
               ) : (
@@ -174,15 +174,15 @@ export function GooglePropertyPicker({
                 >
                   <ComboboxInput
                     className="w-full"
-                    placeholder="Select a property…"
-                    aria-label="Search properties"
+                    placeholder="Selecciona una propiedad…"
+                    aria-label="Buscar propiedades"
                     disabled={saving}
                   />
                   <ComboboxContent>
                     <ComboboxEmpty>
                       {options.length > 0
-                        ? "No matching properties."
-                        : "No properties available. Check the Google accounts below."}
+                        ? "No hay propiedades que coincidan."
+                        : "No hay propiedades disponibles. Revisa las cuentas de Google de abajo."}
                     </ComboboxEmpty>
                     <ComboboxList>
                       {(group: PropertyGroup) => (
@@ -212,8 +212,8 @@ export function GooglePropertyPicker({
                                   {!option.selectable ? (
                                     <span className="block text-xs">
                                       {provider === "gsc"
-                                        ? "Ask the property owner for Full access, or verify ownership in Search Console."
-                                        : "No verified access"}
+                                        ? "Pide al propietario de la propiedad acceso Completo o verifica la propiedad en Search Console."
+                                        : "Sin acceso verificado"}
                                     </span>
                                   ) : null}
                                 </span>
@@ -246,14 +246,14 @@ export function GooglePropertyPicker({
             (account) => accountStatus(account, provider) !== null,
           ) ? (
             <p className="text-xs text-muted-foreground">
-              Having trouble?{" "}
+              ¿Tienes problemas?{" "}
               <a
                 href={GSC_SETUP_GUIDE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-4"
               >
-                Setup guide ↗
+                Guía de configuración ↗
               </a>
             </p>
           ) : null}
@@ -265,7 +265,7 @@ export function GooglePropertyPicker({
         <div className="flex flex-wrap items-center gap-1">
           {readOnly ? null : (
             <Button size="sm" onClick={onSave} disabled={!canSave || saving}>
-              {saving ? "Saving…" : saveLabel}
+              {saving ? "Guardando…" : saveLabel}
             </Button>
           )}
           {secondaryAction ? (

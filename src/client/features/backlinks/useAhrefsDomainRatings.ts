@@ -47,7 +47,10 @@ export function useAhrefsDomainRatings(projectId: string) {
       } catch (error) {
         // Opt-in convenience feature — surface partial results, don't crash.
         toast.error(
-          getStandardErrorMessage(error, "Could not load Ahrefs DR."),
+          getStandardErrorMessage(
+            error,
+            "No se ha podido cargar el DR de Ahrefs.",
+          ),
         );
       } finally {
         if (Object.keys(fetched).length > 0) {

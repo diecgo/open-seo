@@ -109,7 +109,7 @@ export function SamChat({
       <StatusScreen>
         <QueryError
           error={access.error}
-          fallback="Could not load AI agent setup status."
+          fallback="No se pudo cargar el estado de configuración del agente de IA."
           onRetry={access.onRetry}
           isRetrying={access.isRetrying}
         />
@@ -140,14 +140,14 @@ export function SamChat({
         {loadFailed ? (
           <QueryError
             error={sessionsQuery.error}
-            fallback="Failed to load your chats."
+            fallback="No se pudieron cargar tus chats."
             onRetry={() => void sessionsQuery.refetch()}
             isRetrying={sessionsQuery.isFetching}
           />
         ) : createError ? (
           <QueryError
             error={createError}
-            fallback="Failed to start a new chat."
+            fallback="No se pudo iniciar un chat nuevo."
             onRetry={startChat}
           />
         ) : null}
@@ -169,15 +169,15 @@ export function SamChat({
         <StatusScreen>
           <QueryError
             error={sessionsQuery.error}
-            fallback="Failed to load your chats."
+            fallback="No se pudieron cargar tus chats."
             onRetry={() => void refetchSessions()}
           />
         </StatusScreen>
       );
     }
     return (
-      <StatusScreen description="This chat was archived or does not exist.">
-        <Button onClick={() => goToSession()}>Go to your latest chat</Button>
+      <StatusScreen description="Este chat se archivó o no existe.">
+        <Button onClick={() => goToSession()}>Ir a tu último chat</Button>
       </StatusScreen>
     );
   }
@@ -196,7 +196,7 @@ export function SamChat({
           className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
           <Brain className="size-3.5" />
-          Project memory
+          Memoria del proyecto
         </Link>
       </div>
       <div className="flex min-h-0 flex-1">

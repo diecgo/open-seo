@@ -44,18 +44,18 @@ type Props = {
 const PROMPT_EXPLORER_BULLETS = [
   {
     icon: Columns3,
-    title: "Four models side-by-side",
-    body: "Run one prompt across ChatGPT, Claude, Gemini, and Perplexity and compare answers in a single view.",
+    title: "Cuatro modelos en paralelo",
+    body: "Lanza un prompt en ChatGPT, Claude, Gemini y Perplexity y compara las respuestas en una sola vista.",
   },
   {
     icon: SearchCheck,
-    title: "See what the models cite",
-    body: "Every answer lists the sources it drew from, so you can audit where each model gets its information.",
+    title: "Mira qué citan los modelos",
+    body: "Cada respuesta indica las fuentes que ha usado, para que puedas revisar de dónde saca cada modelo su información.",
   },
   {
     icon: Sparkles,
-    title: "Check brand mentions",
-    body: "Highlight a brand to instantly see whether it shows up in the answer text or the cited sources.",
+    title: "Comprueba las menciones de marca",
+    body: "Destaca una marca para ver al instante si aparece en el texto de la respuesta o en las fuentes citadas.",
   },
 ];
 
@@ -63,7 +63,7 @@ const PROMPT_EXPLORER_BULLETS = [
 function promptTabLabel(input: SearchTabInput) {
   if (input.type !== "prompt") return "";
   return input.models.length > 1
-    ? `${input.prompt} · ${input.models.length} models`
+    ? `${input.prompt} · ${input.models.length} modelos`
     : input.prompt;
 }
 
@@ -133,23 +133,23 @@ export function PromptExplorerPage({
     event.preventDefault();
     const trimmed = form.prompt.trim();
     if (trimmed.length === 0) {
-      setValidationError("Enter a prompt");
+      setValidationError("Introduce un prompt");
       return;
     }
     if (trimmed.length > PROMPT_EXPLORER_MAX_PROMPT_LENGTH) {
       setValidationError(
-        `Keep prompts under ${PROMPT_EXPLORER_MAX_PROMPT_LENGTH} characters`,
+        `El prompt debe tener menos de ${PROMPT_EXPLORER_MAX_PROMPT_LENGTH} caracteres`,
       );
       return;
     }
     if (form.highlightBrand.trim().length > BRAND_LOOKUP_MAX_INPUT_LENGTH) {
       setValidationError(
-        `Keep the brand under ${BRAND_LOOKUP_MAX_INPUT_LENGTH} characters`,
+        `La marca debe tener menos de ${BRAND_LOOKUP_MAX_INPUT_LENGTH} caracteres`,
       );
       return;
     }
     if (form.models.length === 0) {
-      setValidationError("Select at least one model");
+      setValidationError("Selecciona al menos un modelo");
       return;
     }
     setValidationError(null);
@@ -185,9 +185,9 @@ export function PromptExplorerPage({
       title="Explorador de prompts"
       description="Lanza cualquier prompt en ChatGPT, Claude, Gemini y Perplexity y compara las respuestas."
       gate={{
-        feature: "Prompt Explorer",
+        feature: "Explorador de prompts",
         description:
-          "Ask one prompt across ChatGPT, Claude, Gemini, and Perplexity at the same time and compare their answers: including which sources each model cites.",
+          "Lanza un prompt en ChatGPT, Claude, Gemini y Perplexity a la vez y compara sus respuestas, incluidas las fuentes que cita cada modelo.",
         features: PROMPT_EXPLORER_BULLETS,
         alternative: (
           <PromptTrackingWithoutUpgradeButton projectId={projectId} />
@@ -222,7 +222,7 @@ export function PromptExplorerPage({
       loadingState={<PromptExplorerLoadingState models={urlState.models} />}
       query={exploreQuery}
       hasActiveQuery={hasActivePrompt}
-      errorFallback="Failed to load prompt results"
+      errorFallback="No se pudieron cargar los resultados del prompt"
       // Covers browser back/forward and history links. The route builds a
       // fresh `urlState` object on every render, so compare by value.
       urlKey={`${projectId}:${JSON.stringify(urlState)}`}
@@ -248,7 +248,7 @@ export function PromptExplorerPage({
           search={{}}
           replace
         >
-          Recent searches
+          Búsquedas recientes
         </BackLink>
       }
       renderResults={(result) => <PromptExplorerResults result={result} />}
@@ -258,8 +258,8 @@ export function PromptExplorerPage({
           loaded={historyLoaded}
           onRemove={removeHistoryItem}
           emptyIllustration={<ModelAnswersIllustration />}
-          emptyTitle="See what AI says about your market"
-          emptyDescription="Each model's answer comes with the sources it cited."
+          emptyTitle="Descubre qué dice la IA sobre tu mercado"
+          emptyDescription="La respuesta de cada modelo incluye las fuentes que ha citado."
           getTitle={(item) => item.prompt}
           getSubtitle={(item) => item.models.map(formatModelLabel).join(", ")}
           renderLink={(item, props) => (

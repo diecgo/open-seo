@@ -11,51 +11,51 @@ import {
  * they get support; a self-hoster runs the server and can.
  */
 export const UNEXPECTED_ERROR_MESSAGE = isHostedClientAuthMode()
-  ? "Something went wrong on our end. Please try again, and contact support if it keeps happening."
-  : "Something went wrong. Please try again, or check the server logs for details.";
+  ? "Algo ha fallado por nuestra parte. Vuelve a intentarlo y contacta con soporte si sigue pasando."
+  : "Algo ha fallado. Vuelve a intentarlo o revisa los logs del servidor para ver los detalles.";
 
 const STANDARD_MESSAGES: Record<ErrorCode, string> = {
-  UNAUTHENTICATED: "Please sign in and try again.",
+  UNAUTHENTICATED: "Inicia sesión y vuelve a intentarlo.",
   AUTH_CONFIG_MISSING: isEveryAppClientAuthMode()
-    ? "OpenSEO can't reach your Every App gateway for this right now. An owner or admin can check its setup with pnpm everyapp status."
-    : "OpenSEO auth is not configured. Follow the README setup steps for Cloudflare Access.",
-  PAYMENT_REQUIRED:
-    "An active hosted subscription is required before you can use OpenSEO.",
+    ? "Ahora mismo OpenSEO no puede conectar con tu gateway de Every App para esto. Un propietario o administrador puede revisar su configuración con pnpm everyapp status."
+    : "La autenticación de OpenSEO no está configurada. Sigue los pasos del README para Cloudflare Access.",
+  PAYMENT_REQUIRED: "Necesitas una suscripción activa para poder usar OpenSEO.",
   INSUFFICIENT_CREDITS:
-    "You don't have enough credits for this. Upgrade your plan or buy more credits to keep going.",
+    "No tienes créditos suficientes para esto. Mejora tu plan o compra más créditos para seguir.",
   PAYMENT_METHOD_REQUIRED:
-    "We couldn't charge a card on file. Add or update your card in the billing portal, then try again.",
+    "No hemos podido cobrar en la tarjeta guardada. Añade o actualiza tu tarjeta en el portal de facturación y vuelve a intentarlo.",
   PAYMENT_ACTION_REQUIRED:
-    "Your bank needs more time or a confirmation for this charge. Check your balance in a minute; if nothing arrived, buy your first top-up with the Buy credits button, then turn on auto-reload.",
+    "Tu banco necesita más tiempo o una confirmación para este cargo. Revisa tu saldo dentro de un minuto; si no ha llegado nada, compra tu primera recarga con el botón Comprar créditos y luego activa la recarga automática.",
   AUDIT_RENDERING_UNAVAILABLE: isEveryAppClientAuthMode()
     ? GATEWAY_RENDERING_NOT_SET_UP_MESSAGE
-    : "JavaScript rendering is not configured on this deployment. Ask your administrator to enable a renderer.",
-  FORBIDDEN: "You do not have access to this resource.",
-  NOT_FOUND: "The requested resource was not found.",
+    : "El renderizado de JavaScript no está configurado en esta instalación. Pide a tu administrador que active un renderizador.",
+  FORBIDDEN: "No tienes acceso a este recurso.",
+  NOT_FOUND: "No se ha encontrado el recurso solicitado.",
   AUDIT_CAPACITY_REACHED:
-    "You've reached audit capacity for your account. Delete old audits from your projects to start a new one.",
-  AUDIT_PAGE_LIMIT_EXCEEDED: `Free plan audits are limited to ${FREE_MAX_AUDIT_PAGES} pages. Upgrade to run larger audits.`,
+    "Has alcanzado el límite de auditorías de tu cuenta. Elimina auditorías antiguas de tus proyectos para empezar una nueva.",
+  AUDIT_PAGE_LIMIT_EXCEEDED: `Las auditorías del plan gratuito están limitadas a ${FREE_MAX_AUDIT_PAGES} páginas. Mejora tu plan para hacer auditorías más grandes.`,
   AUDIT_ALREADY_RUNNING:
-    "You've reached the limit of audits running at once. Wait for one to finish or delete it before starting another.",
-  VALIDATION_ERROR: "Please check your input and try again.",
+    "Has alcanzado el límite de auditorías simultáneas. Espera a que termine una o elimínala antes de empezar otra.",
+  VALIDATION_ERROR: "Revisa los datos introducidos y vuelve a intentarlo.",
   UNKNOWN_LOCATION:
-    "We couldn't find that city, county, or region. Pick a location from the list, or clear the field to search the whole country.",
-  CRAWL_TARGET_BLOCKED: "This crawl target is blocked by security policy.",
+    "No hemos encontrado esa ciudad, provincia o región. Elige una ubicación de la lista o vacía el campo para buscar en todo el país.",
+  CRAWL_TARGET_BLOCKED:
+    "La política de seguridad bloquea el rastreo de este destino.",
   BACKLINKS_BILLING_ISSUE:
-    "The connected DataForSEO account has a billing or balance issue.",
+    "La cuenta de DataForSEO conectada tiene un problema de facturación o de saldo.",
   AI_SEARCH_BILLING_ISSUE:
-    "The connected DataForSEO account has a billing or balance issue.",
+    "La cuenta de DataForSEO conectada tiene un problema de facturación o de saldo.",
   AI_VISIBILITY_ERROR:
-    "The AI visibility request could not be completed. Review the tracking settings and try again.",
+    "No se ha podido completar la solicitud de visibilidad en IA. Revisa los ajustes de seguimiento y vuelve a intentarlo.",
   DATAFORSEO_AUTH_FAILED: isEveryAppClientAuthMode()
-    ? "DataForSEO isn't set up on your Every App gateway yet, or rejected the key it holds. An owner or admin sets it with pnpm everyapp secret set DATAFORSEO_API_KEY, or TREG_API_TOKEN to use treg instead."
-    : "DataForSEO rejected the credentials. Check that DATAFORSEO_API_KEY is the base64 of your DataForSEO login:password, and that the DataForSEO account is verified and has API access. If you use TREG_API_TOKEN instead, check the token and its balance at treg.to.",
-  RATE_LIMITED: "Too many requests. Please wait and try again.",
+    ? "DataForSEO aún no está configurado en tu gateway de Every App o ha rechazado la clave guardada. Un propietario o administrador lo configura con pnpm everyapp secret set DATAFORSEO_API_KEY, o TREG_API_TOKEN para usar treg."
+    : "DataForSEO ha rechazado las credenciales. Comprueba que DATAFORSEO_API_KEY es el base64 de tu login:password de DataForSEO y que la cuenta de DataForSEO está verificada y tiene acceso a la API. Si usas TREG_API_TOKEN, revisa el token y su saldo en treg.to.",
+  RATE_LIMITED: "Demasiadas solicitudes. Espera un poco y vuelve a intentarlo.",
   UPSTREAM_UNAVAILABLE:
-    "The data provider is temporarily unavailable. Please retry in a moment.",
+    "El proveedor de datos no está disponible temporalmente. Vuelve a intentarlo en un momento.",
   SUBREQUEST_LIMIT:
-    "Cloudflare stopped this at its limit on requests per run. On Workers Paid, redeploy OpenSEO to raise it.",
-  CONFLICT: "This request conflicts with existing data.",
+    "Cloudflare lo ha detenido al llegar a su límite de solicitudes por ejecución. Con Workers Paid, vuelve a desplegar OpenSEO para subirlo.",
+  CONFLICT: "Esta solicitud entra en conflicto con datos existentes.",
   INTERNAL_ERROR: UNEXPECTED_ERROR_MESSAGE,
 };
 

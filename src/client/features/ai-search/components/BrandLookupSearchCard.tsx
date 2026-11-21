@@ -72,20 +72,20 @@ export function BrandLookupSearchCard({
         <>
           <Field>
             <Input
-              placeholder="Add competitors (comma-separated)"
+              placeholder="Añade competidores (separados por comas)"
               value={competitors}
               onChange={(event) => onCompetitorsChange(event.target.value)}
               autoComplete="off"
               spellCheck={false}
-              aria-label="Competitors"
+              aria-label="Competidores"
               aria-invalid={competitorsError || undefined}
               aria-describedby={
                 competitorsError ? "brand-lookup-input-error" : undefined
               }
             />
             <FieldDescription>
-              Add up to 5 competitor brands or domains to see your Share of
-              Voice.
+              Añade hasta 5 marcas o dominios competidores para ver tu cuota de
+              voz.
             </FieldDescription>
           </Field>
           <p className="text-xs text-muted-foreground tabular-nums">
@@ -96,9 +96,9 @@ export function BrandLookupSearchCard({
             {hasCompetitors ? (
               <span>
                 {" "}
-                plus ~$
-                {BRAND_LOOKUP_COMPETITOR_DISPLAYED_COST_USD.toFixed(2)} to
-                compare competitors
+                más ~$
+                {BRAND_LOOKUP_COMPETITOR_DISPLAYED_COST_USD.toFixed(2)} para
+                comparar competidores
               </span>
             ) : null}
           </p>
@@ -106,8 +106,8 @@ export function BrandLookupSearchCard({
       }
     >
       <SearchInput
-        placeholder="Enter a brand name or domain"
-        aria-label="Brand name or domain"
+        placeholder="Introduce una marca o un dominio"
+        aria-label="Marca o dominio"
         value={query}
         maxLength={BRAND_LOOKUP_MAX_INPUT_LENGTH}
         onChange={(event) => onQueryChange(event.target.value)}

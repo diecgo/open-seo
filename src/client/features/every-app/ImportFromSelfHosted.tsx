@@ -35,14 +35,14 @@ export function ImportFromSelfHosted() {
     <>
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Import from self-hosted OpenSEO</p>
+          <p className="text-sm">Importar desde OpenSEO autoalojado</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Bring over the projects, history and chats from an OpenSEO you host
-            yourself.
+            Trae los proyectos, el historial y los chats de un OpenSEO que
+            alojas tú mismo.
           </p>
         </div>
         <Button size="sm" variant="outline" onClick={() => setOpen(true)}>
-          Import
+          Importar
         </Button>
       </div>
       {open ? <ImportDialog onClose={() => setOpen(false)} /> : null}
@@ -61,17 +61,17 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
     <Dialog open onOpenChange={(next) => !next && onClose()}>
       <DialogContent className="grid-cols-1 sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Import from self-hosted OpenSEO</DialogTitle>
+          <DialogTitle>Importar desde OpenSEO autoalojado</DialogTitle>
           <DialogDescription>
-            Copies its projects and their history here.
+            Copia aquí sus proyectos y su historial.
           </DialogDescription>
         </DialogHeader>
         <ol className="space-y-4">
           <Step
             number={1}
-            title={`Update your self-hosted OpenSEO to v${version}`}
+            title={`Actualiza tu OpenSEO autoalojado a la v${version}`}
           />
-          <Step number={2} title="Create a transfer code">
+          <Step number={2} title="Crea un código de transferencia">
             {code ? (
               <>
                 <div className="flex items-center gap-2">
@@ -83,14 +83,14 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
                   </code>
                   <CopyButton
                     value={code}
-                    successMessage="Transfer code copied"
-                    label="Copy transfer code"
+                    successMessage="Código de transferencia copiado"
+                    label="Copiar código de transferencia"
                     variant="ghost"
                     size="icon-sm"
                   />
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Works once, for 24 hours.
+                  Funciona una sola vez, durante 24 horas.
                 </p>
               </>
             ) : (
@@ -99,12 +99,13 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
                 disabled={createCode.isPending}
                 onClick={() => createCode.mutate()}
               >
-                Create code
+                Crear código
               </Button>
             )}
             {moveRunning ? (
               <p className="text-sm text-destructive" role="alert">
-                A move is already running. Try again once it finishes.
+                Ya hay una migración en curso. Vuelve a intentarlo cuando
+                termine.
               </p>
             ) : null}
             {createCode.isError ? (
@@ -113,15 +114,15 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
               </p>
             ) : null}
           </Step>
-          <Step number={3} title="Paste it in your self-hosted OpenSEO">
+          <Step number={3} title="Pégalo en tu OpenSEO autoalojado">
             <p className="text-sm text-muted-foreground">
-              Settings → Move to Every App → I have a Gateway
+              Ajustes → Pasar a Every App → Ya tengo un Gateway
             </p>
           </Step>
         </ol>
         <DialogFooter>
           <Button variant={code ? "default" : "ghost"} onClick={onClose}>
-            {code ? "Done" : "Cancel"}
+            {code ? "Hecho" : "Cancelar"}
           </Button>
         </DialogFooter>
       </DialogContent>

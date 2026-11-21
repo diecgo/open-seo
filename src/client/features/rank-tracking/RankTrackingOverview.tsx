@@ -32,14 +32,14 @@ const BUCKETS = [
   { key: "top3", label: "Top 3", color: "#1e40af" },
   { key: "top4to10", label: "4–10", color: "#56b4e9" },
   { key: "top11to20", label: "11–20", color: "#e69f00" },
-  { key: "notRanking", label: "Not in top 20", color: "#6b7280" },
+  { key: "notRanking", label: "Fuera del top 20", color: "#6b7280" },
   // Missing data, not a ranking: lighter fill so it doesn't read as lost
   // positions.
   {
     key: "notChecked",
-    label: "Not checked",
+    label: "Sin comprobar",
     color: "#d1d5db",
-    hint: "No result from Google on this check.",
+    hint: "Google no devolvió resultado en esta comprobación.",
   },
 ] as const;
 
@@ -84,7 +84,9 @@ export function RankTrackingOverview({
     <div className="px-4 pt-4 pb-4">
       <div className="space-y-2 rounded-lg border border-border p-3">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-sm font-medium">Position distribution</span>
+          <span className="text-sm font-medium">
+            Distribución de posiciones
+          </span>
           <TrendRangeToggle value={sinceDays} onChange={setSinceDays} />
         </div>
 
@@ -121,7 +123,7 @@ export function RankTrackingOverview({
 
         <QueryState
           query={trendQuery}
-          errorFallback="Failed to load position history"
+          errorFallback="No se ha podido cargar el historial de posiciones"
           loading={<Skeleton className="h-[220px] w-full" />}
         >
           {() =>

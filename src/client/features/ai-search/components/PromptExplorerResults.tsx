@@ -91,8 +91,8 @@ function ModelResultCard({
 
       <p className="px-5 pt-3 text-xs text-muted-foreground">
         {modelResult.webSearchCountryCode
-          ? `Country hint sent: ${formatCountryLabel(modelResult.webSearchCountryCode)}. This is not a verified search location.`
-          : "No country hint sent. Any search uses the provider’s default location."}
+          ? `País sugerido enviado: ${formatCountryLabel(modelResult.webSearchCountryCode)}. No es una ubicación de búsqueda verificada.`
+          : "No se ha enviado ningún país sugerido. Las búsquedas usan la ubicación predeterminada del proveedor."}
       </p>
       <div className="px-5 py-5">
         <MarkdownAnswer text={modelResult.text} />
@@ -108,7 +108,7 @@ function ModelResultCard({
       {modelResult.fanOutQueries.length > 0 ? (
         <div className="border-t border-border px-5 py-3">
           <p className="mb-2 text-xs font-medium tracking-wider text-muted-foreground uppercase">
-            Related queries the model considered
+            Consultas relacionadas que consideró el modelo
           </p>
           <div className="flex flex-wrap gap-1.5">
             {modelResult.fanOutQueries.map((query, index) => (
@@ -137,7 +137,7 @@ function CitationsList({
   return (
     <div className="border-t border-border bg-muted/30 px-5 py-3">
       <p className="mb-2 text-xs font-medium tracking-wider text-muted-foreground uppercase">
-        Cited sources ({citations.length})
+        Fuentes citadas ({citations.length})
       </p>
       <ExpandableList
         items={citations}
@@ -200,7 +200,7 @@ function ModelHeader({
         ) : null}
         {status === "error" ? <Badge variant="destructive">Error</Badge> : null}
         {status === "skipped" ? (
-          <Badge variant="secondary">Skipped</Badge>
+          <Badge variant="secondary">Omitido</Badge>
         ) : null}
         <BrandMentionBadge
           mentioned={brandMentioned}
@@ -209,14 +209,14 @@ function ModelHeader({
         {webSearch ? (
           <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
             <Globe className="size-3" />
-            web search
+            búsqueda web
           </span>
         ) : webSearch === false ? (
           // The model chose not to browse for this answer — that's why there
           // are no cited sources on this card.
           <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
             <Globe className="size-3" />
-            no web search
+            sin búsqueda web
           </span>
         ) : null}
       </div>
@@ -248,7 +248,7 @@ function BrandMentionBadge({
   return (
     <Badge variant="secondary" className="font-normal text-muted-foreground">
       <XCircle data-icon="inline-start" />
-      no {highlightBrand}
+      sin {highlightBrand}
     </Badge>
   );
 }

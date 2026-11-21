@@ -75,7 +75,10 @@ export function useKeywordSerpAnalysis(
     serpKeyword ?? serpQuery.data?.requestedKeyword ?? null;
   const serpLoading = !!serpKeyword && serpQuery.isLoading;
   const serpError = serpQuery.isError
-    ? getStandardErrorMessage(serpQuery.error, "Failed to load SERP data.")
+    ? getStandardErrorMessage(
+        serpQuery.error,
+        "No se han podido cargar los datos de la SERP.",
+      )
     : null;
 
   // A deeper fetch is available until the loaded snapshot is the deep one.

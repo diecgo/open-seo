@@ -46,10 +46,10 @@ export function WebsiteOnboardingStep({
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight">
-          What’s your website?
+          ¿Cuál es tu web?
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          We’ll start a site audit for you.
+          Empezaremos una auditoría del sitio por ti.
         </p>
       </div>
       {project ? (
@@ -63,19 +63,19 @@ export function WebsiteOnboardingStep({
       ) : projectsQuery.isError ? (
         <QueryError
           error={projectsQuery.error}
-          fallback="Couldn't load your project."
+          fallback="No se ha podido cargar tu proyecto."
           onRetry={() => void projectsQuery.refetch()}
           isRetrying={projectsQuery.isFetching}
         />
       ) : (
-        <Spinner size="sm" label="Checking…" />
+        <Spinner size="sm" label="Comprobando…" />
       )}
     </div>
   );
 }
 
 const websiteSchema = z.object({
-  domain: z.string().trim().min(1, "Enter your website."),
+  domain: z.string().trim().min(1, "Introduce tu web."),
   market: z.object({ locationCode: z.number(), languageCode: z.string() }),
 });
 
@@ -134,7 +134,7 @@ function WebsiteForm({
         if (errorCode === "VALIDATION_ERROR")
           formApi.setErrorMap({
             onSubmit: {
-              fields: { domain: "Enter a valid domain, like acme.com." },
+              fields: { domain: "Introduce un dominio válido, como acme.com." },
             },
           });
         else toast.error(getStandardErrorMessage(error));
@@ -148,7 +148,7 @@ function WebsiteForm({
         <form.AppField name="domain">
           {(field) => (
             <field.TextField
-              label="Website"
+              label="Web"
               placeholder="example.com"
               maxLength={255}
             />
@@ -157,7 +157,7 @@ function WebsiteForm({
         <Collapsible>
           <CollapsibleTrigger className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
             <ChevronDown className="size-4 transition-transform group-data-panel-open:rotate-180" />
-            Choose default country &amp; language
+            Elige el país y el idioma por defecto
           </CollapsibleTrigger>
           <CollapsibleContent keepMounted className="pt-4">
             <form.Field name="market">
@@ -173,7 +173,7 @@ function WebsiteForm({
         <WizardFooter
           className="mt-4"
           onSkip={onSkip}
-          skipLabel="Skip for now"
+          skipLabel="Omitir por ahora"
           continueAction={
             <form.Subscribe
               selector={(state) => ({
@@ -195,7 +195,7 @@ function WebsiteForm({
                       submitting && "invisible",
                     )}
                   >
-                    Save and continue <ArrowRight className="size-4" />
+                    Guardar y continuar <ArrowRight className="size-4" />
                   </span>
                   {submitting ? (
                     <SpinnerIcon className="absolute inset-0 m-auto text-muted-foreground" />

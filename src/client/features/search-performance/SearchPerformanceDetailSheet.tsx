@@ -54,7 +54,7 @@ function DetailBody({
   return (
     <QueryState
       query={detailQuery}
-      errorFallback="Failed to load Search Console data"
+      errorFallback="No se han podido cargar los datos de Search Console"
       loading={
         <div className="flex flex-col gap-4" aria-busy>
           <Skeleton className="h-32" />
@@ -81,25 +81,25 @@ function DetailBody({
               <div>
                 <h3 className="mb-1 text-sm font-medium">
                   {isQuery
-                    ? "Pages ranking for this query"
-                    : "Queries this page ranks for"}
+                    ? "Páginas que posicionan para esta consulta"
+                    : "Consultas para las que posiciona esta página"}
                 </h3>
                 {detail.related.length === 0 ? (
                   <p className="py-2 text-sm text-muted-foreground">
                     {isQuery
-                      ? "Google reported no pages for this query."
-                      : "Google reported no queries for this page."}
+                      ? "Google no ha registrado páginas para esta consulta."
+                      : "Google no ha registrado consultas para esta página."}
                   </p>
                 ) : (
                   <Table className={cardTableClass}>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>{isQuery ? "Page" : "Query"}</TableHead>
-                        <TableHead className="text-right">Clicks</TableHead>
+                        <TableHead>{isQuery ? "Página" : "Consulta"}</TableHead>
+                        <TableHead className="text-right">Clics</TableHead>
                         <TableHead className="hidden text-right sm:table-cell">
-                          Impressions
+                          Impresiones
                         </TableHead>
-                        <TableHead className="text-right">Position</TableHead>
+                        <TableHead className="text-right">Posición</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -150,7 +150,7 @@ function QueryActions({
         onClick={() => save.mutate([query])}
       >
         {save.isPending ? null : <Save data-icon="inline-start" />}
-        Save as keyword
+        Guardar como palabra clave
       </Button>
       <TrackRankingsMenu
         projectId={projectId}
@@ -203,7 +203,7 @@ export function SearchPerformanceDetailSheet({
               className="p-6 pb-4 outline-none"
             >
               <SheetDescription>
-                {selection.dimension === "query" ? "Query" : "Page"} ·{" "}
+                {selection.dimension === "query" ? "Consulta" : "Página"} ·{" "}
                 {periodLabel}
               </SheetDescription>
               <SheetTitle className="pr-8 text-lg font-semibold break-words">

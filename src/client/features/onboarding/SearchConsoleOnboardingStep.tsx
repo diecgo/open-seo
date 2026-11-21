@@ -46,10 +46,10 @@ export function SearchConsoleOnboardingStep(props: NavigationProps) {
     <div className="space-y-4">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">
-          Connect Google Search Console
+          Conecta Google Search Console
         </h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          See which Google searches bring people to your site.
+          Descubre qué búsquedas de Google traen gente a tu web.
         </p>
       </div>
 
@@ -60,18 +60,18 @@ export function SearchConsoleOnboardingStep(props: NavigationProps) {
           {projectsQuery.isError ? (
             <QueryError
               error={projectsQuery.error}
-              fallback="Couldn't load your project."
+              fallback="No se ha podido cargar tu proyecto."
               onRetry={() => void projectsQuery.refetch()}
               isRetrying={projectsQuery.isFetching}
             />
           ) : (
-            <Spinner size="sm" label="Checking…" />
+            <Spinner size="sm" label="Comprobando…" />
           )}
           <WizardFooter
             onBack={props.onBack}
             onSkip={props.onSkip}
-            skipLabel="Skip for now"
-            continueLabel="Save and continue"
+            skipLabel="Omitir por ahora"
+            continueLabel="Guardar y continuar"
           />
         </>
       )}
@@ -162,10 +162,10 @@ function GscConnect({
   return (
     <fieldset disabled={busy} className="min-w-0">
       {connectionQuery.isLoading ? (
-        <Spinner size="sm" label="Checking…" />
+        <Spinner size="sm" label="Comprobando…" />
       ) : connectionQuery.isError && !connection ? (
         <QueryError
-          fallback="Couldn't check your Google connection."
+          fallback="No se ha podido comprobar tu conexión con Google."
           onRetry={() => void connectionQuery.refetch()}
           isRetrying={connectionQuery.isFetching}
         />
@@ -175,7 +175,7 @@ function GscConnect({
             <Check className="size-3.5" />
           </span>
           <span className="min-w-0 text-foreground/80">
-            Connected to{" "}
+            Conectado a{" "}
             <span className="font-mono break-all">{connection?.property}</span>.
           </span>
         </div>
@@ -198,9 +198,11 @@ function GscConnect({
                 <WizardFooter
                   onBack={onBack}
                   onSkip={onSkip}
-                  skipLabel="Skip for now"
+                  skipLabel="Omitir por ahora"
                   continueLabel={
-                    setSiteMutation.isPending ? "Saving…" : "Save and continue"
+                    setSiteMutation.isPending
+                      ? "Guardando…"
+                      : "Guardar y continuar"
                   }
                   continueDisabled={disabled}
                   continueRef={continueRef}
@@ -227,7 +229,7 @@ function GscConnect({
               ) : (
                 <GoogleGlyph className="size-[18px]" />
               )}
-              {linking ? "Opening Google…" : "Connect with Google"}
+              {linking ? "Abriendo Google…" : "Conectar con Google"}
             </Button>
           )}
         </div>
@@ -236,9 +238,9 @@ function GscConnect({
         <WizardFooter
           onBack={onBack}
           onSkip={connected ? undefined : onSkip}
-          skipLabel="Skip for now"
+          skipLabel="Omitir por ahora"
           onContinue={connected ? onNext : undefined}
-          continueLabel={connected ? "Continue" : "Save and continue"}
+          continueLabel={connected ? "Continuar" : "Guardar y continuar"}
         />
       )}
     </fieldset>

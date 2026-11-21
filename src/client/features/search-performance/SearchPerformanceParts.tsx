@@ -37,7 +37,7 @@ function strikingExportTable(report: Report): ExportTable {
   const stamp = `${report.range.startDate}-to-${report.range.endDate}`;
   return {
     filename: `search-performance-striking-distance-${stamp}`,
-    headers: ["Query", "Page", "Impressions", "Clicks", "Position"],
+    headers: ["Consulta", "Página", "Impresiones", "Clics", "Posición"],
     rows: report.strikingDistance.map((row) => [
       row.query,
       row.page,
@@ -60,11 +60,11 @@ function dimensionExportTable(
   return {
     filename: `search-performance-${isPage ? "pages" : "queries"}-${stamp}`,
     headers: [
-      isPage ? "Page" : "Query",
-      "Clicks",
-      "Impressions",
+      isPage ? "Página" : "Consulta",
+      "Clics",
+      "Impresiones",
       "CTR (%)",
-      ...(showPosition ? ["Position"] : []),
+      ...(showPosition ? ["Posición"] : []),
     ],
     rows: rows.map((row) => [
       row.key,
@@ -152,17 +152,19 @@ export function DimensionTable({
       empty={
         isPastEnd
           ? {
-              title: "No rows on this page",
-              description: "This page is past the end of the results.",
+              title: "No hay filas en esta página",
+              description:
+                "Esta página está más allá del final de los resultados.",
               action: (
                 <Button variant="outline" size="sm" onClick={onFirstPage}>
-                  Go to first page
+                  Ir a la primera página
                 </Button>
               ),
             }
           : {
-              title: "No Search Console data yet",
-              description: "Search Console data can take a few days to appear.",
+              title: "Aún no hay datos de Search Console",
+              description:
+                "Los datos de Search Console pueden tardar unos días en aparecer.",
             }
       }
     />
@@ -187,7 +189,7 @@ export function useSaveQueriesAsKeywords(
         queryKey: ["savedKeywords", projectId],
       });
       toast.success(
-        `Saved ${keywords.length} ${keywords.length === 1 ? "keyword" : "keywords"}`,
+        `${keywords.length} ${keywords.length === 1 ? "palabra clave guardada" : "palabras clave guardadas"}`,
       );
       onSaved?.();
     },
@@ -245,10 +247,10 @@ export function StrikingDistanceTable({
         .join("\n");
       await navigator.clipboard.writeText(text);
       toast.success(
-        `Copied ${selectedQueries.length} ${selectedQueries.length === 1 ? "keyword" : "keywords"}`,
+        `${selectedQueries.length} ${selectedQueries.length === 1 ? "palabra clave copiada" : "palabras clave copiadas"}`,
       );
     } catch {
-      toast.error("Couldn't copy to clipboard");
+      toast.error("No se ha podido copiar al portapapeles");
     }
   };
 
@@ -258,8 +260,8 @@ export function StrikingDistanceTable({
     <>
       <div className="p-4">
         <p className="mb-3 text-sm text-muted-foreground">
-          Queries ranking at positions 5 to 20, sorted by impressions. Improve
-          the listed page to move them into the top results.
+          Consultas en las posiciones 5 a 20, ordenadas por impresiones. Mejora
+          la página indicada para subirlas a los primeros resultados.
         </p>
         <DataTable
           table={table}
@@ -268,22 +270,23 @@ export function StrikingDistanceTable({
           empty={
             isPastEnd
               ? {
-                  title: "No rows on this page",
-                  description: "This page is past the end of the results.",
+                  title: "No hay filas en esta página",
+                  description:
+                    "Esta página está más allá del final de los resultados.",
                   action: (
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => onPageChange(1)}
                     >
-                      Go to first page
+                      Ir a la primera página
                     </Button>
                   ),
                 }
               : {
-                  title: "No striking-distance queries",
+                  title: "No hay consultas al alcance",
                   description:
-                    "Queries ranking at positions 5 to 20 will appear here.",
+                    "Aquí aparecerán las consultas en las posiciones 5 a 20.",
                 }
           }
         />
@@ -302,7 +305,11 @@ export function StrikingDistanceTable({
       )}
       <TableBulkActionBar
         selectedCount={selectedQueries.length}
-        selectedLabel={selectedQueries.length === 1 ? "query" : "queries"}
+        selectedLabel={
+          selectedQueries.length === 1
+            ? "consulta seleccionada"
+            : "consultas seleccionadas"
+        }
         onClear={() => setRowSelection({})}
         actions={
           <div className="flex items-center gap-1 px-1.5">
@@ -310,7 +317,7 @@ export function StrikingDistanceTable({
               icon={<Copy className="size-3.5" />}
               onClick={() => void copyKeywords()}
             >
-              Copy keywords
+              Copiar palabras clave
             </TableBulkActionButton>
             <TableBulkActionButton
               icon={
@@ -323,7 +330,7 @@ export function StrikingDistanceTable({
               onClick={() => save.mutate(selectedQueries)}
               disabled={save.isPending}
             >
-              Save as keywords
+              Guardar como palabras clave
             </TableBulkActionButton>
             <TrackRankingsMenu
               projectId={projectId}

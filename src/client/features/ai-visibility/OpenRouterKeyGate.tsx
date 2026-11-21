@@ -26,7 +26,7 @@ export function OpenRouterKeyGate({
     return (
       <QueryError
         error={access.error}
-        fallback="Could not check the OpenRouter API key."
+        fallback="No se pudo comprobar la clave de API de OpenRouter."
         onRetry={access.onRetry}
         isRetrying={access.isRetrying}
       />
@@ -37,26 +37,27 @@ export function OpenRouterKeyGate({
         className="max-w-2xl"
         icon={KeyRound}
         tone="warning"
-        title="Add an OpenRouter API key"
+        title="Añade una clave de API de OpenRouter"
         description={
           <>
             <p>
-              AI visibility uses OpenRouter to research your brand and suggest
-              the prompts worth tracking, so you don&apos;t have to write them
-              yourself. The tracking results, what ChatGPT and other AI engines
-              actually answer, come from your DataForSEO account.
+              Visibilidad en IA usa OpenRouter para investigar tu marca y
+              sugerir los prompts que merece la pena seguir, para que no tengas
+              que escribirlos tú. Los resultados del seguimiento, lo que
+              responden de verdad ChatGPT y otros motores de IA, vienen de tu
+              cuenta de DataForSEO.
             </p>
             <p>
-              Create a key on OpenRouter, set it as{" "}
-              <code>OPENROUTER_API_KEY</code>, restart OpenSEO, then confirm
-              here. The{" "}
+              Crea una clave en OpenRouter, configúrala como{" "}
+              <code>OPENROUTER_API_KEY</code>, reinicia OpenSEO y confírmalo
+              aquí. La{" "}
               <Link
                 className="underline underline-offset-2 hover:text-foreground"
                 to="/help/openrouter-api-key"
               >
-                OpenRouter API key setup guide
+                guía de configuración de la clave de API de OpenRouter
               </Link>{" "}
-              has the steps for each deployment.
+              explica los pasos para cada despliegue.
             </p>
           </>
         }
@@ -67,7 +68,7 @@ export function OpenRouterKeyGate({
               pending={access.isRefetching}
               onClick={access.onRetry}
             >
-              Confirm API Key
+              Confirmar clave de API
             </Button>
             <Button
               size="lg"
@@ -81,7 +82,7 @@ export function OpenRouterKeyGate({
                 />
               }
             >
-              Open OpenRouter Keys
+              Abrir claves de OpenRouter
             </Button>
           </>
         }

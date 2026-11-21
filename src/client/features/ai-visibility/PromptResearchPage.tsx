@@ -56,7 +56,7 @@ export function PromptResearchPage({
               to="/p/$projectId/ai-visibility/research"
               params={{ projectId }}
             >
-              Relevant keywords
+              Palabras clave relevantes
             </BackLink>
           ) : undefined
         }
@@ -64,8 +64,8 @@ export function PromptResearchPage({
       {!state?.configured ? (
         <EmptyState
           icon={Telescope}
-          title="Prompt research starts with a tracker"
-          description="Set up prompt tracking to research prompts for your topics."
+          title="La investigación de prompts empieza con un rastreador"
+          description="Configura el seguimiento de prompts para investigar prompts sobre tus temas."
           action={
             <Button
               size="sm"
@@ -74,7 +74,7 @@ export function PromptResearchPage({
                 <Link to="/p/$projectId/ai-visibility" params={{ projectId }} />
               }
             >
-              Set up prompt tracking
+              Configurar seguimiento de prompts
             </Button>
           }
         />
@@ -110,9 +110,10 @@ function KeywordList({ projectId }: { projectId: string }) {
     <div className="overflow-hidden rounded-lg border bg-card border-border">
       <div className="flex items-center justify-between gap-3 border-b p-4 border-border">
         <div>
-          <h2 className="font-medium">Relevant keywords</h2>
+          <h2 className="font-medium">Palabras clave relevantes</h2>
           <p className="text-sm text-muted-foreground">
-            Select a keyword to see the prompts people ask AI about it.
+            Selecciona una palabra clave para ver los prompts que la gente
+            pregunta a la IA sobre ella.
           </p>
         </div>
         {query.data ? (
@@ -135,15 +136,15 @@ function KeywordList({ projectId }: { projectId: string }) {
         />
       ) : !query.data.keywords.length ? (
         <p className="p-10 text-center text-sm text-muted-foreground">
-          Add topics to your tracker, or search a keyword above.
+          Añade temas a tu rastreador o busca una palabra clave arriba.
         </p>
       ) : (
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Keyword</TableHead>
+              <TableHead>Palabra clave</TableHead>
               <TableHead className="w-10">
-                <span className="sr-only">Open</span>
+                <span className="sr-only">Abrir</span>
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -200,7 +201,7 @@ function KeywordSearch({
       onSubmit={(event) => {
         event.preventDefault();
         if (!draft.trim()) {
-          setError("Enter a keyword.");
+          setError("Introduce una palabra clave.");
           return;
         }
         void navigate({
@@ -216,7 +217,7 @@ function KeywordSearch({
           id="ai-keyword-research-cost"
           className="text-xs text-muted-foreground"
         >
-          About $0.25 in credits per keyword.
+          Unos 0,25 $ en créditos por palabra clave.
         </p>
       }
     >
@@ -226,8 +227,8 @@ function KeywordSearch({
           setDraft(event.target.value);
           setError(null);
         }}
-        placeholder="Enter a keyword"
-        aria-label="Keyword"
+        placeholder="Introduce una palabra clave"
+        aria-label="Palabra clave"
         aria-invalid={error ? true : undefined}
         aria-describedby={
           error

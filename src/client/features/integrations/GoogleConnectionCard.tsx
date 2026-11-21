@@ -108,7 +108,7 @@ export function GoogleConnectionCard({
         (current: GoogleConnection | undefined) =>
           current ? { ...current, ...saved } : current,
       );
-      toast.success(`${config.name} connected`);
+      toast.success(`${config.name} conectado`);
       afterChange();
     },
   });
@@ -116,7 +116,7 @@ export function GoogleConnectionCard({
     meta: { errorToast: false },
     mutationFn: () => config.disconnect(projectId),
     onSuccess: () => {
-      toast.success(`${config.name} disconnected from this project`);
+      toast.success(`${config.name} desconectado de este proyecto`);
       queryClient.setQueryData(
         connectionKey,
         (current: GoogleConnection | undefined) =>
@@ -136,7 +136,7 @@ export function GoogleConnectionCard({
       onClick={onDismiss}
       disabled={dismissing || changingConnection}
     >
-      Dismiss
+      Descartar
     </Button>
   ) : null;
   const handleConnect = () => void linkAccount(window.location.href);
@@ -162,18 +162,14 @@ export function GoogleConnectionCard({
     >
       <GoogleLinkErrorAlert provider={provider} className="mb-4" />
       {connectionQuery.isPending ? (
-        <div
-          role="status"
-          aria-label="Loading connection"
-          className="space-y-3"
-        >
+        <div role="status" aria-label="Cargando conexión" className="space-y-3">
           <Skeleton className="h-4 w-2/3" />
           <Skeleton className="h-9 w-24" />
         </div>
       ) : connectionUnavailable ? (
         <QueryError
           error={connectionQuery.error}
-          fallback="Couldn't check this project's connection."
+          fallback="No se ha podido comprobar la conexión de este proyecto."
           onRetry={() => void connectionQuery.refetch()}
           isRetrying={connectionQuery.isFetching}
         />
@@ -214,7 +210,7 @@ export function GoogleConnectionCard({
             onSave={() => selection && setPropertyMutation.mutate(selection)}
             saving={setPropertyMutation.isPending}
             secondaryAction={{
-              label: "Cancel",
+              label: "Cancelar",
               disabled: setPropertyMutation.isPending,
               onClick: () => {
                 setPicking(false);
@@ -245,7 +241,7 @@ export function GoogleConnectionCard({
       />
       {connectionQuery.isSuccess && !needsGoogleOAuthSetup && !canManage ? (
         <PermissionHint
-          action="change this project's connection"
+          action="cambiar la conexión de este proyecto"
           className={prominent && !connected ? "mt-3 text-center" : "mt-3"}
         />
       ) : null}
@@ -282,10 +278,10 @@ function ConnectionStatusPill({
     >
       <span className="size-1.5 rounded-full bg-current" />
       {connected
-        ? "Connected"
+        ? "Conectado"
         : setupRequired
-          ? "Setup required"
-          : "Not connected"}
+          ? "Configuración pendiente"
+          : "No conectado"}
     </Badge>
   );
 }

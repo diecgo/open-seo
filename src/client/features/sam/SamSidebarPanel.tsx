@@ -37,7 +37,7 @@ function BetaNotice() {
         <Button
           variant="ghost"
           size="icon-xs"
-          aria-label="Dismiss"
+          aria-label="Descartar"
           className="text-muted-foreground"
           onClick={() => {
             localStorage.setItem(BETA_NOTICE_DISMISSED_KEY, "1");
@@ -48,14 +48,14 @@ function BetaNotice() {
         </Button>
       </div>
       <p className="mt-1.5 text-xs text-muted-foreground">
-        For more powerful AI workflows, use the OpenSEO MCP with your own agent
-        like Claude Code or Hermes.
+        Para flujos de IA más potentes, usa el MCP de OpenSEO con tu propio
+        agente, como Claude Code o Hermes.
       </p>
       <Link
         to="/ai"
         className="mt-1.5 inline-block text-xs text-primary underline-offset-4 hover:underline"
       >
-        Set up the MCP →
+        Configurar el MCP →
       </Link>
     </div>
   );
@@ -127,7 +127,7 @@ export function SamSidebarPanel({
   if (!optedIn) {
     return (
       <p className="px-4 py-6 text-center text-xs text-muted-foreground">
-        Your chats will show here once you opt in to the beta.
+        Tus chats aparecerán aquí cuando te apuntes a la beta.
       </p>
     );
   }
@@ -145,20 +145,20 @@ export function SamSidebarPanel({
           onClick={() => createSession.mutate()}
         >
           {createSession.isPending ? null : <Plus />}
-          New chat
+          Nuevo chat
         </Button>
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto px-2 py-1">
         <QueryState
           query={sessionsQuery}
-          errorFallback="Failed to load chats."
+          errorFallback="No se pudieron cargar los chats."
           loading={<SamChatListSkeleton />}
         >
           {(loadedSessions) =>
             loadedSessions.length === 0 ? (
               <p className="px-2 py-6 text-center text-xs text-muted-foreground">
-                No chats yet. Start a new one.
+                Aún no hay chats. Empieza uno nuevo.
               </p>
             ) : (
               loadedSessions.map((session) => {
@@ -188,7 +188,7 @@ export function SamSidebarPanel({
                       <Button
                         variant="ghost"
                         size="icon-xs"
-                        aria-label="Archive chat"
+                        aria-label="Archivar chat"
                         className="text-muted-foreground reveal-on-hover"
                         disabled={archiveSession.isPending}
                         onClick={() => archiveSession.mutate(session.id)}

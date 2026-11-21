@@ -22,7 +22,7 @@ export function BacklinksBestLinksMenu({
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="ghost" size="sm" />}>
         <Link2 data-icon="inline-start" />
-        Best links: {hideSpam ? "On" : "Off"}
+        Mejores enlaces: {hideSpam ? "Sí" : "No"}
         <ChevronDown data-icon="inline-end" className="opacity-60" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-72">
@@ -32,17 +32,20 @@ export function BacklinksBestLinksMenu({
         >
           <DropdownMenuRadioItem value="best">
             <span>
-              <span className="block">Best links only</span>
+              <span className="block">Solo los mejores enlaces</span>
               <span className="block text-xs text-muted-foreground">
-                Scores below {DEFAULT_BACKLINKS_SPAM_THRESHOLD} or unknown
+                Puntuación inferior a {DEFAULT_BACKLINKS_SPAM_THRESHOLD} o
+                desconocida
               </span>
             </span>
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="all">
             <span>
-              <span className="block">All links (spammy included)</span>
+              <span className="block">
+                Todos los enlaces (incluidos los de spam)
+              </span>
               <span className="block text-xs text-muted-foreground">
-                Includes scores {DEFAULT_BACKLINKS_SPAM_THRESHOLD} or higher
+                Incluye puntuaciones de {DEFAULT_BACKLINKS_SPAM_THRESHOLD} o más
               </span>
             </span>
           </DropdownMenuRadioItem>
@@ -68,8 +71,8 @@ export function BacklinksActionsMenu({
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label="Backlinks table actions"
-            title="Backlinks table actions"
+            aria-label="Acciones de la tabla de enlaces entrantes"
+            title="Acciones de la tabla de enlaces entrantes"
           />
         }
       >
@@ -79,7 +82,7 @@ export function BacklinksActionsMenu({
         <DropdownMenuItem
           onClick={() => void loadRatings(ratableDomains)}
           disabled={isLoadingRatings}
-          title="Look up Ahrefs Domain Rating for each domain in the table"
+          title="Consulta el Domain Rating de Ahrefs de cada dominio de la tabla"
         >
           {isLoadingRatings ? <Spinner /> : <Gauge />}
           Ahrefs DR

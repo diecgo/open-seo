@@ -29,21 +29,21 @@ import { Input } from "@/client/components/ui/input";
 import { Textarea } from "@/client/components/ui/textarea";
 
 const SECTION_HINTS: Record<ProjectContextSectionKey, string> = {
-  business_overview: "What you sell, who buys it, and where.",
-  current_goal: "What you're pushing for right now, and by when.",
-  positioning: "Why someone picks you over the alternatives.",
-  writing_preferences: "Voice, words to avoid, topics that are off-limits.",
+  business_overview: "Qué vendes, quién lo compra y dónde.",
+  current_goal: "Qué estás persiguiendo ahora mismo y para cuándo.",
+  positioning: "Por qué alguien te elige frente a las alternativas.",
+  writing_preferences: "Tono, palabras que evitar y temas prohibidos.",
 };
 
 const SECTION_PLACEHOLDERS: Record<ProjectContextSectionKey, string> = {
   business_overview:
-    "e.g. Booking software for independent restaurants in the US and Canada. Buyers are owner-operators, not marketers.",
+    "p. ej., software de reservas para restaurantes independientes de España y Portugal. Los compradores son los propios dueños, no equipos de marketing.",
   current_goal:
-    "e.g. Double organic signups by Q4. Comparison pages are the current bet.",
+    "p. ej., duplicar los registros orgánicos antes del cuarto trimestre. La apuesta actual son las páginas comparativas.",
   positioning:
-    "e.g. The only booking tool that sets up in an afternoon. Cheaper than the incumbents, simpler than the DIY stack.",
+    "p. ej., la única herramienta de reservas que se configura en una tarde. Más barata que las de siempre y más sencilla que montártelo tú.",
   writing_preferences:
-    "e.g. Plain and direct, no hype. Never say 'seamless' or 'game-changing'. Don't write about competitor pricing.",
+    "p. ej., claro y directo, sin exagerar. Nunca digas 'revolucionario' ni 'sin fricciones'. No hables de los precios de la competencia.",
 };
 
 export function ProjectContextPage({ projectId }: { projectId: string }) {
@@ -58,16 +58,16 @@ export function ProjectContextPage({ projectId }: { projectId: string }) {
   return (
     <QueryState
       query={contextQuery}
-      errorFallback="Failed to load project context"
+      errorFallback="No se ha podido cargar el contexto del proyecto"
     >
       {(context) => (
         // key remounts the whole page when the project switches under it, so no
         // draft, open form, or edit state can carry over to another project.
         <div key={projectId} className="space-y-8">
           <p className="text-sm text-muted-foreground">
-            What Claude Code and any other connected MCP client know about this
-            project. They read it before they work and write back what they
-            learn, so correct anything that looks wrong.
+            Lo que Claude Code y cualquier otro cliente MCP conectado saben de
+            este proyecto. Lo leen antes de trabajar y apuntan lo que aprenden,
+            así que corrige lo que veas mal.
           </p>
 
           <BrandNameSection
@@ -160,8 +160,8 @@ function ProseSections({
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing written down yet"
-          description="Fill in what you can — or ask your agent to draft it from your site and confirm what it got right."
+          title="Aún no hay nada escrito"
+          description="Rellena lo que puedas o pide a tu agente que lo redacte a partir de tu web y confirma lo que haya acertado."
         />
       ) : null}
 
@@ -179,7 +179,7 @@ function ProseSections({
               {section ? (
                 <Provenance by={section.updatedBy} at={section.updatedAt} />
               ) : (
-                <span className="text-xs text-muted-foreground">Empty</span>
+                <span className="text-xs text-muted-foreground">Vacío</span>
               )}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -215,7 +215,7 @@ function ProseSections({
           size="sm"
           disabled={update.isPending || changed.length === 0}
         >
-          Save changes
+          Guardar cambios
         </Button>
       </div>
     </form>
@@ -235,16 +235,16 @@ function CustomSections({
   return (
     <section className="space-y-3">
       <SectionHeader
-        title="Custom sections"
-        hint="Anything an agent wrote down that didn't fit the sections above."
+        title="Secciones personalizadas"
+        hint="Todo lo que un agente ha apuntado y no encaja en las secciones anteriores."
       />
 
       {customSections.length === 0 ? (
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing here yet"
-          description="Agents add a section when they learn something important that has nowhere else to live."
+          title="Aún no hay nada aquí"
+          description="Los agentes añaden una sección cuando aprenden algo importante que no tiene otro sitio."
         />
       ) : (
         <div className="space-y-3">
@@ -278,13 +278,13 @@ function CustomSections({
                     <Button
                       variant="ghost"
                       size="icon-xs"
-                      aria-label={`Edit ${custom.title ?? custom.slug}`}
+                      aria-label={`Editar ${custom.title ?? custom.slug}`}
                       onClick={() => setEditingSlug(custom.slug)}
                     >
                       <Pencil className="size-3.5" />
                     </Button>
                     <InlineConfirm
-                      label={`Delete ${custom.title ?? custom.slug}`}
+                      label={`Eliminar ${custom.title ?? custom.slug}`}
                       pending={update.isPending}
                       onConfirm={() =>
                         update.mutate([{ deleteCustomSection: custom.slug }])
@@ -332,14 +332,14 @@ function CustomSectionForm({
         onChange={(event) => setTitle(event.target.value)}
         placeholder={custom.slug}
         maxLength={120}
-        aria-label="Section title"
+        aria-label="Título de la sección"
       />
       <Textarea
         value={content}
         onChange={(event) => setContent(event.target.value)}
         rows={5}
         maxLength={PROSE_MAX_CHARS}
-        aria-label="Section content"
+        aria-label="Contenido de la sección"
       />
       <FormActions
         pending={pending}
@@ -363,16 +363,16 @@ function ResearchLog({
   return (
     <section className="space-y-3">
       <SectionHeader
-        title="Research log"
-        hint="What's already been looked up, so nobody buys the same data twice."
+        title="Registro de investigación"
+        hint="Lo que ya se ha consultado, para que nadie pague dos veces por los mismos datos."
       />
 
       {researchLog.length === 0 ? (
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing logged yet"
-          description="Agents record paid research here as they run it."
+          title="Aún no hay nada registrado"
+          description="Los agentes registran aquí la investigación de pago a medida que la hacen."
         />
       ) : (
         <ul className={listClass}>
@@ -390,7 +390,7 @@ function ResearchLog({
               </div>
               <RowActions>
                 <InlineConfirm
-                  label={`Delete log entry from ${entry.entryDate}`}
+                  label={`Eliminar la entrada del registro del ${entry.entryDate}`}
                   pending={update.isPending}
                   onConfirm={() =>
                     update.mutate([{ removeResearchLog: [entry.id] }])

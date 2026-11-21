@@ -84,7 +84,7 @@ export function PerformanceTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "No Lighthouse results" }}
+      empty={{ title: "No hay resultados de Lighthouse" }}
       isFiltered={activeFilterCount > 0}
       onClearFilters={resetFilters}
       toolbar={
@@ -128,21 +128,26 @@ function buildPerformanceColumns({
       meta: { cellClassName: "max-w-[180px] truncate" },
     }),
     performanceColumnHelper.accessor("strategy", {
-      header: ({ column }) => <SortableHeader column={column} label="Device" />,
+      header: ({ column }) => (
+        <SortableHeader column={column} label="Dispositivo" />
+      ),
       cell: ({ getValue }) => (
-        <span className="capitalize text-xs">{getValue()}</span>
+        <span className="text-xs">
+          {getValue() === "mobile" ? "Móvil" : "Escritorio"}
+        </span>
       ),
     }),
     performanceColumnHelper.display({
       id: "status",
-      header: ({ column }) => <SortableHeader column={column} label="Status" />,
+      header: ({ column }) => <SortableHeader column={column} label="Estado" />,
       cell: ({ row }) => {
         const isFailed = isLighthouseFailure(row.original);
         const failureMessage =
-          row.original.errorMessage ?? "Lighthouse returned no category scores";
+          row.original.errorMessage ??
+          "Lighthouse no ha devuelto puntuaciones por categoría";
         return isFailed ? (
           <Badge variant="destructive" title={failureMessage}>
-            failed
+            fallido
           </Badge>
         ) : (
           <Badge variant="success">ok</Badge>
@@ -154,12 +159,12 @@ function buildPerformanceColumns({
         Number(isLighthouseFailure(right.original)),
     }),
     performanceColumnHelper.accessor("performanceScore", {
-      header: ({ column }) => <SortableHeader column={column} label="Perf" />,
+      header: ({ column }) => <SortableHeader column={column} label="Rend." />,
       cell: ({ getValue }) => <LighthouseScoreBadge score={getValue()} />,
       sortingFn: numericNullsLast,
     }),
     performanceColumnHelper.accessor("accessibilityScore", {
-      header: ({ column }) => <SortableHeader column={column} label="A11y" />,
+      header: ({ column }) => <SortableHeader column={column} label="Acces." />,
       cell: ({ getValue }) => <LighthouseScoreBadge score={getValue()} />,
       sortingFn: numericNullsLast,
     }),
@@ -218,7 +223,7 @@ function buildPerformanceColumns({
     }),
     performanceColumnHelper.display({
       id: "issues",
-      header: () => "Issues",
+      header: () => "Problemas",
       cell: ({ row }) =>
         row.original.r2Key && !isLighthouseFailure(row.original) ? (
           <Button
@@ -232,7 +237,7 @@ function buildPerformanceColumns({
               />
             }
           >
-            View issues
+            Ver problemas
           </Button>
         ) : (
           <span className="text-xs text-muted-foreground">-</span>

@@ -132,7 +132,7 @@ export function backlinksFilterBudgetError(
 ): string | null {
   const limit = backlinksFilterConditionLimit(scope, hideSpam);
   if (countFilterConditions(values) <= limit) return null;
-  return `These filters exceed the ${limit}-condition limit for this view. Remove conditions in Filters${hideSpam ? " or choose All links (spammy included) from Best links" : ""}. Your filters have been kept.`;
+  return `Estos filtros superan el límite de ${limit} condiciones de esta vista. Quita condiciones en Filtros${hideSpam ? " o elige Todos los enlaces (incluidos los de spam) en Mejores enlaces" : ""}. Hemos conservado tus filtros.`;
 }
 
 /**

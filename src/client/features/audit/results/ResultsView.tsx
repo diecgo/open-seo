@@ -95,15 +95,15 @@ export function ResultsView({
     <>
       {excludePaths.length > 0 && (
         <p className="text-sm text-muted-foreground">
-          This audit skipped pages matching{" "}
+          Esta auditoría omitió las páginas que coinciden con{" "}
           {excludePaths.map((path, index) => (
             <Fragment key={path}>
               {index > 0 && ", "}
               <code>{path}</code>
             </Fragment>
           ))}
-          . The orphan page check didn't run, because links from skipped pages
-          aren't known.
+          . No se ha comprobado si hay páginas huérfanas porque no se conocen
+          los enlaces de las páginas omitidas.
         </p>
       )}
 
@@ -119,8 +119,8 @@ export function ResultsView({
         <Alert variant="warning">
           <ShieldAlert />
           <AlertTitle>
-            Bot protection blocked our crawler on {blockedCount}{" "}
-            {blockedCount === 1 ? "page" : "pages"}.
+            La protección antibots bloqueó nuestro rastreador web en{" "}
+            {blockedCount} {blockedCount === 1 ? "página" : "páginas"}.
           </AlertTitle>
           <AlertDescription>
             <BotProtectionAdvice
@@ -136,22 +136,22 @@ export function ResultsView({
           <ShieldAlert />
           <AlertTitle>
             {crawlStopped
-              ? "The crawl stopped early because of the site’s rate limit."
-              : `The site rate limited us on ${rateLimitedCount} ${rateLimitedCount === 1 ? "page" : "pages"}.`}
+              ? "El rastreo se detuvo antes de tiempo por el límite de frecuencia del sitio."
+              : `El sitio limitó nuestras peticiones en ${rateLimitedCount} ${rateLimitedCount === 1 ? "página" : "páginas"}.`}
           </AlertTitle>
           <AlertDescription>
             {crawlStopped
-              ? "The site kept refusing pages, so some URLs were left unvisited. This report is incomplete. "
-              : "Pages that returned 429 Too Many Requests could not be audited. "}
-            Re-run the audit after the rate limit resets, or ask the site owner
-            to allow the{" "}
+              ? "El sitio siguió rechazando páginas, así que algunas URL quedaron sin visitar. Este informe está incompleto. "
+              : "No se han podido auditar las páginas que devolvieron 429 Too Many Requests. "}
+            Vuelve a lanzar la auditoría cuando se restablezca el límite o pide
+            al propietario del sitio que permita el{" "}
             <a
               className="underline underline-offset-4"
               href="https://openseo.so/docs/crawler"
               target="_blank"
               rel="noreferrer"
             >
-              OpenSEO-Audit crawler
+              rastreador web OpenSEO-Audit
             </a>
             .
           </AlertDescription>
@@ -234,13 +234,13 @@ function ResultsHeader({
   onExport: (format: "csv" | "json" | "sheets") => void;
 }) {
   const tabs: Array<{ tab: ResultsTab; label: string }> = [
-    { tab: "issues", label: `Issues (${issueCount})` },
-    { tab: "pages", label: `Pages (${pageCount})` },
+    { tab: "issues", label: `Problemas (${issueCount})` },
+    { tab: "pages", label: `Páginas (${pageCount})` },
     ...(hasPerformanceTab
       ? [
           {
             tab: "performance" as const,
-            label: `Performance (${lighthouseCount})`,
+            label: `Rendimiento (${lighthouseCount})`,
           },
         ]
       : []),
@@ -302,9 +302,9 @@ function StatsStrip({
   }, [issueGroups]);
 
   const items: StatItem[] = [
-    { label: "Pages crawled", value: String(pagesCrawled) },
+    { label: "Páginas rastreadas", value: String(pagesCrawled) },
     {
-      label: "Issues found",
+      label: "Problemas encontrados",
       value: String(issueCount),
       valueClass: issueCount === 0 ? "text-success" : "",
       sub: issueCount > 0 && (
@@ -317,10 +317,10 @@ function StatsStrip({
                 title={severity}
               >
                 {severity === "critical"
-                  ? "Critical"
+                  ? "Crítico"
                   : severity === "warning"
-                    ? "Warning"
-                    : "Info"}{" "}
+                    ? "Aviso"
+                    : "Información"}{" "}
                 {severityCounts[severity]}
               </SeverityBadge>
             ) : null,
@@ -328,14 +328,14 @@ function StatsStrip({
         </span>
       ),
     },
-    { label: "Average response time", value: `${averageResponseMs}ms` },
+    { label: "Tiempo de respuesta medio", value: `${averageResponseMs}ms` },
   ];
 
   if (totalLighthouse > 0) {
     items.push(
-      { label: "Lighthouse tests", value: String(totalLighthouse) },
+      { label: "Pruebas de Lighthouse", value: String(totalLighthouse) },
       {
-        label: "Lighthouse performance",
+        label: "Rendimiento de Lighthouse",
         value:
           lighthouseSummary.avgPerformance == null
             ? "-"
@@ -351,7 +351,7 @@ function StatsStrip({
         valueClass: scoreClass(lighthouseSummary.avgSeo),
       },
       {
-        label: "Lighthouse accessibility",
+        label: "Accesibilidad de Lighthouse",
         value:
           lighthouseSummary.avgAccessibility == null
             ? "-"
@@ -359,7 +359,7 @@ function StatsStrip({
         valueClass: scoreClass(lighthouseSummary.avgAccessibility),
       },
       {
-        label: "Lighthouse failures",
+        label: "Fallos de Lighthouse",
         value: String(lighthouseSummary.failed),
         valueClass:
           lighthouseSummary.failed > 0 ? "text-destructive" : "text-success",

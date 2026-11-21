@@ -23,7 +23,7 @@ import { useBillingUsage } from "@/client/features/billing/useBillingUsage";
 const PROJECT_USAGE_COMPLETE_AT = Date.parse("2026-12-02T00:00:00Z");
 
 const chartConfig = {
-  usd: { label: "Usage", color: "var(--chart-1)" },
+  usd: { label: "Uso", color: "var(--chart-1)" },
 } satisfies ChartConfig;
 
 /** The billing Usage tab: the last 30 days by day, feature and project. */
@@ -33,7 +33,7 @@ export function BillingUsage() {
   return (
     <QueryState
       query={usageQuery}
-      errorFallback="Failed to load usage"
+      errorFallback="No se ha podido cargar el uso"
       loading={<UsageSkeleton />}
     >
       {(usage) => <UsageReport usage={usage} />}
@@ -50,8 +50,8 @@ function UsageReport({ usage }: { usage: BillingUsageData }) {
       <EmptyState
         variant="plain"
         icon={ChartColumn}
-        title="No usage recorded yet"
-        description="What you spend over the last 30 days shows up here, by day, feature and project."
+        title="Aún no hay uso registrado"
+        description="Aquí aparecerá lo que gastes en los últimos 30 días, por día, función y proyecto."
       />
     );
   }
@@ -61,7 +61,7 @@ function UsageReport({ usage }: { usage: BillingUsageData }) {
       <section className="space-y-4">
         <div>
           <p className="text-xs text-muted-foreground">
-            Spent in the last 30 days
+            Gastado en los últimos 30 días
           </p>
           <p className="mt-1 text-2xl font-semibold tracking-tight tabular-nums">
             ${totalUsd.toFixed(2)}
@@ -74,14 +74,15 @@ function UsageReport({ usage }: { usage: BillingUsageData }) {
         <Alert>
           <Info />
           <AlertDescription>
-            Project tracking started Nov 1, so earlier usage shows as Workspace.
+            El desglose por proyecto empezó el 1 de noviembre, así que el uso
+            anterior aparece como Workspace.
           </AlertDescription>
         </Alert>
       ) : null}
 
       <div className="grid gap-8 md:grid-cols-2">
-        <Breakdown title="Usage by feature" rows={usage.features} />
-        <Breakdown title="Usage by project" rows={usage.projects} />
+        <Breakdown title="Uso por función" rows={usage.features} />
+        <Breakdown title="Uso por proyecto" rows={usage.projects} />
       </div>
     </div>
   );
@@ -179,7 +180,7 @@ function UsageSkeleton() {
 }
 
 function formatShortDate(timestamp: number) {
-  return new Date(timestamp).toLocaleDateString("en-US", {
+  return new Date(timestamp).toLocaleDateString("es-ES", {
     month: "short",
     day: "numeric",
   });

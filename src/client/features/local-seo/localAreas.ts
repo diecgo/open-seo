@@ -4,14 +4,22 @@ import { entries } from "remeda";
 // (gridSize - 1) × spacing, and each point is one paid search per keyword.
 export const LOCAL_AREAS = {
   neighborhood: {
-    label: "Neighborhood · 2 km wide · 9 points",
+    label: "Barrio · 2 km de ancho · 9 puntos",
     gridSize: 3,
     spacingKm: 1,
   },
-  town: { label: "Town · 4 km wide · 9 points", gridSize: 3, spacingKm: 2 },
-  city: { label: "City · 8 km wide · 25 points", gridSize: 5, spacingKm: 2 },
+  town: {
+    label: "Pueblo · 4 km de ancho · 9 puntos",
+    gridSize: 3,
+    spacingKm: 2,
+  },
+  city: {
+    label: "Ciudad · 8 km de ancho · 25 puntos",
+    gridSize: 5,
+    spacingKm: 2,
+  },
   metro: {
-    label: "Metro area · 20 km wide · 25 points",
+    label: "Área metropolitana · 20 km de ancho · 25 puntos",
     gridSize: 5,
     spacingKm: 5,
   },

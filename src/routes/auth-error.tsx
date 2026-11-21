@@ -10,7 +10,7 @@ const authErrorSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/auth-error")({
-  head: () => pageHead("Connection error"),
+  head: () => pageHead("Error de conexión"),
   validateSearch: authErrorSearchSchema,
   component: AuthErrorPage,
 });
@@ -34,7 +34,7 @@ function AuthErrorPage() {
         footer={
           error ? (
             <p className="font-mono text-xs text-muted-foreground">
-              Code: {error}
+              Código: {error}
             </p>
           ) : undefined
         }
@@ -45,7 +45,7 @@ function AuthErrorPage() {
           variant="secondary"
           className="w-full"
         >
-          Back to OpenSEO
+          Volver a OpenSEO
         </Button>
       </AuthPageCard>
     </AuthPageShell>

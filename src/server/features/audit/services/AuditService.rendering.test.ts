@@ -102,7 +102,7 @@ describe("rendered audit start", () => {
       );
       expect(error).toMatchObject({ code: "AUDIT_RENDERING_UNAVAILABLE" });
       expect(String(error)).toContain(
-        "JavaScript rendering isn't set up on your Every App gateway yet. An owner or admin sets it with pnpm everyapp secret set CONTEXT_API_KEY.",
+        "El renderizado de JavaScript aún no está configurado en tu gateway de Every App. Un propietario o administrador lo configura con pnpm everyapp secret set CONTEXT_API_KEY.",
       );
       expect(mocks.lock).not.toHaveBeenCalled();
     } finally {

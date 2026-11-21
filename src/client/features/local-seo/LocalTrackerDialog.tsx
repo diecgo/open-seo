@@ -83,8 +83,14 @@ function ListingLookup({
     validationLogic: revalidateLogic(),
     validators: {
       onDynamic: z.object({
-        query: z.string().trim().min(2, "Enter the business name.").max(200),
-        locationName: z.string().min(1, "Pick the city the business is in."),
+        query: z
+          .string()
+          .trim()
+          .min(2, "Escribe el nombre del negocio.")
+          .max(200),
+        locationName: z
+          .string()
+          .min(1, "Elige la ciudad donde está el negocio."),
       }),
     },
     onSubmit: async ({ value }) => {
@@ -94,30 +100,30 @@ function ListingLookup({
   const listings = lookup.data && lookup.data.length > 1 ? lookup.data : null;
   return (
     <FormDialog
-      title="Add business"
+      title="Añadir negocio"
       onClose={onClose}
       wide={Boolean(listings)}
       actions={
         listings ? (
           <>
             <Button variant="outline" onClick={() => lookup.reset()}>
-              Search again
+              Buscar de nuevo
             </Button>
             <Button onClick={() => onSelect(listings[selected])}>
-              Use this listing
+              Usar esta ficha
             </Button>
           </>
         ) : (
           <>
             <Button variant="outline" onClick={onClose}>
-              Cancel
+              Cancelar
             </Button>
             <Button
               type="submit"
               form="local-business-lookup"
               pending={lookup.isPending}
             >
-              Find listing
+              Buscar ficha
             </Button>
           </>
         )
@@ -147,8 +153,8 @@ function ListingLookup({
             <form.AppField name="query">
               {(field) => (
                 <field.TextField
-                  label="Business name"
-                  placeholder="e.g. Joe's Pizza"
+                  label="Nombre del negocio"
+                  placeholder="p. ej. Pizzería Joe"
                 />
               )}
             </form.AppField>
@@ -157,7 +163,9 @@ function ListingLookup({
                 const error = field.state.meta.errors[0]?.message;
                 return (
                   <Field data-invalid={Boolean(error) || undefined}>
-                    <FieldLabel htmlFor="local-business-city">City</FieldLabel>
+                    <FieldLabel htmlFor="local-business-city">
+                      Ciudad
+                    </FieldLabel>
                     <SerpLocationCombobox
                       id="local-business-city"
                       value={field.state.value || undefined}
@@ -175,20 +183,20 @@ function ListingLookup({
       )}
       {lookup.isPending && (
         <p className="text-sm text-muted-foreground">
-          Searching Google Maps. This usually takes a few seconds.
+          Buscando en Google Maps. Suele tardar unos segundos.
         </p>
       )}
       {lookup.isError && (
         <QueryError
-          title="Could not look up this business"
+          title="No se ha podido buscar este negocio"
           cause={lookup.error}
-          fallback="Please try again in a moment."
+          fallback="Vuelve a intentarlo en un momento."
         />
       )}
       {lookup.isSuccess && lookup.data.length === 0 && (
         <p className="text-sm text-muted-foreground">
-          No Google Maps listing found. Check the name matches the listing and
-          the city is right.
+          No se ha encontrado ninguna ficha de Google Maps. Comprueba que el
+          nombre coincide con la ficha y que la ciudad es correcta.
         </p>
       )}
     </FormDialog>
@@ -236,7 +244,7 @@ function TrackerSettings({
   });
   return (
     <FormDialog
-      title="Set up local tracking"
+      title="Configurar seguimiento local"
       onClose={onClose}
       actions={
         <>
@@ -245,14 +253,14 @@ function TrackerSettings({
             disabled={create.isPending}
             onClick={onClose}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             type="submit"
             form="local-tracker-settings"
             pending={create.isPending}
           >
-            Save business
+            Guardar negocio
           </Button>
         </>
       }
@@ -266,8 +274,8 @@ function TrackerSettings({
           <form.Field name="keywords">
             {(field) => (
               <KeywordFields
-                label="Keywords to track"
-                placeholder="e.g. pizza delivery"
+                label="Palabras clave que seguir"
+                placeholder="p. ej. pizza a domicilio"
                 max={MAX_LOCAL_KEYWORDS}
                 maxLength={MAX_LOCAL_KEYWORD_LENGTH}
                 value={field.state.value}
@@ -278,8 +286,8 @@ function TrackerSettings({
           <form.AppField name="area">
             {(field) => (
               <field.SelectField
-                label="Area to check"
-                description="We search Google Maps from points spread across this area."
+                label="Zona que comprobar"
+                description="Buscamos en Google Maps desde puntos repartidos por esta zona."
                 items={LOCAL_AREA_ITEMS}
               />
             )}
@@ -296,7 +304,7 @@ function TrackerSettings({
                     note={
                       business.address
                         ? undefined
-                        : "The selected listing has no public address, so Google's location may be different."
+                        : "La ficha seleccionada no tiene dirección pública, así que la ubicación de Google puede ser distinta."
                     }
                   />
                 )}
@@ -308,7 +316,7 @@ function TrackerSettings({
       {create.isError && (
         <QueryError
           error={create.error}
-          fallback="Could not save this business."
+          fallback="No se ha podido guardar este negocio."
         />
       )}
     </FormDialog>

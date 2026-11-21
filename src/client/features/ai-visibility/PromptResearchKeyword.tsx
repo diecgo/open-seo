@@ -71,7 +71,7 @@ export function PromptResearchKeyword({
               icon={<Plus className="size-3.5" />}
               onClick={track}
             >
-              Track prompts
+              Seguir prompts
             </TableBulkActionButton>
           </div>
         }
@@ -92,12 +92,12 @@ export function PromptResearchKeyword({
           ) : undefined
         }
         empty={{
-          title: `No prompts found for “${keyword}”`,
-          description: "Try a shorter, broader term.",
+          title: `No se han encontrado prompts para “${keyword}”`,
+          description: "Prueba con un término más corto y general.",
         }}
         toolbar={
           <div className="border-b px-4 py-3 border-border">
-            <h2 className="font-medium">Prompts about “{keyword}”</h2>
+            <h2 className="font-medium">Prompts sobre “{keyword}”</h2>
           </div>
         }
       />

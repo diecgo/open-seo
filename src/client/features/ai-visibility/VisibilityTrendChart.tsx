@@ -13,8 +13,8 @@ import {
 import type { AiTrend } from "@/shared/ai-visibility";
 
 export const trendSeries = [
-  { key: "mentionRate", label: "Brand mentions", color: "#2563eb" },
-  { key: "citationRate", label: "Owned citations", color: "#e69f00" },
+  { key: "mentionRate", label: "Menciones de marca", color: "#2563eb" },
+  { key: "citationRate", label: "Citas propias", color: "#e69f00" },
 ] as const;
 
 const chartConfig: ChartConfig = Object.fromEntries(
@@ -47,13 +47,13 @@ export function VisibilityTrendChart({ trend }: { trend: AiTrend }) {
     time: Date.parse(run.createdAt),
     mentionRate: run.mentionRate,
     citationRate: run.citationRate,
-    collected: `${run.coverage.answered} of ${run.coverage.expected} answers collected`,
+    collected: `${run.coverage.answered} de ${run.coverage.expected} respuestas recopiladas`,
   }));
   return (
     <ChartContainer
       config={chartConfig}
       className="h-[220px]"
-      aria-label="Daily brand mention and owned citation rate"
+      aria-label="Porcentaje diario de menciones de marca y citas propias"
     >
       <LineChart data={data} margin={{ left: 0, right: 12, top: 8, bottom: 0 }}>
         <ChartGrid />

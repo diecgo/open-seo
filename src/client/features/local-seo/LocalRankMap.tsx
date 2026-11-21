@@ -58,7 +58,7 @@ export default function LocalRankMap({
       keyboard={false}
       attributionControl={false}
       className="z-0 h-full w-full"
-      aria-label="Local search ranking grid on a Google Maps basemap"
+      aria-label="Cuadrícula de posiciones locales sobre un mapa de Google Maps"
     >
       <FitGridOnResize bounds={bounds} />
       <GoogleMapsTiles projectId={projectId} />

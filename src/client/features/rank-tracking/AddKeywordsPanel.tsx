@@ -45,14 +45,14 @@ export function AddKeywordsPanel({
           rows={3}
           // The field grows with its text; a long line must wrap, not widen the card.
           className="min-w-0"
-          aria-label="Keywords to add"
-          placeholder="Enter keywords, one per line"
+          aria-label="Palabras clave que añadir"
+          placeholder="Escribe palabras clave, una por línea"
           value={keywordInput}
           onChange={(e) => setKeywordInput(e.target.value)}
         />
         <div
           className="flex w-fit items-center gap-2"
-          title="Track these keywords exactly as typed instead of lowercasing them. Google can return different results for a capitalized brand name."
+          title="Sigue estas palabras clave tal como las escribes, sin pasarlas a minúsculas. Google puede devolver resultados distintos para una marca con mayúsculas."
         >
           <Checkbox
             id={matchCaseId}
@@ -60,7 +60,7 @@ export function AddKeywordsPanel({
             onCheckedChange={(checked) => setMatchCase(checked)}
           />
           <Label htmlFor={matchCaseId} className="text-xs font-normal">
-            Match case
+            Respetar mayúsculas
           </Label>
         </div>
       </div>
@@ -75,7 +75,7 @@ export function AddKeywordsPanel({
               .filter(Boolean);
             if (lines.some((l) => l.length > MAX_TRACKED_KEYWORD_LENGTH)) {
               toast.error(
-                `Keywords must be ${MAX_TRACKED_KEYWORD_LENGTH} characters or fewer.`,
+                `Las palabras clave deben tener ${MAX_TRACKED_KEYWORD_LENGTH} caracteres o menos.`,
               );
               return;
             }
@@ -83,10 +83,10 @@ export function AddKeywordsPanel({
           }}
           disabled={!keywordInput.trim()}
         >
-          Add
+          Añadir
         </Button>
         <Button variant="ghost" size="sm" onClick={onCancel}>
-          Cancel
+          Cancelar
         </Button>
       </div>
     </div>

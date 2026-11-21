@@ -61,8 +61,9 @@ export function DomainTableToolbar({
           <Alert variant="warning">
             <AlertTriangle />
             <AlertDescription className="text-foreground">
-              Saved filters exceed this scope&apos;s {overBudgetLimit}-condition
-              limit and were not applied. Open Filters to trim them.
+              Los filtros guardados superan el límite de {overBudgetLimit}{" "}
+              condiciones de este ámbito y no se han aplicado. Abre Filtros para
+              reducirlos.
             </AlertDescription>
           </Alert>
         </div>

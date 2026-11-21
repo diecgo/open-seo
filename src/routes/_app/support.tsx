@@ -25,7 +25,7 @@ function SupportPage() {
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="space-y-1">
           <p className="text-sm font-medium text-muted-foreground">
-            Help & Community
+            Ayuda y comunidad
           </p>
           <PageHeader
             title="Queremos saber de ti"
@@ -40,14 +40,14 @@ function SupportPage() {
                 <h2>Email</h2>
               </CardTitle>
               <CardDescription>
-                Send ideas, problems, questions, or feedback directly.
+                Envíanos ideas, problemas, dudas o comentarios directamente.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <CopyButton
                 value={SUPPORT_EMAIL}
                 label={SUPPORT_EMAIL}
-                successMessage="Email copied to clipboard"
+                successMessage="Email copiado al portapapeles"
                 size="sm"
               />
             </CardContent>
@@ -56,15 +56,15 @@ function SupportPage() {
           <SupportLinkCard
             href={DISCORD_URL}
             title="Discord"
-            description="Ask for help, share ideas and learn from the community."
-            cta="Join the Discord"
+            description="Pide ayuda, comparte ideas y aprende de la comunidad."
+            cta="Únete al Discord"
           />
 
           <SupportLinkCard
             href={`${GITHUB_URL}/issues`}
             title="GitHub Issues"
-            description="Report bugs or request features on GitHub."
-            cta="Open an issue"
+            description="Informa de errores o pide funciones en GitHub."
+            cta="Abrir una incidencia"
           />
         </div>
       </div>

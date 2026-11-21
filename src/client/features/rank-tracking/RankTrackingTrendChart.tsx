@@ -53,9 +53,9 @@ export function RankTrendChart({
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between text-[11px] text-muted-foreground">
-        <span>Google position (1 = best)</span>
+        <span>Posición en Google (1 = mejor)</span>
         <span className="inline-flex items-center gap-1">
-          Better <span aria-hidden>↑</span>
+          Mejor <span aria-hidden>↑</span>
         </span>
       </div>
       <ChartContainer config={config} className="h-56">
@@ -119,7 +119,7 @@ export const TIME_AXIS = {
 } as const;
 
 function formatDateTick(value: number): string {
-  return new Date(value).toLocaleDateString("en-US", {
+  return new Date(value).toLocaleDateString("es-ES", {
     month: "short",
     day: "numeric",
   });
@@ -128,7 +128,7 @@ function formatDateTick(value: number): string {
 /** Tooltip label for a `checkedAt` timestamp: "Sep 28, 2026". */
 export function formatDateLabel(label: unknown): string {
   return typeof label === "number"
-    ? new Date(label).toLocaleDateString("en-US", {
+    ? new Date(label).toLocaleDateString("es-ES", {
         month: "short",
         day: "numeric",
         year: "numeric",
@@ -140,7 +140,7 @@ export function formatDateLabel(label: unknown): string {
 const TREND_RANGES = [
   { value: "30", icon: null, label: "30d" },
   { value: "90", icon: null, label: "90d" },
-  { value: "730", icon: null, label: "All" },
+  { value: "730", icon: null, label: "Todo" },
 ];
 
 export function TrendRangeToggle({
@@ -166,11 +166,15 @@ export function TrendEmptyState({ checks }: { checks: number }) {
     <EmptyState
       icon={TrendingUp}
       size="sm"
-      title={checks === 0 ? "No history yet" : "Only 1 check so far"}
+      title={
+        checks === 0
+          ? "Aún no hay historial"
+          : "Solo hay 1 comprobación por ahora"
+      }
       description={
         checks === 0
-          ? "Run a check to start tracking positions over time."
-          : "The trend fills in after the next check."
+          ? "Lanza una comprobación para empezar a seguir las posiciones."
+          : "La tendencia se completará tras la próxima comprobación."
       }
     />
   );

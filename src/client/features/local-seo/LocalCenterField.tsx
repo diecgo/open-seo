@@ -26,7 +26,7 @@ export function LocalCenterField({
 }) {
   return (
     <Field>
-      <FieldLabel>Grid center</FieldLabel>
+      <FieldLabel>Centro de la cuadrícula</FieldLabel>
       <div className="h-64 overflow-hidden rounded-lg border border-border">
         <Suspense fallback={<Skeleton className="h-full rounded-none" />}>
           <CenterMap
@@ -41,7 +41,7 @@ export function LocalCenterField({
         </Suspense>
       </div>
       <FieldDescription>
-        Drag the pin or click the map to move the grid.
+        Arrastra el marcador o haz clic en el mapa para mover la cuadrícula.
       </FieldDescription>
       {note && <FieldDescription>{note}</FieldDescription>}
     </Field>

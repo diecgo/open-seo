@@ -32,10 +32,10 @@ export function SuggestedSites({
     (project) => project.id === projectId,
   )?.domain;
   const sites = [
-    ...(ownDomain ? [{ domain: ownDomain, note: "Your website" }] : []),
+    ...(ownDomain ? [{ domain: ownDomain, note: "Tu web" }] : []),
     ...(contextQuery.data?.competitors ?? [])
       .slice(0, MAX_COMPETITORS)
-      .map((competitor) => ({ domain: competitor.domain, note: "Competitor" })),
+      .map((competitor) => ({ domain: competitor.domain, note: "Competidor" })),
   ];
   if (sites.length === 0) return null;
 

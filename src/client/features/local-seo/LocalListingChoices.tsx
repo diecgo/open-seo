@@ -26,11 +26,11 @@ export function LocalListingChoices({
   return (
     <div className="space-y-2">
       <p className="text-sm text-muted-foreground">
-        {listings.length} listings match your search.
+        {listings.length} fichas coinciden con tu búsqueda.
       </p>
       <RadioGroup
         ref={list}
-        aria-label="Google Maps listings"
+        aria-label="Fichas de Google Maps"
         value={selected}
         onValueChange={(value) => onSelectedChange(Number(value))}
         className="max-h-80 overflow-y-auto"
@@ -48,14 +48,14 @@ export function LocalListingChoices({
                 {listing.business.title}
               </p>
               <p className="text-sm text-muted-foreground">
-                {listing.business.address ?? "No public address"}
+                {listing.business.address ?? "Sin dirección pública"}
               </p>
               <p className="flex items-center gap-1 text-xs text-muted-foreground">
                 {listing.rating != null && (
                   <>
                     <Star className="size-3 fill-current" />
                     {listing.rating} · {(listing.reviews ?? 0).toLocaleString()}{" "}
-                    reviews
+                    reseñas
                     {listing.category && " · "}
                   </>
                 )}

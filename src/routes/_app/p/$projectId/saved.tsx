@@ -239,11 +239,13 @@ function SavedKeywordsPage() {
         count: result.deletedCount,
       });
       toast.success(
-        `${result.deletedCount} keyword${result.deletedCount !== 1 ? "s" : ""} removed`,
+        `${result.deletedCount} ${result.deletedCount !== 1 ? "palabras clave eliminadas" : "palabra clave eliminada"}`,
       );
     },
     onError: (error) => {
-      setRemoveError(getStandardErrorMessage(error, "Remove failed."));
+      setRemoveError(
+        getStandardErrorMessage(error, "No se han podido eliminar."),
+      );
     },
   });
 
@@ -266,7 +268,7 @@ function SavedKeywordsPage() {
       setShowTagModal(false);
       void invalidateSavedKeywords();
       toast.success(
-        `Updated tags for ${result.taggedCount} keyword${result.taggedCount !== 1 ? "s" : ""}`,
+        `Etiquetas actualizadas en ${result.taggedCount} ${result.taggedCount !== 1 ? "palabras clave" : "palabra clave"}`,
       );
     },
   });
@@ -276,7 +278,7 @@ function SavedKeywordsPage() {
     onSuccess: (result) => {
       void invalidateSavedKeywords();
       toast.success(
-        `Updated stats for ${result.updated} keyword${result.updated !== 1 ? "s" : ""}`,
+        `Datos actualizados de ${result.updated} ${result.updated !== 1 ? "palabras clave" : "palabra clave"}`,
       );
     },
   });
@@ -329,7 +331,7 @@ function SavedKeywordsPage() {
         {savedKeywordsQuery.isError ? (
           <QueryError
             error={savedKeywordsQuery.error}
-            fallback="Failed to load saved keywords."
+            fallback="No se han podido cargar las palabras guardadas."
             onRetry={() => void savedKeywordsQuery.refetch()}
             isRetrying={isFetching}
           />
@@ -389,9 +391,9 @@ function SavedKeywordsPage() {
               .then(
                 () =>
                   toast.success(
-                    `${selectedCount} keyword${selectedCount !== 1 ? "s" : ""} copied`,
+                    `${selectedCount} ${selectedCount !== 1 ? "palabras clave copiadas" : "palabra clave copiada"}`,
                   ),
-                () => toast.error("Could not copy to clipboard"),
+                () => toast.error("No se ha podido copiar al portapapeles"),
               );
           }}
           onOpenTags={() => setShowTagModal(true)}

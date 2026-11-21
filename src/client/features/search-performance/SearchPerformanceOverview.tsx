@@ -69,7 +69,7 @@ export function SearchPerformanceOverview({
         projectId={projectId}
         filterInput={filterInput}
         isWeb={isWeb}
-        comparedWith={`Compared with ${report.range.prevStartDate} to ${report.range.prevEndDate}`}
+        comparedWith={`Comparado con ${report.range.prevStartDate} a ${report.range.prevEndDate}`}
         onSelect={onSelect}
       />
     </>

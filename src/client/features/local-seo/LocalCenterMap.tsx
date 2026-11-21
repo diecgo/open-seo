@@ -56,7 +56,7 @@ export default function LocalCenterMap({
       scrollWheelZoom={false}
       attributionControl={false}
       className="z-0 h-full w-full"
-      aria-label="Grid center on a Google Maps basemap"
+      aria-label="Centro de la cuadrícula sobre un mapa de Google Maps"
     >
       <GoogleMapsTiles projectId={projectId} />
       <MoveOnClick onMove={onCenterChange} />
@@ -79,7 +79,7 @@ export default function LocalCenterMap({
         position={[center.latitude, center.longitude]}
         icon={centerIcon}
         draggable
-        title="Grid center"
+        title="Centro de la cuadrícula"
         eventHandlers={{
           dragend: () => {
             if (marker.current)

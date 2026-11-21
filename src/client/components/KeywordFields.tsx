@@ -47,7 +47,7 @@ export function KeywordFields({
           <div key={index} className="flex items-center gap-1">
             <Input
               id={`${id}-${index}`}
-              aria-label={`Keyword ${index + 1}`}
+              aria-label={`Palabra clave ${index + 1}`}
               placeholder={placeholder}
               maxLength={maxLength}
               autoFocus={index === addedRow}
@@ -80,7 +80,7 @@ export function KeywordFields({
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label={`Remove keyword ${index + 1}`}
+              aria-label={`Quitar palabra clave ${index + 1}`}
               onClick={() =>
                 setRows(value.filter((_, position) => position !== index))
               }
@@ -101,7 +101,7 @@ export function KeywordFields({
           onChange([...value, ""]);
         }}
       >
-        <Plus /> Add keyword
+        <Plus /> Añadir palabra clave
       </Button>
     </Field>
   );

@@ -25,7 +25,7 @@ export function WorkspaceMergeBanner() {
     mutationFn: () => mergeLegacyWorkspaces(),
     onSuccess: ({ mergedWorkspaces }) => {
       toast.success(
-        `Migrated ${mergedWorkspaces} organization${mergedWorkspaces === 1 ? "" : "s"} into the shared organization.`,
+        `${mergedWorkspaces === 1 ? "Se ha migrado 1 organización" : `Se han migrado ${mergedWorkspaces} organizaciones`} a la organización compartida.`,
       );
       // The merge changes projects, connections, and the banner's own status —
       // refetch everything rather than enumerating keys.
@@ -40,10 +40,10 @@ export function WorkspaceMergeBanner() {
   return (
     <Alert variant="warning" className="p-5">
       <AlertDescription className="max-w-3xl text-foreground">
-        When self-hosting on Cloudflare, there was a bug where each user had
-        their own workspace. It was intended for all users to be in one
-        workspace. Clicking the button below will migrate everyone&apos;s
-        previous work into this shared workspace.
+        En las instalaciones propias en Cloudflare había un error por el que
+        cada usuario tenía su propio espacio de trabajo. La idea era que todos
+        los usuarios compartieran uno. Al pulsar el botón de abajo se migrará el
+        trabajo anterior de todos a este espacio de trabajo compartido.
       </AlertDescription>
       <Button
         size="sm"
@@ -51,7 +51,7 @@ export function WorkspaceMergeBanner() {
         pending={mergeMutation.isPending}
         onClick={() => mergeMutation.mutate()}
       >
-        {mergeMutation.isPending ? "Migrating…" : "Migrate organizations"}
+        {mergeMutation.isPending ? "Migrando…" : "Migrar organizaciones"}
       </Button>
     </Alert>
   );

@@ -51,7 +51,7 @@ export function LaunchFormCard({
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2>Start New Audit</h2>
+          <h2>Nueva auditoría</h2>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -69,7 +69,7 @@ export function LaunchFormCard({
               return (
                 <Input
                   className="lg:col-span-9"
-                  aria-label="Site URL"
+                  aria-label="URL del sitio"
                   aria-invalid={urlError ? true : undefined}
                   placeholder="https://example.com"
                   value={field.state.value}
@@ -92,7 +92,7 @@ export function LaunchFormCard({
                 className="w-full lg:col-span-3"
                 pending={isSubmitting}
               >
-                {isSubmitting ? "Starting..." : "Start Audit"}
+                {isSubmitting ? "Iniciando…" : "Lanzar auditoría"}
               </Button>
             )}
           </launchForm.Subscribe>
@@ -128,7 +128,7 @@ function LaunchOptions({
 }: Props) {
   return (
     <Field className="rounded-lg border border-border p-3">
-      <FieldLabel htmlFor="audit-max-pages">Max pages</FieldLabel>
+      <FieldLabel htmlFor="audit-max-pages">Páginas máximas</FieldLabel>
       <launchForm.Field name="maxPagesInput">
         {(field) => (
           <Input
@@ -151,14 +151,14 @@ function LaunchOptions({
         )}
       </launchForm.Field>
       <FieldDescription>
-        Enter any value from {MIN_PAGES} to {maxPagesLimit.toLocaleString()}.
+        Introduce un valor entre {MIN_PAGES} y {maxPagesLimit.toLocaleString()}.
         {maxPagesLimit < PAID_MAX_AUDIT_PAGES ? (
           <>
             {" "}
             <Link to={SUBSCRIBE_ROUTE} search={{ upgrade: true }}>
-              Upgrade
+              Mejora tu plan
             </Link>{" "}
-            to crawl up to {PAID_MAX_AUDIT_PAGES.toLocaleString()} pages.
+            para rastrear hasta {PAID_MAX_AUDIT_PAGES.toLocaleString()} páginas.
           </>
         ) : null}
       </FieldDescription>
@@ -181,9 +181,9 @@ function LighthouseOptions({ launchForm }: Pick<Props, "launchForm">) {
         </launchForm.Field>
         <FieldLabel
           htmlFor="audit-run-lighthouse"
-          title="Lighthouse measures the performance of your pages and identifies issues."
+          title="Lighthouse mide el rendimiento de tus páginas e identifica problemas."
         >
-          Include Lighthouse
+          Incluir Lighthouse
         </FieldLabel>
       </div>
 
@@ -193,8 +193,8 @@ function LighthouseOptions({ launchForm }: Pick<Props, "launchForm">) {
         {(runLighthouse) =>
           runLighthouse ? (
             <FieldDescription>
-              We choose a sample of 20 pages to audit, removing pages from
-              duplicate templates.
+              Elegimos una muestra de 20 páginas para auditar y descartamos las
+              que usan plantillas duplicadas.
             </FieldDescription>
           ) : null
         }
@@ -223,9 +223,9 @@ function RenderingOptions({
         </launchForm.Field>
         <FieldLabel
           htmlFor="audit-render-javascript"
-          title="Loads each page in a browser before auditing it. Slower."
+          title="Carga cada página en un navegador antes de auditarla. Es más lento."
         >
-          Render JavaScript
+          Renderizar JavaScript
         </FieldLabel>
       </div>
 
@@ -249,22 +249,23 @@ function RenderingOptions({
       )}
       {canRenderJavaScript === false && isEveryAppClientAuthMode() && (
         <FieldDescription>
-          JavaScript rendering isn't set up on your Every App gateway yet. An
-          owner or admin sets it with{" "}
+          El renderizado de JavaScript aún no está configurado en tu gateway de
+          Every App. Un propietario o administrador lo configura con{" "}
           <code>pnpm everyapp secret set CONTEXT_API_KEY</code>.
         </FieldDescription>
       )}
       {canRenderJavaScript === false && !isEveryAppClientAuthMode() && (
         <FieldDescription>
-          This deployment has no browser, so rendering needs a Context.dev API
-          key. Set <code>CONTEXT_API_KEY</code>, restart OpenSEO, then reload
-          this page.{" "}
+          Esta instalación no tiene navegador, así que el renderizado necesita
+          una clave de API de Context.dev. Configura{" "}
+          <code>CONTEXT_API_KEY</code>, reinicia OpenSEO y vuelve a cargar esta
+          página.{" "}
           <a
             href="https://github.com/every-app/open-seo/blob/main/docs/SELF_HOSTING_CLOUDFLARE_OPERATIONS.md#render-javascript-in-site-audits"
             target="_blank"
             rel="noreferrer"
           >
-            Setup guide
+            Guía de configuración
           </a>
         </FieldDescription>
       )}

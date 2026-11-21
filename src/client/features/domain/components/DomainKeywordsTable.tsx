@@ -61,7 +61,7 @@ export function DomainKeywordsTable({
     () => [
       makeSelectionColumn<KeywordRow>(selectAnchorRef),
       keywordColumnHelper.accessor("keyword", {
-        header: () => "Keyword",
+        header: () => "Palabra clave",
         cell: ({ getValue }) => (
           <span className="font-medium">{getValue()}</span>
         ),
@@ -69,7 +69,7 @@ export function DomainKeywordsTable({
       keywordColumnHelper.accessor("position", {
         header: () => (
           <SortableHeader
-            label="Rank"
+            label="Posición"
             column={domainSortColumn(
               sortMode === "rank",
               currentSortOrder,
@@ -82,7 +82,7 @@ export function DomainKeywordsTable({
       keywordColumnHelper.accessor("searchVolume", {
         header: () => (
           <SortableHeader
-            label="Volume"
+            label="Volumen"
             column={domainSortColumn(
               sortMode === "volume",
               currentSortOrder,
@@ -95,7 +95,7 @@ export function DomainKeywordsTable({
       keywordColumnHelper.accessor("traffic", {
         header: () => (
           <SortableHeader
-            label="Traffic"
+            label="Tráfico"
             column={domainSortColumn(
               sortMode === "traffic",
               currentSortOrder,
@@ -109,7 +109,7 @@ export function DomainKeywordsTable({
         header: () => (
           <SortableHeader
             label="CPC"
-            helpText="Cost per click in USD."
+            helpText="Coste por clic en USD."
             column={domainSortColumn(sortMode === "cpc", currentSortOrder, () =>
               onSortClick("cpc"),
             )}
@@ -137,8 +137,8 @@ export function DomainKeywordsTable({
       keywordColumnHelper.accessor("keywordDifficulty", {
         header: () => (
           <SortableHeader
-            label="Score"
-            helpText="Organic ranking difficulty (0-100): higher means harder to reach Google's top 10."
+            label="Dificultad"
+            helpText="Dificultad de posicionamiento orgánico (0-100): cuanto más alta, más cuesta entrar en el top 10 de Google."
             column={domainSortColumn(
               sortMode === "score",
               currentSortOrder,
@@ -174,7 +174,7 @@ export function DomainKeywordsTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "No keywords match this search." }}
+      empty={{ title: "Ninguna palabra clave coincide con esta búsqueda." }}
       {...frame}
     />
   );

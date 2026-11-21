@@ -69,9 +69,10 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
       {answer.observation.answerStatus === "no_answer" && (
         <p className="border-b px-5 py-3 text-sm text-warning border-border">
           {answer.observation.engine === "google_ai_overview"
-            ? "Google showed no AI Overview for this search."
-            : "No substantive answer was returned."}{" "}
-          This collection is excluded from visibility rates.
+            ? "Google no mostró ninguna AI Overview para esta búsqueda."
+            : "No se devolvió ninguna respuesta útil."}{" "}
+          Esta recopilación no se tiene en cuenta en los porcentajes de
+          visibilidad.
         </p>
       )}
       {answer.observation.error && (
@@ -84,13 +85,14 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
       )}
       {answer.truncated && (
         <p className="border-b px-5 py-3 text-xs text-warning border-border">
-          This response was truncated. The retained evidence may be incomplete.
+          Esta respuesta se cortó. Puede que los datos guardados estén
+          incompletos.
         </p>
       )}
       <div
         className="flex gap-2 border-b px-5 py-3 lg:hidden border-border"
         role="group"
-        aria-label="Answer view"
+        aria-label="Vista de la respuesta"
       >
         <Button
           size="sm"
@@ -98,7 +100,7 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
           aria-pressed={view === "answer"}
           onClick={() => setView("answer")}
         >
-          Answer
+          Respuesta
         </Button>
         <Button
           size="sm"
@@ -106,7 +108,7 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
           aria-pressed={view === "citations"}
           onClick={() => setView("citations")}
         >
-          Citations ({citations.length})
+          Citas ({citations.length})
         </Button>
         <Button
           size="sm"
@@ -114,13 +116,13 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
           aria-pressed={view === "brands"}
           onClick={() => setView("brands")}
         >
-          Brands
+          Marcas
         </Button>
       </div>
       <div className="grid lg:grid-cols-[minmax(0,1fr)_300px]">
         <article
           className={`min-w-0 space-y-5 p-5 text-sm sm:p-6 lg:block ${view !== "answer" ? "hidden" : ""}`}
-          aria-label="AI answer"
+          aria-label="Respuesta de IA"
           data-ph-mask
         >
           {answer.answerMarkdown ? (
@@ -134,15 +136,15 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
             <div className="whitespace-pre-wrap">{answer.answerText}</div>
           ) : (
             <p className="text-muted-foreground">
-              No answer was captured. Status:{" "}
-              {aiObservationStatusLabel(answer.observation.status)}. This is not
-              a negative brand result.
+              No se capturó ninguna respuesta. Estado:{" "}
+              {aiObservationStatusLabel(answer.observation.status)}. No es un
+              resultado negativo para la marca.
             </p>
           )}
         </article>
         <aside
           className={`min-w-0 bg-muted/20 p-4 lg:block lg:border-l border-border ${view === "answer" ? "hidden" : ""}`}
-          aria-label="Answer evidence"
+          aria-label="Datos de la respuesta"
         >
           <Tabs
             value={view === "brands" ? "brands" : "citations"}
@@ -153,14 +155,14 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
           >
             <TabsList className="hidden w-full lg:flex">
               <TabsTrigger value="citations">
-                Citations ({citations.length})
+                Citas ({citations.length})
               </TabsTrigger>
-              <TabsTrigger value="brands">Brands</TabsTrigger>
+              <TabsTrigger value="brands">Marcas</TabsTrigger>
             </TabsList>
             <TabsContent value="citations" className="space-y-3">
               {!citations.length && (
                 <p className="text-sm text-muted-foreground">
-                  This answer has no citations.
+                  Esta respuesta no tiene citas.
                 </p>
               )}
               {citations.map((source) => (
@@ -182,12 +184,12 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
             </TabsContent>
             <TabsContent value="brands" className="space-y-3">
               <p className="text-xs text-muted-foreground">
-                Mentions appear in the answer text. Citations link to the
-                brand’s domain.
+                Las menciones aparecen en el texto de la respuesta. Las citas
+                enlazan al dominio de la marca.
               </p>
               {!answer.observation.brands.length && (
                 <p className="text-sm text-muted-foreground">
-                  No brand evidence was captured.
+                  No se capturaron datos de marcas.
                 </p>
               )}
               {answer.observation.brands.map((brand) => {
@@ -205,7 +207,7 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
                       {aiBrandLabel(brand)}
                       {brand.own && (
                         <Badge variant="secondary" size="sm">
-                          You
+                          Tú
                         </Badge>
                       )}
                     </div>
@@ -219,7 +221,7 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
                       <Accordion>
                         <AccordionItem value="mentions">
                           <AccordionTrigger className="py-1 text-xs">
-                            Mention excerpts ({spans.length})
+                            Fragmentos con menciones ({spans.length})
                           </AccordionTrigger>
                           <AccordionContent
                             className="space-y-2 pt-2 text-xs text-muted-foreground"
@@ -264,7 +266,7 @@ const ANSWER_COMPONENTS = {
   ...MARKDOWN_COMPONENTS,
   img: ({ alt }: { alt?: string }) => (
     <span className="text-muted-foreground">
-      {alt ? `[Image: ${alt}]` : "[Image]"}
+      {alt ? `[Imagen: ${alt}]` : "[Imagen]"}
     </span>
   ),
 };

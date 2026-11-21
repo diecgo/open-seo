@@ -123,7 +123,9 @@ export function BacklinksTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "No backlinks found for this target." }}
+      empty={{
+        title: "No se han encontrado enlaces entrantes para este objetivo.",
+      }}
       {...frame}
     />
   );

@@ -37,17 +37,17 @@ class MoveStoppedError extends Error {
 function problemMessage({ problem }: MoveFailure) {
   switch (problem) {
     case TransferProblem.InvalidCode:
-      return "That isn't a transfer code. Copy it again from OpenSEO on your Gateway.";
+      return "Eso no es un código de transferencia. Vuelve a copiarlo desde el OpenSEO de tu Gateway.";
     case TransferProblem.CodeRejected:
-      return "This code expired, was used or was replaced. Make a new one and try again.";
+      return "Este código ha caducado, ya se ha usado o se ha sustituido. Crea uno nuevo y vuelve a intentarlo.";
     case TransferProblem.VersionMismatch:
-      return "This install and your Gateway run different OpenSEO versions. Update both to the latest release, then try again.";
+      return "Esta instalación y tu Gateway usan versiones distintas de OpenSEO. Actualiza ambas a la última versión y vuelve a intentarlo.";
     case TransferProblem.RunningWork:
-      return "An audit or check is still running here. Try again once it finishes.";
+      return "Aquí todavía hay una auditoría o comprobación en curso. Vuelve a intentarlo cuando termine.";
     case TransferProblem.MultipleOrganizations:
-      return "This install has more than one organization, and a move can only take one.";
+      return "Esta instalación tiene más de una organización y una migración solo puede llevarse una.";
     case TransferProblem.Unreachable:
-      return "Couldn't reach OpenSEO on your Gateway. Check it's installed and up to date, then try again.";
+      return "No se ha podido conectar con el OpenSEO de tu Gateway. Comprueba que está instalado y actualizado y vuelve a intentarlo.";
   }
 }
 

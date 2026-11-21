@@ -9,9 +9,9 @@ export function toastInitialAudit(
     | null,
 ) {
   if (initialAudit?.status === "unavailable")
-    toast.warning("Website saved. The first scan could not start.", {
+    toast.warning("Web guardada. No se ha podido iniciar el primer análisis.", {
       description: getStandardErrorMessage(new Error(initialAudit.code)),
     });
   else if (initialAudit?.status === "started")
-    toast.success("Your 50-page site scan is running");
+    toast.success("El análisis de 50 páginas de tu web está en marcha");
 }

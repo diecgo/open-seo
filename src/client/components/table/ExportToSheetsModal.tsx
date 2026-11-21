@@ -48,15 +48,17 @@ export function ExportToSheetsModal() {
             <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-success/15 text-success">
               <Check className="size-4" />
             </span>
-            Copied {rowCount} row{rowCount === 1 ? "" : "s"} to your clipboard
+            {rowCount === 1
+              ? "Se ha copiado 1 fila al portapapeles"
+              : `Se han copiado ${rowCount} filas al portapapeles`}
           </DialogTitle>
           <DialogDescription>
-            Open a new Google Sheet and paste to fill it.
+            Abre una hoja de Google Sheets nueva y pega los datos.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button onClick={handleOpenSheet}>
-            Open new Google Sheet
+            Abrir hoja de Google Sheets nueva
             <ExternalLink data-icon="inline-end" />
           </Button>
         </DialogFooter>

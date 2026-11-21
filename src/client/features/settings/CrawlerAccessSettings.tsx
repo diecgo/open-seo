@@ -52,7 +52,7 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
       await queryClient.invalidateQueries({
         queryKey: crawlerCredentialsQueryKey,
       });
-      toast.success("Crawler access removed");
+      toast.success("Acceso del rastreador eliminado");
     },
   });
 
@@ -70,17 +70,17 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
             size="sm"
             onClick={() => setIsAdding((value) => !value)}
           >
-            {isAdding ? "Cancel" : "Connect"}
+            {isAdding ? "Cancelar" : "Conectar"}
           </Button>
         </CardAction>
       </CardHeader>
       {isAdding ? (
         <CardContent className="space-y-4">
           <p className="text-muted-foreground">
-            Let the audit crawler through Shopify. Paste the signature you
-            created in Shopify admin under Online Store &rarr; Preferences
-            &rarr; Crawler access. Every audit of that domain in your
-            organization sends it with each request.
+            Deja pasar al rastreador de la auditoría en Shopify. Pega la firma
+            que creaste en el admin de Shopify, en Tienda online &rarr;
+            Preferencias &rarr; Acceso de rastreadores. Todas las auditorías de
+            ese dominio en tu organización la envían con cada solicitud.
           </p>
           <CrawlerAccessForm
             projectId={projectId}
@@ -93,17 +93,17 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
         <CardContent>
           {credentialsQuery.isError ? (
             <p className="text-sm text-destructive">
-              We couldn't load your crawler access.
+              No hemos podido cargar el acceso del rastreador.
             </p>
           ) : credentials.length > 0 ? (
             <TableCard>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Domain</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Added</TableHead>
-                    <TableHead>Expires</TableHead>
+                    <TableHead>Dominio</TableHead>
+                    <TableHead>Tipo</TableHead>
+                    <TableHead>Añadido</TableHead>
+                    <TableHead>Caduca</TableHead>
                     <TableHead className="w-10" />
                   </TableRow>
                 </TableHeader>
@@ -114,7 +114,7 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
                         {credential.host}
                       </TableCell>
                       <TableCell className="text-muted-foreground">
-                        Shopify signature
+                        Firma de Shopify
                       </TableCell>
                       <TableCell className="text-muted-foreground">
                         {formatDate(credential.createdAt)}
@@ -122,16 +122,18 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
                       <TableCell className="text-muted-foreground">
                         {credential.expiresAt
                           ? formatDate(credential.expiresAt)
-                          : "Unknown"}
+                          : "Desconocido"}
                         {isCrawlerAccessExpired(credential.expiresAt) && (
-                          <span className="ml-2 text-destructive">Expired</span>
+                          <span className="ml-2 text-destructive">
+                            Caducado
+                          </span>
                         )}
                       </TableCell>
                       <TableCell>
                         <Button
                           variant="ghost"
                           size="icon-xs"
-                          aria-label={`Remove crawler access for ${credential.host}`}
+                          aria-label={`Quitar el acceso del rastreador de ${credential.host}`}
                           disabled={deleteMutation.isPending}
                           onClick={() => deleteMutation.mutate(credential.id)}
                         >

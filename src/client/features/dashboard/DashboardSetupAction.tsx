@@ -28,10 +28,10 @@ import { listMcpConnections } from "@/serverFunctions/mcp-connections";
 import type { DashboardSetupStep } from "@/types/schemas/dashboard";
 import { parseResearchTarget } from "@/shared/researchScope";
 
-const projectPrompt = `Use OpenSEO to set up a separate project for each website below. List my existing projects first and reuse matches so you don’t create duplicates. Set the country and language for each site, and ask me about anything missing.
+const projectPrompt = `Usa OpenSEO para crear un proyecto independiente para cada sitio web de la lista. Primero lista mis proyectos existentes y reutiliza los que coincidan para no crear duplicados. Configura el país y el idioma de cada sitio y pregúntame lo que falte.
 
-Replace this list with my websites:
-- Project name — website — country — language`;
+Sustituye esta lista por mis sitios web:
+- Nombre del proyecto — sitio web — país — idioma`;
 
 export function DashboardSetupAction({
   step,
@@ -53,10 +53,10 @@ export function DashboardSetupAction({
   if (step === "competitor")
     return (
       <StepInputForm
-        description="Explore a competitor’s domain to discover the topics they rank for and the websites linking to them."
-        label="Competitor website"
+        description="Explora el dominio de un competidor para descubrir los temas por los que posiciona y los sitios que lo enlazan."
+        label="Sitio web del competidor"
         placeholder="competitor.com"
-        submitLabel="Explore competitor"
+        submitLabel="Explorar competidor"
         validate={validateDomain}
         onSubmit={(value) => {
           onComplete();
@@ -71,12 +71,12 @@ export function DashboardSetupAction({
   if (step === "keywords")
     return (
       <StepInputForm
-        description="Start from one keyword that describes what you offer. You’ll get related searches with volume and difficulty."
-        label="Seed keyword"
-        placeholder="e.g. running shoes"
-        submitLabel="Get keyword ideas"
+        description="Empieza con una palabra clave que describa lo que ofreces. Obtendrás búsquedas relacionadas con volumen y dificultad."
+        label="Palabra clave semilla"
+        placeholder="p. ej., zapatillas de running"
+        submitLabel="Obtener ideas de palabras clave"
         validate={(value) =>
-          value.trim() ? undefined : "Enter a keyword to start from"
+          value.trim() ? undefined : "Introduce una palabra clave para empezar"
         }
         onSubmit={(value) => {
           onComplete();
@@ -91,11 +91,11 @@ export function DashboardSetupAction({
   if (step === "audit")
     return (
       <StepInputForm
-        description="Crawl your site to find broken links, missing tags, and pages search engines can’t index. You can adjust the crawl size before it starts."
-        label="Site URL"
+        description="Rastrea tu sitio para encontrar enlaces rotos, etiquetas ausentes y páginas que los buscadores no pueden indexar. Puedes ajustar el tamaño del rastreo antes de empezar."
+        label="URL del sitio"
         placeholder="https://example.com"
         defaultValue={domain ? `https://${domain}` : ""}
-        submitLabel="Set up audit"
+        submitLabel="Configurar auditoría"
         validate={validateDomain}
         onSubmit={(value) => {
           onComplete();
@@ -138,29 +138,27 @@ export function DashboardSetupAction({
   if (!canManage)
     return org.isPending ? (
       <p className="text-sm text-muted-foreground">
-        Checking workspace permissions…
+        Comprobando permisos del espacio de trabajo…
       </p>
     ) : org.isError ? (
       <p className="text-sm text-muted-foreground">
         {getStandardErrorMessage(org.error)}
       </p>
     ) : (
-      <PermissionHint action="help with this step" />
+      <PermissionHint action="ayudar con este paso" />
     );
   if (step === "project")
     return (
       <div className="space-y-4">
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Keep each website’s research, rankings, and connections in its own
-          project. Use the project switcher in the sidebar → New project
-          anytime.
+          Mantén la investigación, las posiciones y las conexiones de cada sitio
+          web en su propio proyecto. Usa el selector de proyectos de la barra
+          lateral → Nuevo proyecto cuando quieras.
         </p>
-        <Button onClick={() => setShowModal(true)}>
-          Create another project
-        </Button>
+        <Button onClick={() => setShowModal(true)}>Crear otro proyecto</Button>
         <Collapsible className="rounded-lg border border-border p-4">
           <CollapsibleTrigger className="cursor-pointer text-sm font-medium">
-            Have a list of websites? Let your agent set them up.
+            ¿Tienes una lista de sitios web? Deja que tu agente los configure.
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3 space-y-3">
             <p className="text-sm text-muted-foreground">
@@ -168,17 +166,17 @@ export function DashboardSetupAction({
                 to="/ai"
                 className="text-primary underline-offset-4 hover:underline"
               >
-                Connect your agent
+                Conecta tu agente
               </Link>
-              , then paste this prompt with your list of websites.
+              y pega este prompt con tu lista de sitios web.
             </p>
             <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-muted-foreground">
               {projectPrompt}
             </pre>
             <CopyButton
               value={projectPrompt}
-              label="Copy project prompt"
-              successMessage="Project prompt copied"
+              label="Copiar prompt de proyectos"
+              successMessage="Prompt de proyectos copiado"
             />
           </CollapsibleContent>
         </Collapsible>
@@ -190,10 +188,10 @@ export function DashboardSetupAction({
   return (
     <div className="space-y-4">
       <p className="text-sm leading-relaxed text-muted-foreground">
-        Bring a teammate into your workspace to share projects, research, and
-        results.
+        Invita a un compañero a tu espacio de trabajo para compartir proyectos,
+        investigación y resultados.
       </p>
-      <Button onClick={() => setShowModal(true)}>Invite a teammate</Button>
+      <Button onClick={() => setShowModal(true)}>Invitar a un compañero</Button>
       {showModal && (
         <InviteTeammateModal
           onClose={() => setShowModal(false)}
@@ -212,8 +210,8 @@ export function DashboardSetupAction({
 }
 
 function getSkillsSetupPrompt(domain: string | null) {
-  const site = domain ? ` for ${domain}` : "";
-  return `Check whether I have the OpenSEO skills set up in this agent. If not, walk me through installing them using https://openseo.so/docs/skills/setup. Then recommend the single most useful OpenSEO skill to try first${site} and show me how to run it.`;
+  const site = domain ? ` para ${domain}` : "";
+  return `Comprueba si tengo las skills de OpenSEO configuradas en este agente. Si no, guíame para instalarlas con https://openseo.so/docs/skills/setup. Después recomiéndame la skill de OpenSEO más útil para probar primero${site} y enséñame a usarla.`;
 }
 
 function DashboardSkillsAction({ domain }: { domain: string | null }) {
@@ -231,11 +229,11 @@ function DashboardSkillsAction({ domain }: { domain: string | null }) {
   return (
     <div className="max-w-2xl space-y-4">
       <p className="text-sm leading-relaxed text-muted-foreground">
-        Skills guide your agent through complete SEO workflows and save results
-        as reports.{" "}
+        Las skills guían a tu agente por flujos de SEO completos y guardan los
+        resultados como informes.{" "}
         {chats.length > 0
-          ? "Open a chat to check your skills setup and pick one to try."
-          : "Paste this prompt into your agent to check your skills setup and pick one to try."}
+          ? "Abre un chat para comprobar tu configuración de skills y elegir una para probar."
+          : "Pega este prompt en tu agente para comprobar tu configuración de skills y elegir una para probar."}
       </p>
       <pre className="whitespace-pre-wrap break-words rounded-lg border border-border bg-background/25 p-3.5 font-sans text-sm leading-relaxed text-muted-foreground">
         {prompt}
@@ -256,13 +254,13 @@ function DashboardSkillsAction({ domain }: { domain: string | null }) {
             }
           >
             <Icon data-icon="inline-start" />
-            Open in {name}
+            Abrir en {name}
           </Button>
         ))}
         <CopyButton
           value={prompt}
-          label="Copy prompt"
-          successMessage="Prompt copied"
+          label="Copiar prompt"
+          successMessage="Prompt copiado"
           variant={chats.length === 0 ? "default" : "outline"}
           size="default"
           onCopy={() => captureClientEvent("dashboard:skills_prompt_copy")}
@@ -272,7 +270,7 @@ function DashboardSkillsAction({ domain }: { domain: string | null }) {
           search={{ tab: "skills" }}
           className="ml-1 text-sm text-muted-foreground hover:text-foreground"
         >
-          Browse skills
+          Ver skills
         </Link>
       </div>
     </div>

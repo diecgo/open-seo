@@ -28,7 +28,7 @@ export function EditResearchKeywordsButton({
     <>
       <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
         <Pencil data-icon="inline-start" />
-        Edit
+        Editar
       </Button>
       {open ? (
         <EditResearchKeywordsDialog
@@ -77,19 +77,19 @@ function EditResearchKeywordsDialog({
   });
   return (
     <FormDialog
-      title="Edit keywords"
+      title="Editar palabras clave"
       onClose={onClose}
       actions={
         <>
           <Button variant="outline" disabled={save.isPending} onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             type="submit"
             form="research-keywords"
             pending={save.isPending}
           >
-            Save keywords
+            Guardar palabras clave
           </Button>
         </>
       }
@@ -101,9 +101,9 @@ function EditResearchKeywordsDialog({
               <KeywordFields
                 value={field.state.value}
                 onChange={field.handleChange}
-                label="Keywords"
-                description="Topics from your tracker are always listed and aren't edited here."
-                placeholder="e.g. running shoes"
+                label="Palabras clave"
+                description="Los temas de tu rastreador siempre aparecen y no se editan aquí."
+                placeholder="p. ej., zapatillas de running"
                 max={MAX_AI_RESEARCH_KEYWORDS}
                 maxLength={100}
               />
@@ -114,7 +114,7 @@ function EditResearchKeywordsDialog({
       {save.isError && (
         <QueryError
           error={save.error}
-          fallback="Could not save these keywords."
+          fallback="No se pudieron guardar estas palabras clave."
         />
       )}
     </FormDialog>

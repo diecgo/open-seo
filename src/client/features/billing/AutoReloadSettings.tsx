@@ -106,7 +106,11 @@ export function AutoReloadSettings() {
         queryKey: billingAccountQueryOptions().queryKey,
       });
       setEditing(false);
-      toast.success(input.enabled ? "Auto-reload is on" : "Auto-reload is off");
+      toast.success(
+        input.enabled
+          ? "Recarga automática activada"
+          : "Recarga automática desactivada",
+      );
     },
   });
   const saving = mutation.isPending && Boolean(mutation.variables?.enabled);
@@ -127,10 +131,10 @@ export function AutoReloadSettings() {
   };
 
   const saveLabel = chargesNow
-    ? `${on ? "Retry" : "Turn on"} and buy $${values.amountUsd} now`
+    ? `${on ? "Reintentar" : "Activar"} y comprar $${values.amountUsd} ahora`
     : on
-      ? "Save"
-      : "Turn on auto-reload";
+      ? "Guardar"
+      : "Activar recarga automática";
 
   const notice = saved ? (
     <AutoReloadNotice
@@ -152,27 +156,27 @@ export function AutoReloadSettings() {
 
   return (
     <BillingRow
-      label="Auto-reload"
+      label="Recarga automática"
       summary={
         on ? (
           <>
-            <span className="font-medium text-foreground">On</span> &middot;
-            Adds ${on.amountUsd} when top-ups drop to $
-            {AUTO_RELOAD_THRESHOLD_USD} &middot; ${on.spentUsd.toFixed(2)} of $
-            {on.monthlyLimitUsd} monthly budget used
-            {refillDate ? `, resets ${refillDate}` : ""}
+            <span className="font-medium text-foreground">Activada</span>{" "}
+            &middot; Añade ${on.amountUsd} cuando las recargas bajan de $
+            {AUTO_RELOAD_THRESHOLD_USD} &middot; ${on.spentUsd.toFixed(2)} de $
+            {on.monthlyLimitUsd} de presupuesto mensual usados
+            {refillDate ? `, se reinicia el ${refillDate}` : ""}
           </>
         ) : (
           <>
-            Off &middot; Buy more automatically when top-ups drop to $
-            {AUTO_RELOAD_THRESHOLD_USD}
+            Desactivada &middot; Compra más automáticamente cuando las recargas
+            bajen de ${AUTO_RELOAD_THRESHOLD_USD}
           </>
         )
       }
       action={
         editing ? null : (
           <Button variant="outline" size="sm" onClick={openForm}>
-            {!on ? "Turn on" : chargesNow ? "Retry" : "Edit"}
+            {!on ? "Activar" : chargesNow ? "Reintentar" : "Editar"}
           </Button>
         )
       }
@@ -183,12 +187,12 @@ export function AutoReloadSettings() {
           <div className="grid gap-3 sm:grid-cols-2">
             <AmountField
               id="auto-reload-amount"
-              label="Add each time"
+              label="Añadir cada vez"
               value={fields.amountUsd}
               error={
                 amount.isValid
                   ? undefined
-                  : `Enter between $${TOP_UP_MIN_USD}–$${TOP_UP_MAX_USD}.`
+                  : `Introduce entre $${TOP_UP_MIN_USD} y $${TOP_UP_MAX_USD}.`
               }
               onChange={(value) =>
                 setFields((prev) => ({ ...prev, amountUsd: value }))
@@ -196,12 +200,12 @@ export function AutoReloadSettings() {
             />
             <AmountField
               id="auto-reload-budget"
-              label="Monthly budget"
+              label="Presupuesto mensual"
               value={fields.monthlyLimitUsd}
               error={
                 budget.isValid
                   ? undefined
-                  : `Enter between $${amount.parsed}–$${AUTO_RELOAD_MAX_MONTHLY_USD}.`
+                  : `Introduce entre $${amount.parsed} y $${AUTO_RELOAD_MAX_MONTHLY_USD}.`
               }
               onChange={(value) =>
                 setFields((prev) => ({ ...prev, monthlyLimitUsd: value }))
@@ -209,8 +213,8 @@ export function AutoReloadSettings() {
             />
           </div>
           <p className="text-xs text-muted-foreground">
-            The budget caps what you spend on top-up credits each month,
-            including ones you buy yourself.
+            El presupuesto limita lo que gastas en créditos de recarga cada mes,
+            incluidos los que compras tú.
           </p>
 
           {hint ? <p className="text-xs text-amber-600">{hint}</p> : null}
@@ -233,7 +237,7 @@ export function AutoReloadSettings() {
               disabled={mutation.isPending}
               onClick={() => setEditing(false)}
             >
-              Cancel
+              Cancelar
             </Button>
             {on ? (
               <Button
@@ -244,7 +248,7 @@ export function AutoReloadSettings() {
                 disabled={mutation.isPending}
                 onClick={() => mutation.mutate({ enabled: false })}
               >
-                Turn off auto-reload
+                Desactivar recarga automática
               </Button>
             ) : null}
           </div>
@@ -254,7 +258,7 @@ export function AutoReloadSettings() {
               <p role="alert" className="text-sm text-destructive">
                 {getStandardErrorMessage(
                   mutation.error,
-                  "We couldn't save auto-reload. Please try again.",
+                  "No hemos podido guardar la recarga automática. Vuelve a intentarlo.",
                 )}
               </p>
               {getErrorCode(mutation.error) === "PAYMENT_METHOD_REQUIRED" ? (
@@ -302,16 +306,16 @@ function hintCopy({
     isBudgetUnderSpend(saved, values.monthlyLimitUsd) &&
     (!on || values.monthlyLimitUsd !== on.monthlyLimitUsd)
   ) {
-    return `You've already spent $${saved.spentUsd.toFixed(2)} on top-up credits this month. Set a budget of at least $${Math.ceil(saved.spentUsd + AUTO_RELOAD_THRESHOLD_USD)} to keep going.`;
+    return `Este mes ya has gastado $${saved.spentUsd.toFixed(2)} en créditos de recarga. Fija un presupuesto de al menos $${Math.ceil(saved.spentUsd + AUTO_RELOAD_THRESHOLD_USD)} para seguir.`;
   }
   if (!chargesNow || !isValid) return null;
   if (on) {
-    return `Retrying charges your card $${values.amountUsd} now.`;
+    return `Al reintentar se cargarán $${values.amountUsd} en tu tarjeta ahora.`;
   }
   if (topUpRemaining > 0) {
-    return `Your top-up credits are already at $${topUpRemaining.toFixed(2)}, so turning this on buys $${values.amountUsd} now.`;
+    return `Tus créditos de recarga ya están en $${topUpRemaining.toFixed(2)}, así que al activarlo comprarás $${values.amountUsd} ahora.`;
   }
-  return `You have no top-up credits yet, so turning this on buys $${values.amountUsd} now. They're used after your monthly credits run out.`;
+  return `Aún no tienes créditos de recarga, así que al activarlo comprarás $${values.amountUsd} ahora. Se usan cuando se agotan tus créditos mensuales.`;
 }
 
 function AmountField({

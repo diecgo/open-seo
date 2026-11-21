@@ -145,7 +145,7 @@ export function RankTrackingDomainList({
       void queryClient.invalidateQueries({
         queryKey: ["rankTrackingConfigs", projectId],
       });
-      toast.success("Domain archived");
+      toast.success("Dominio archivado");
     },
   });
 
@@ -159,12 +159,12 @@ export function RankTrackingDomainList({
       <Card className="gap-0 py-0">
         <CardHeader className="px-5 pt-4 pb-3">
           <CardTitle>
-            <h2 className="text-sm font-semibold">Tracked Domains</h2>
+            <h2 className="text-sm font-semibold">Dominios seguidos</h2>
           </CardTitle>
           <CardAction className="self-center">
             <Button size="sm" onClick={onAddDomain}>
               <Plus data-icon="inline-start" />
-              Add Domain
+              Añadir dominio
             </Button>
           </CardAction>
         </CardHeader>
@@ -183,7 +183,7 @@ export function RankTrackingDomainList({
             <div className="px-5 py-4">
               <QueryError
                 error={summariesQuery.error}
-                fallback="Failed to load tracked domains"
+                fallback="No se han podido cargar los dominios seguidos"
                 onRetry={() => void summariesQuery.refetch()}
                 isRetrying={summariesQuery.isFetching}
               />
@@ -202,18 +202,18 @@ export function RankTrackingDomainList({
             <EmptyState
               variant="plain"
               illustration={<RankRowsIllustration />}
-              title="Track your Google rankings over time"
-              description="Add a domain and the keywords you care about to see when their positions move."
+              title="Sigue tus posiciones en Google a lo largo del tiempo"
+              description="Añade un dominio y las palabras clave que te interesan para ver cuándo se mueven sus posiciones."
             />
           ) : filteredSummaries.length === 0 ? (
             <EmptyState
               variant="plain"
               kind="filtered"
-              title="No matching tracked domains"
-              description="Try clearing search or adjusting filters."
+              title="Ningún dominio seguido coincide"
+              description="Prueba a borrar la búsqueda o ajustar los filtros."
               action={
                 <Button variant="outline" size="sm" onClick={clearFilters}>
-                  Clear filters
+                  Borrar filtros
                 </Button>
               }
             />
@@ -239,15 +239,15 @@ export function RankTrackingDomainList({
 
         {archiveTarget && (
           <ConfirmDialog
-            title={`Archive ${archiveTarget.domain}?`}
-            confirmLabel="Archive"
+            title={`¿Archivar ${archiveTarget.domain}?`}
+            confirmLabel="Archivar"
             destructive
             pending={archiveMutation.isPending}
             onConfirm={() => archiveMutation.mutate(archiveTarget.id)}
             onClose={() => setArchiveTarget(null)}
           >
-            Scheduled checks will stop and this domain will be hidden from the
-            list. Ranking history is preserved.
+            Las comprobaciones programadas se detendrán y este dominio dejará de
+            aparecer en la lista. El historial de posiciones se conserva.
           </ConfirmDialog>
         )}
       </Card>
@@ -260,12 +260,12 @@ function CreditsSkipNotice() {
   const { autoReloadState } = useCreditBalance();
   const reason =
     autoReloadState === "budget_spent"
-      ? "monthly auto-reload budget reached"
-      : "out of credits";
+      ? "has alcanzado el presupuesto mensual de recarga automática"
+      : "sin créditos";
   return (
     <div className="mt-1 flex items-center gap-2 text-xs text-destructive">
       <CircleAlert className="size-3" />
-      Scheduled check skipped: {reason}
+      Comprobación programada omitida: {reason}
       {/* Above the row link, like the archive button. */}
       <span className="pointer-events-auto relative z-10">
         <GetCreditsButton />
@@ -291,7 +291,7 @@ function DomainRow({
         to="/p/$projectId/rank-tracking/$configId"
         params={{ projectId, configId: summary.id }}
         className="absolute inset-0 z-0"
-        aria-label={`Open ${summary.domain}`}
+        aria-label={`Abrir ${summary.domain}`}
       />
       <div className="min-w-0 flex-1 pointer-events-none">
         <p className="font-medium truncate">{summary.domain}</p>
@@ -310,12 +310,12 @@ function DomainRow({
           &middot; {devicesLabel(summary.devices)} &middot;{" "}
           {scheduleLabel(summary.scheduleInterval)}
           {summary.scheduleInterval !== "manual" && summary.nextCheckAt && (
-            <> &middot; Next: {formatNextCheck(summary.nextCheckAt)}</>
+            <> &middot; Próxima: {formatNextCheck(summary.nextCheckAt)}</>
           )}
           {summary.lastRunCompletedAt && (
             <>
               {" "}
-              &middot; Last:{" "}
+              &middot; Última:{" "}
               {parseDbTimestamp(
                 summary.lastRunCompletedAt,
               ).toLocaleDateString()}
@@ -325,7 +325,7 @@ function DomainRow({
                     render={
                       // Above the row link, like the archive button.
                       <span
-                        aria-label="Last check incomplete"
+                        aria-label="Última comprobación incompleta"
                         className="pointer-events-auto relative z-10 ml-1 inline-flex cursor-help align-text-bottom"
                       />
                     }
@@ -333,7 +333,7 @@ function DomainRow({
                     <Info className="size-3.5" aria-hidden />
                   </TooltipTrigger>
                   <TooltipContent>
-                    Some results from the last check are missing.
+                    Faltan algunos resultados de la última comprobación.
                   </TooltipContent>
                 </Tooltip>
               )}
@@ -346,7 +346,7 @@ function DomainRow({
         {summary.lastSkipReason === "plan_required" && (
           <p className="flex items-center gap-1 text-xs text-warning">
             <AlertTriangle className="size-3" />
-            Scheduled check skipped — paid plan required
+            Comprobación programada omitida: requiere el plan de pago
           </p>
         )}
       </div>
@@ -354,7 +354,7 @@ function DomainRow({
         {summary.keywordCount > 0 && (
           <div className="text-center">
             <p className="text-xs uppercase tracking-wide text-muted-foreground">
-              Keywords
+              Palabras clave
             </p>
             <p className="font-mono font-medium">{summary.keywordCount}</p>
           </div>
@@ -364,8 +364,8 @@ function DomainRow({
         variant="ghost"
         size="icon-xs"
         className="relative z-10 text-muted-foreground hover:text-destructive"
-        title="Archive domain"
-        aria-label={`Archive ${summary.domain}`}
+        title="Archivar dominio"
+        aria-label={`Archivar ${summary.domain}`}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();

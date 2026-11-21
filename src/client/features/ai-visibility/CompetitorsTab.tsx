@@ -68,13 +68,13 @@ export function CompetitorsTab({
             nativeButton={false}
             render={<Link to="/p/$projectId/context" params={{ projectId }} />}
           >
-            Manage competitors
+            Gestionar competidores
           </Button>
         }
       >
         {runId && state.engines.length > 1 && (
           <EngineFilter
-            label="Filter engine"
+            label="Filtrar motor"
             engines={state.engines}
             value={engines}
             onChange={setSelectedEngines}
@@ -88,17 +88,17 @@ export function CompetitorsTab({
       ) : runId && !rows.length ? (
         <p className="p-10 text-center text-sm text-muted-foreground">
           {collecting
-            ? "Collecting answers. Brands appear here as answers arrive."
-            : "No answers match these filters."}
+            ? "Recopilando respuestas. Las marcas aparecerán aquí a medida que lleguen."
+            : "Ninguna respuesta coincide con estos filtros."}
         </p>
       ) : (
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Brand</TableHead>
-              <TableHead>Mentioned in</TableHead>
-              <TableHead>Cited in</TableHead>
-              <TableHead>Avg. position</TableHead>
+              <TableHead>Marca</TableHead>
+              <TableHead>Mencionada en</TableHead>
+              <TableHead>Citada en</TableHead>
+              <TableHead>Posición media</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -110,7 +110,7 @@ export function CompetitorsTab({
                     {aiBrandLabel({ name, domain, own })}
                     {own && (
                       <Badge variant="secondary" className="ml-2">
-                        You
+                        Tú
                       </Badge>
                     )}
                   </span>
@@ -134,7 +134,8 @@ export function CompetitorsTab({
                   colSpan={4}
                   className="py-8 text-center text-muted-foreground"
                 >
-                  No competitors saved yet. Use Manage competitors to add them.
+                  Aún no hay competidores guardados. Usa Gestionar competidores
+                  para añadirlos.
                 </TableCell>
               </TableRow>
             )}
@@ -143,15 +144,16 @@ export function CompetitorsTab({
       )}
       {!runId && (
         <p className="border-t border-border p-4 text-sm text-muted-foreground">
-          Run{" "}
+          Ejecuta el{" "}
           <Link
             to="/p/$projectId/ai-visibility"
             params={{ projectId }}
             className="text-foreground underline underline-offset-4"
           >
-            prompt tracking
+            seguimiento de prompts
           </Link>{" "}
-          to see how often AI answers mention and cite your competitors.
+          para ver con qué frecuencia las respuestas de IA mencionan y citan a
+          tus competidores.
         </p>
       )}
       {runId && (
@@ -168,5 +170,5 @@ export function CompetitorsTab({
 function share(count: number, total: number) {
   return total
     ? `${count} / ${total} (${Math.round((count / total) * 100)}%)`
-    : "No answers";
+    : "Sin respuestas";
 }

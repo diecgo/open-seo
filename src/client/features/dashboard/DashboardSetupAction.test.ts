@@ -69,15 +69,15 @@ describe("DashboardSetupAction skills step", () => {
   it.each([
     {
       webChat: "chatgpt" as const,
-      label: "Open in ChatGPT",
+      label: "Abrir en ChatGPT",
       urlPrefix: "https://chatgpt.com/?q=",
-      otherLabel: "Open in Claude",
+      otherLabel: "Abrir en Claude",
     },
     {
       webChat: "claude" as const,
-      label: "Open in Claude",
+      label: "Abrir en Claude",
       urlPrefix: "https://claude.ai/new?q=",
-      otherLabel: "Open in ChatGPT",
+      otherLabel: "Abrir en ChatGPT",
     },
   ])(
     "links directly to $webChat in a new tab with a prefilled skills prompt",
@@ -98,7 +98,7 @@ describe("DashboardSetupAction skills step", () => {
       expect(prompt).toContain("example.com");
 
       expect($.text()).not.toContain(otherLabel);
-      expect($.text()).toContain("Copy prompt");
+      expect($.text()).toContain("Copiar prompt");
     },
   );
 
@@ -110,7 +110,7 @@ describe("DashboardSetupAction skills step", () => {
     ({ webChats }) => {
       const $ = renderSkillsStep({ webChats, domain: null });
       expect($("a[target='_blank']")).toHaveLength(0);
-      expect($.text()).toContain("Copy prompt");
+      expect($.text()).toContain("Copiar prompt");
       expect($("pre").text()).toContain("https://openseo.so/docs/skills/setup");
     },
   );

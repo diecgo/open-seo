@@ -6,9 +6,9 @@ import { Button } from "@/client/components/ui/button";
 export function WizardFooter({
   onBack,
   onSkip,
-  skipLabel = "Skip",
+  skipLabel = "Omitir",
   onContinue,
-  continueLabel = "Continue",
+  continueLabel = "Continuar",
   continueDisabled = false,
   continueAction,
   continueRef,
@@ -38,7 +38,7 @@ export function WizardFooter({
           className="gap-1.5 px-0 text-xs font-normal text-muted-foreground hover:bg-transparent"
           onClick={onBack}
         >
-          <ArrowLeft className="size-3.5" /> Back
+          <ArrowLeft className="size-3.5" /> Volver
         </Button>
       ) : (
         <span />

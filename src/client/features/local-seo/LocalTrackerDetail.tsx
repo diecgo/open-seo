@@ -27,8 +27,8 @@ type TrackerData = Awaited<ReturnType<typeof getLocalTracker>>;
 function checkDurationLabel(keywords: number, points: number) {
   const seconds = keywords * Math.ceil(points / 6) * 5;
   return seconds < 60
-    ? "under a minute"
-    : `about ${Math.ceil(seconds / 60)} minute${seconds > 60 ? "s" : ""}`;
+    ? "menos de un minuto"
+    : `unos ${Math.ceil(seconds / 60)} minuto${seconds > 60 ? "s" : ""}`;
 }
 
 export function LocalTrackerDetail({
@@ -51,7 +51,10 @@ export function LocalTrackerDetail({
         : false,
   });
   return (
-    <QueryState query={query} errorFallback="Failed to load local tracking">
+    <QueryState
+      query={query}
+      errorFallback="No se ha podido cargar el seguimiento local"
+    >
       {(data) => (
         <TrackerContent
           projectId={projectId}
@@ -126,7 +129,7 @@ function TrackerContent({
             <h2 className="text-lg font-semibold">{tracker.title}</h2>
             <p className="text-xs text-muted-foreground">{tracker.address}</p>
             <p className="text-xs text-muted-foreground">
-              {localAreaLabel(tracker)} · Mobile
+              {localAreaLabel(tracker)} · Móvil
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -137,7 +140,7 @@ function TrackerContent({
               onClick={() => setChangingArea(true)}
             >
               <Grid3x3 data-icon="inline-start" />
-              Change area
+              Cambiar zona
             </Button>
             <Button
               size="sm"
@@ -146,7 +149,7 @@ function TrackerContent({
               onClick={() => setManagingKeywords(true)}
             >
               <Pencil data-icon="inline-start" />
-              Manage keywords
+              Gestionar palabras clave
             </Button>
             <Button
               size="sm"
@@ -155,7 +158,7 @@ function TrackerContent({
               onClick={() => setConfirm(crypto.randomUUID())}
             >
               <Play data-icon="inline-start" />
-              {active ? "Checking rankings…" : "Check rankings"}
+              {active ? "Comprobando posiciones…" : "Comprobar ahora"}
             </Button>
           </div>
         </div>
@@ -163,18 +166,18 @@ function TrackerContent({
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-border px-4 py-2 text-sm text-muted-foreground">
             <Spinner className="size-3.5 text-primary" />
             <span>
-              Checking {estimate.keywords} keyword
-              {estimate.keywords === 1 ? "" : "s"} across {estimate.points}{" "}
-              points · {searchesDone}/{estimate.searches} searches
+              Comprobando {estimate.keywords} palabra
+              {estimate.keywords === 1 ? "" : "s"} clave en {estimate.points}{" "}
+              puntos · {searchesDone}/{estimate.searches} búsquedas
             </span>
             <Progress
               className="w-24"
-              aria-label="Ranking check progress"
+              aria-label="Progreso de la comprobación de posiciones"
               value={searchesDone}
               max={estimate.searches}
             />
             <span>
-              Usually takes{" "}
+              Suele tardar{" "}
               {checkDurationLabel(estimate.keywords, estimate.points)}
             </span>
           </div>
@@ -184,7 +187,7 @@ function TrackerContent({
             <QueryError
               fallback={
                 failed.error ??
-                "The last check returned no rankings. Earlier results are shown below."
+                "La última comprobación no ha devuelto posiciones. Abajo se muestran los resultados anteriores."
               }
             />
           </div>
@@ -208,12 +211,12 @@ function TrackerContent({
                 {
                   value: "latest",
                   icon: <List className="size-3.5" />,
-                  label: "Latest",
+                  label: "Última",
                 },
                 {
                   value: "history",
                   icon: <CalendarDays className="size-3.5" />,
-                  label: "History",
+                  label: "Historial",
                 },
               ]}
               value={history ? "history" : "latest"}
@@ -226,11 +229,11 @@ function TrackerContent({
             />
           )}
           <span className="text-sm text-muted-foreground">
-            {keywords.length} keyword{keywords.length === 1 ? "" : "s"}
+            {keywords.length} palabra{keywords.length === 1 ? "" : "s"} clave
           </span>
           {history && (
             <span className="ml-auto text-xs text-muted-foreground">
-              Average rank where found
+              Posición media donde aparece
             </span>
           )}
         </div>
@@ -268,16 +271,16 @@ function TrackerContent({
       )}
       {confirm && (
         <ConfirmDialog
-          title={`Check ${estimate.keywords} keyword${estimate.keywords === 1 ? "" : "s"}?`}
-          confirmLabel="Run now"
+          title={`¿Comprobar ${estimate.keywords} palabra${estimate.keywords === 1 ? "" : "s"} clave?`}
+          confirmLabel="Comprobar ahora"
           pending={start.isPending}
           onConfirm={() => start.mutate(confirm)}
           onClose={() => setConfirm(null)}
         >
-          {estimate.keywords} keyword{estimate.keywords === 1 ? "" : "s"}{" "}
-          &times; {estimate.points} grid points = {estimate.searches} Google
-          Maps searches on mobile, taking{" "}
-          {checkDurationLabel(estimate.keywords, estimate.points)}. Costs up to{" "}
+          {estimate.keywords} palabra{estimate.keywords === 1 ? "" : "s"} clave
+          &times; {estimate.points} puntos de la cuadrícula ={" "}
+          {estimate.searches} búsquedas de Google Maps en móvil; tarda{" "}
+          {checkDurationLabel(estimate.keywords, estimate.points)}. Cuesta hasta{" "}
           <span className="font-mono font-semibold text-foreground">
             {/* Credits are $0.001, so three decimals show the exact maximum. */}
             {estimate.costUsd.toLocaleString("en-US", {

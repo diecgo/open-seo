@@ -214,7 +214,7 @@ export function KeywordResearchPage(input: Props) {
                 data-testid="keyword-research-recent-searches"
                 onClick={showRecentSearches}
               >
-                Recent searches
+                Búsquedas recientes
               </BackButton>
             ) : undefined
           }
@@ -313,7 +313,7 @@ function KeywordSaveDialog({
 
   return (
     <FormDialog
-      title={`Save ${controller.selectedKeywordRows.length} Keywords`}
+      title={`Guardar ${controller.selectedKeywordRows.length} palabras clave`}
       onClose={() => controller.setShowSaveDialog(false)}
       actions={
         <>
@@ -321,23 +321,24 @@ function KeywordSaveDialog({
             variant="outline"
             onClick={() => controller.setShowSaveDialog(false)}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             pending={controller.savePending}
             onClick={controller.confirmSave}
           >
-            Save
+            Guardar
           </Button>
         </>
       }
     >
       <div className="space-y-2 text-sm text-muted-foreground">
-        <p>These keywords will be saved to your current project.</p>
+        <p>Estas palabras clave se guardarán en tu proyecto actual.</p>
         {controller.locationName ? (
           <p>
-            Saved keywords show national metrics. The local volume for{" "}
-            {formatLocationLabel(controller.locationName)} is not saved.
+            Las palabras guardadas muestran métricas nacionales. El volumen
+            local de {formatLocationLabel(controller.locationName)} no se
+            guarda.
           </p>
         ) : null}
       </div>

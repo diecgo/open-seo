@@ -21,23 +21,23 @@ const FEATURE_SHORT_LABELS: Record<string, string> = {
   ai_overview: "AI",
   local_pack: "Local",
   knowledge_panel: "KP",
-  video: "Video",
+  video: "Vídeo",
   images: "Img",
-  shopping: "Shop",
-  top_stories: "News",
+  shopping: "Compras",
+  top_stories: "Noticias",
 };
 
 const FEATURE_TOOLTIPS: Record<string, string> = {
   featured_snippet:
-    "Featured Snippet — highlighted answer box at top of results",
-  people_also_ask: "People Also Ask — expandable related questions",
-  ai_overview: "AI Overview — AI-generated summary at top of search",
-  local_pack: "Local Pack — map with local business listings",
-  knowledge_panel: "Knowledge Panel — info box about an entity",
-  video: "Video — video results shown in the SERP",
-  images: "Images — image results shown in the SERP",
-  shopping: "Shopping — product listings with prices",
-  top_stories: "Top Stories — news articles carousel",
+    "Featured Snippet: cuadro de respuesta destacado arriba de los resultados",
+  people_also_ask: "People Also Ask: preguntas relacionadas desplegables",
+  ai_overview: "AI Overview: resumen generado por IA arriba de la búsqueda",
+  local_pack: "Local Pack: mapa con fichas de negocios locales",
+  knowledge_panel: "Knowledge Panel: cuadro informativo sobre una entidad",
+  video: "Vídeo: resultados de vídeo en la SERP",
+  images: "Imágenes: resultados de imágenes en la SERP",
+  shopping: "Shopping: fichas de productos con precios",
+  top_stories: "Noticias destacadas: carrusel de artículos de noticias",
 };
 
 export function SerpFeatureTags({ features }: { features: string[] }) {
@@ -82,7 +82,7 @@ export function DeviceRankCell({
         </span>
         <span className="text-muted-foreground/60">→</span>
         <span className="font-mono rounded px-1.5 py-0.5 text-xs font-semibold bg-destructive/15 text-destructive">
-          lost
+          perdida
         </span>
       </span>
     );
@@ -174,9 +174,11 @@ export function DeviceUrlCell({
             />
           }
         >
-          View page
+          Ver página
         </TooltipTrigger>
-        <TooltipContent>Google hid this page's address.</TooltipContent>
+        <TooltipContent>
+          Google ocultó la dirección de esta página.
+        </TooltipContent>
       </Tooltip>
     );
   }
@@ -215,8 +217,8 @@ export function csvChange(
   current: number | null,
   previous: number | null,
 ): number | string {
-  if (previous === null) return current !== null ? "new" : "";
-  if (current === null) return "lost";
+  if (previous === null) return current !== null ? "nueva" : "";
+  if (current === null) return "perdida";
   return previous - current;
 }
 
@@ -227,29 +229,29 @@ function buildRankTrackingExport(
   locationName?: string | null,
 ): { headers: string[]; rows: (string | number)[][] } {
   const headers = [
-    "Keyword",
+    "Palabra clave",
     // Exports lack the table's tooltip, so name the city inline.
     locationName
-      ? `Local volume (${formatLocationLabel(locationName, 2)})`
-      : "Volume",
+      ? `Volumen local (${formatLocationLabel(locationName, 2)})`
+      : "Volumen",
     "KD",
     "CPC",
     ...(showDesktop
       ? [
-          "Desktop Position",
-          "Desktop Change",
-          "Desktop URL",
-          "Desktop SERP Features",
-          "Desktop Checked At (UTC)",
+          "Posición escritorio",
+          "Cambio escritorio",
+          "URL escritorio",
+          "Elementos SERP escritorio",
+          "Comprobado escritorio (UTC)",
         ]
       : []),
     ...(showMobile
       ? [
-          "Mobile Position",
-          "Mobile Change",
-          "Mobile URL",
-          "Mobile SERP Features",
-          "Mobile Checked At (UTC)",
+          "Posición móvil",
+          "Cambio móvil",
+          "URL móvil",
+          "Elementos SERP móvil",
+          "Comprobado móvil (UTC)",
         ]
       : []),
   ];

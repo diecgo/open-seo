@@ -35,13 +35,13 @@ function notice(trend: AiTrend, collecting: boolean) {
   const { days } = trend;
   switch (trend.comparison) {
     case "incomplete":
-      return `Fewer than 90% of planned answers were collected in one period, so no change is shown. Failed collections never count as lost visibility.`;
+      return `En uno de los periodos se recopiló menos del 90 % de las respuestas previstas, así que no se muestra el cambio. Las recopilaciones fallidas nunca cuentan como visibilidad perdida.`;
     case "scope_changed":
-      return `No prompt and engine has answers for the same market and brand in both periods. The tracked scope changed, so the periods cannot be compared.`;
+      return `Ninguna combinación de prompt y motor tiene respuestas para el mismo mercado y marca en ambos periodos. El ámbito seguido ha cambiado, así que los periodos no se pueden comparar.`;
     case "no_data":
       return collecting
-        ? "Collecting answers. Visibility appears here when the run finishes."
-        : `There are no finished runs in the last ${days} days.`;
+        ? "Recopilando respuestas. La visibilidad aparecerá aquí cuando termine la ejecución."
+        : `No hay ejecuciones terminadas en los últimos ${days} días.`;
     default:
       return null;
   }
@@ -66,7 +66,9 @@ export function VisibilityTrend({
     <div className="px-4 pt-2 pb-6">
       <section className="space-y-3 rounded-lg border border-border p-3">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="text-sm font-medium">Visibility over time</h2>
+          <h2 className="text-sm font-medium">
+            Visibilidad a lo largo del tiempo
+          </h2>
           <SegmentedToggle
             showLabels
             items={periods}
@@ -149,7 +151,7 @@ function TrendSummary({ trend }: { trend: AiTrend }) {
   const rows = [
     {
       key: "all",
-      label: <span className="font-medium">All engines</span>,
+      label: <span className="font-medium">Todos los motores</span>,
       mentions: trend.mentions,
       citations: trend.citations,
     },
@@ -167,8 +169,8 @@ function TrendSummary({ trend }: { trend: AiTrend }) {
       <TableHeader>
         <TableRow>
           <TableHead />
-          <TableHead className="text-right">Brand mentions</TableHead>
-          <TableHead className="text-right">Owned citations</TableHead>
+          <TableHead className="text-right">Menciones de marca</TableHead>
+          <TableHead className="text-right">Citas propias</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

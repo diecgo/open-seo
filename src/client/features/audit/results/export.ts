@@ -29,11 +29,11 @@ async function fetchAllRows<T>(
 }
 
 async function withExportToast(run: () => Promise<void>) {
-  const toastId = toast.loading("Preparing export…");
+  const toastId = toast.loading("Preparando la exportación…");
   try {
     await run();
   } catch {
-    toast.error("Could not export the audit results");
+    toast.error("No se han podido exportar los resultados de la auditoría");
   } finally {
     toast.dismiss(toastId);
   }

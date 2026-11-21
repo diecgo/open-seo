@@ -91,7 +91,7 @@ export function TablePagination<TSize extends number>({
               <SelectTrigger
                 size="sm"
                 className="w-20"
-                aria-label="Rows per page"
+                aria-label="Filas por página"
               >
                 <SelectValue />
               </SelectTrigger>
@@ -108,14 +108,14 @@ export function TablePagination<TSize extends number>({
 
         <div className="flex items-center gap-2">
           <span className="whitespace-nowrap text-sm tabular-nums text-muted-foreground">
-            Page {currentPage.toLocaleString()}
-            {totalPages != null ? ` of ${totalPages.toLocaleString()}` : ""}
+            Página {currentPage.toLocaleString()}
+            {totalPages != null ? ` de ${totalPages.toLocaleString()}` : ""}
           </span>
           <div className="flex items-center gap-1">
             {renderPageButton({
               page: currentPage - 1,
               disabled: !canGoPrev || isLoading,
-              label: "Previous page",
+              label: "Página anterior",
               children: <ChevronLeft />,
               onPageChange,
             })}
@@ -133,7 +133,7 @@ export function TablePagination<TSize extends number>({
               renderPageButton({
                 page: currentPage + 1,
                 disabled: !canGoNext || isLoading,
-                label: "Next page",
+                label: "Página siguiente",
                 children: <ChevronRight />,
                 onPageChange,
               })
@@ -178,5 +178,5 @@ function formatRange(
     return `${start.toLocaleString()}–${pageEnd.toLocaleString()}`;
   }
   const end = Math.min(totalCount, pageEnd);
-  return `${start.toLocaleString()}–${end.toLocaleString()} of ${totalCount.toLocaleString()}`;
+  return `${start.toLocaleString()}–${end.toLocaleString()} de ${totalCount.toLocaleString()}`;
 }

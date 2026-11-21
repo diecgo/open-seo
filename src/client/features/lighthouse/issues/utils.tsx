@@ -31,8 +31,17 @@ export function issuesToTable(issues: LighthouseIssue[]) {
   return { headers: ISSUE_HEADERS, rows: issuesToRows(issues) };
 }
 
+const CATEGORY_LABELS: Partial<Record<CategoryTab, string>> = {
+  all: "Todos",
+  performance: "Rendimiento",
+  accessibility: "Accesibilidad",
+  "best-practices": "Buenas prácticas",
+  seo: "SEO",
+};
+
 export function categoryLabel(category: CategoryTab) {
-  if (category === "best-practices") return "Best practices";
-  if (category === "all") return "All";
-  return `${category.charAt(0).toUpperCase()}${category.slice(1)}`;
+  return (
+    CATEGORY_LABELS[category] ??
+    `${category.charAt(0).toUpperCase()}${category.slice(1)}`
+  );
 }

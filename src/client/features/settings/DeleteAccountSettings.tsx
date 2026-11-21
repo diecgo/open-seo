@@ -35,29 +35,29 @@ type Status = Awaited<ReturnType<typeof getAccountDeletionStatus>>;
 function blockerText(blocker: Status["blockers"][number]) {
   const others =
     blocker.otherMemberCount === 1
-      ? "1 other member"
-      : `${blocker.otherMemberCount} other members`;
-  return `You own “${blocker.organizationName}”, which has ${others}. Deleting your account would leave them without an owner. Remove them in Organization settings, or email support@openseo.so to hand the workspace to one of them.`;
+      ? "1 miembro más"
+      : `${blocker.otherMemberCount} miembros más`;
+  return `Eres propietario de “${blocker.organizationName}”, que tiene ${others}. Si eliminas tu cuenta, se quedarían sin propietario. Quítalos en los ajustes de la organización o escribe a support@openseo.so para pasarle el espacio de trabajo a uno de ellos.`;
 }
 
 function billingText(charge: Status["billingToStop"][number]) {
   const stops = [
-    charge.renewingPlan ? "cancel its paid plan" : null,
-    charge.autoReload ? "turn off auto-reload" : null,
+    charge.renewingPlan ? "cancelaremos su plan de pago" : null,
+    charge.autoReload ? "desactivaremos la recarga automática" : null,
   ]
     .filter(Boolean)
-    .join(" and ");
-  return `“${charge.organizationName}”: we'll ${stops}.`;
+    .join(" y ");
+  return `“${charge.organizationName}”: ${stops}.`;
 }
 
 function deletionErrorMessage(error: unknown) {
   switch (getErrorCode(error)) {
     case "FORBIDDEN":
-      return "For your security, sign out and sign back in, then try again.";
+      return "Por seguridad, cierra sesión, vuelve a iniciarla y reinténtalo.";
     case "VALIDATION_ERROR":
-      return "Your account can't be deleted yet. Click Delete account again to see why.";
+      return "Aún no se puede eliminar tu cuenta. Vuelve a pulsar Eliminar cuenta para ver por qué.";
     case "CONFLICT":
-      return "Your account is already scheduled for deletion.";
+      return "Tu cuenta ya está programada para eliminarse.";
     default:
       return getStandardErrorMessage(error);
   }
@@ -75,12 +75,12 @@ export function DeleteAccountSettings() {
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="Delete account" />
+      <SectionHeader title="Eliminar cuenta" />
       <p className="text-sm text-muted-foreground">
-        Permanently delete your account, and every workspace where you are the
-        only member, with all its projects and data. You are signed out right
-        away and the deletion happens{" "}
-        {status ? `${status.deletionDelayDays} days` : "two weeks"} later.
+        Elimina para siempre tu cuenta y todos los espacios de trabajo en los
+        que eres el único miembro, con todos sus proyectos y datos. Se cerrará
+        tu sesión al momento y la eliminación se hará{" "}
+        {status ? `${status.deletionDelayDays} días` : "dos semanas"} después.
       </p>
       <Button
         variant="ghost"
@@ -89,7 +89,7 @@ export function DeleteAccountSettings() {
         disabled={!status}
         onClick={() => setOpen(true)}
       >
-        Delete account
+        Eliminar cuenta
       </Button>
 
       {open && status ? (
@@ -116,7 +116,7 @@ function BlockedDialog({
     <AlertDialog open onOpenChange={(next) => !next && onClose()}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>You can't delete your account yet</AlertDialogTitle>
+          <AlertDialogTitle>Aún no puedes eliminar tu cuenta</AlertDialogTitle>
           <AlertDialogDescription render={<div />}>
             <ul className="list-disc space-y-1 pl-5 text-left">
               {status.blockers.map((blocker) => (
@@ -126,7 +126,7 @@ function BlockedDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Close</AlertDialogCancel>
+          <AlertDialogCancel>Cerrar</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -138,15 +138,17 @@ function SignInAgainDialog({ onClose }: { onClose: () => void }) {
     <AlertDialog open onOpenChange={(next) => !next && onClose()}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Sign in again to continue</AlertDialogTitle>
+          <AlertDialogTitle>
+            Vuelve a iniciar sesión para continuar
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            For your security, sign out and sign back in before deleting your
-            account.
+            Por seguridad, cierra sesión y vuelve a iniciarla antes de eliminar
+            tu cuenta.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button onClick={() => signOutAndRedirect()}>Sign out</Button>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <Button onClick={() => signOutAndRedirect()}>Cerrar sesión</Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -171,7 +173,7 @@ function DeleteAccountDialog({
     mutationFn: () => requestAccountDeletion({ data: { confirmEmail } }),
     onSuccess: ({ deleteAfter }) => {
       toast.success(
-        `Your account will be deleted on ${formatDeletionDate(deleteAfter)}.`,
+        `Tu cuenta se eliminará el ${formatDeletionDate(deleteAfter)}.`,
       );
       signOutAndRedirect();
     },
@@ -195,17 +197,20 @@ function DeleteAccountDialog({
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete your account?</AlertDialogTitle>
+          <AlertDialogTitle>¿Eliminar tu cuenta?</AlertDialogTitle>
           <AlertDialogDescription>
-            You'll be signed out now, and any paid plan and auto-reload on the
-            workspaces deleted with your account are canceled. This can't be
-            undone after the deletion date. Type your email to confirm.
+            Se cerrará tu sesión ahora y se cancelarán los planes de pago y las
+            recargas automáticas de los espacios de trabajo que se eliminen con
+            tu cuenta. No se puede deshacer tras la fecha de eliminación.
+            Escribe tu email para confirmar.
           </AlertDialogDescription>
         </AlertDialogHeader>
         {status.billingToStop.length > 0 ? (
           <Alert variant="warning">
             <AlertTriangle />
-            <AlertTitle>Deleting your account stops billing</AlertTitle>
+            <AlertTitle>
+              Al eliminar tu cuenta se detiene la facturación
+            </AlertTitle>
             <AlertDescription>
               <ul className="list-disc space-y-1 pl-5">
                 {status.billingToStop.map((charge) => (
@@ -213,8 +218,8 @@ function DeleteAccountDialog({
                 ))}
               </ul>
               <p className="mt-2">
-                A canceled plan doesn't renew, and you keep its credits until
-                the deletion date.
+                Un plan cancelado no se renueva y conservas sus créditos hasta
+                la fecha de eliminación.
               </p>
             </AlertDescription>
           </Alert>
@@ -223,12 +228,12 @@ function DeleteAccountDialog({
           value={confirmEmail}
           onChange={(event) => setConfirmEmail(event.target.value)}
           placeholder={email}
-          aria-label="Your email"
+          aria-label="Tu email"
           autoComplete="off"
         />
         <AlertDialogFooter>
           <AlertDialogCancel disabled={mutation.isPending}>
-            Cancel
+            Cancelar
           </AlertDialogCancel>
           <Button
             variant="destructive"
@@ -236,7 +241,7 @@ function DeleteAccountDialog({
             pending={mutation.isPending}
             onClick={() => mutation.mutate()}
           >
-            Delete account
+            Eliminar cuenta
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

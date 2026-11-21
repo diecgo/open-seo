@@ -29,9 +29,9 @@ function PersonalSettings() {
   return (
     <div className="space-y-10">
       <section className="space-y-3">
-        <SectionHeader title="Appearance" />
+        <SectionHeader title="Apariencia" />
         <div className="flex items-center justify-between gap-6">
-          <span className="text-sm">Theme</span>
+          <span className="text-sm">Tema</span>
           <ThemePreferenceRadio />
         </div>
       </section>
@@ -50,9 +50,9 @@ function PersonalSettings() {
         <PrivacySettings />
       ) : (
         <section className="space-y-3">
-          <SectionHeader title="About" />
+          <SectionHeader title="Acerca de" />
           <div className="flex items-center justify-between gap-6">
-            <span className="text-sm">Version</span>
+            <span className="text-sm">Versión</span>
             <span className="font-mono text-sm text-muted-foreground">
               v{version}
             </span>
@@ -75,9 +75,9 @@ function EveryAppSettings() {
       <div className="space-y-6">
         <div className="flex items-start justify-between gap-6">
           <div>
-            <p className="text-sm">Account and team</p>
+            <p className="text-sm">Cuenta y equipo</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Your account, teammates and AI connections are managed on Every
+              Tu cuenta, tu equipo y tus conexiones de IA se gestionan en Every
               App.
             </p>
           </div>
@@ -88,7 +88,7 @@ function EveryAppSettings() {
               nativeButton={false}
               render={<a href={account.gatewayUrl} />}
             >
-              Open Every App
+              Abrir Every App
             </Button>
           ) : null}
         </div>

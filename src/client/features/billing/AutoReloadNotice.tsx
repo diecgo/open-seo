@@ -23,12 +23,12 @@ const BUDGET_RAISE_STEP_USD = 50;
 // Why a reload did not go through, in the customer's terms, for the reasons
 // in AUTO_RELOAD_CARD_FAILURE_REASONS. Anything else is ours and gets support.
 const CARD_FAILURES: Record<string, string> = {
-  charge_failed: "your card was declined",
-  suspended_after_failures: "your card kept declining",
-  missing_payment_method: "there is no card on file",
+  charge_failed: "tu tarjeta ha sido rechazada",
+  suspended_after_failures: "tu tarjeta se ha rechazado varias veces",
+  missing_payment_method: "no hay ninguna tarjeta guardada",
   payment_method_not_supported:
-    "your payment method can't be charged automatically",
-  payment_method_delayed: "your payment method settles too slowly",
+    "no se pueden hacer cargos automáticos a tu método de pago",
+  payment_method_delayed: "tu método de pago tarda demasiado en confirmarse",
 };
 
 function formatDate(epochMs: number) {
@@ -67,16 +67,16 @@ export function AutoReloadNotice({
           <p>
             {isCardFailure ? (
               <>
-                Auto-reload failed on {formatDate(saved.failure.at)}:{" "}
-                {CARD_FAILURES[saved.failure.reason] ?? "the charge failed"}.{" "}
+                La recarga automática falló el {formatDate(saved.failure.at)}:{" "}
+                {CARD_FAILURES[saved.failure.reason] ?? "el cargo ha fallado"}.{" "}
                 {canRetry
-                  ? "Update your card, then retry."
-                  : "Update your card so it works the next time you run low."}
+                  ? "Actualiza tu tarjeta y vuelve a intentarlo."
+                  : "Actualiza tu tarjeta para que funcione la próxima vez que te quedes sin saldo."}
               </>
             ) : (
               <>
-                Auto-reload isn&rsquo;t working right now. Buy credits above and
-                email {SUPPORT_EMAIL}.
+                La recarga automática no funciona ahora mismo. Compra créditos
+                arriba y escribe a {SUPPORT_EMAIL}.
               </>
             )}
           </p>
@@ -96,9 +96,10 @@ export function AutoReloadNotice({
       <Alert variant="warning">
         <AlertDescription className="space-y-2">
           <p>
-            You&rsquo;ve hit your ${saved.monthlyLimitUsd} monthly budget, so
-            top-up credits are paused{resetDate ? ` until ${resetDate}` : ""}.
-            {canRaise ? " Raise it to keep going." : ""}
+            Has alcanzado tu presupuesto mensual de ${saved.monthlyLimitUsd},
+            así que las recargas de créditos están en pausa
+            {resetDate ? ` hasta el ${resetDate}` : ""}.
+            {canRaise ? " Súbelo para seguir." : ""}
           </p>
           {onRaise && canRaise ? (
             <Button
@@ -108,7 +109,7 @@ export function AutoReloadNotice({
               disabled={pending}
               onClick={() => onRaise(raised)}
             >
-              Raise budget to ${raised}
+              Subir el presupuesto a ${raised}
             </Button>
           ) : null}
         </AlertDescription>
@@ -133,7 +134,7 @@ export function UpdateCardButton() {
       toast.error(
         getStandardErrorMessage(
           error,
-          "We couldn't open the billing portal. Please try again.",
+          "No hemos podido abrir el portal de facturación. Vuelve a intentarlo.",
         ),
       );
     }
@@ -146,7 +147,7 @@ export function UpdateCardButton() {
       pending={isOpening}
       onClick={() => void openPortal()}
     >
-      {isOpening ? "Opening Stripe..." : "Update card"}
+      {isOpening ? "Abriendo Stripe..." : "Actualizar tarjeta"}
     </Button>
   );
 }

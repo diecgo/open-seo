@@ -23,8 +23,8 @@ const columns = [
     meta: { cellClassName: "min-w-80" },
     header: () => (
       <HelpLabel
-        label="Page"
-        helpText="Page on the target site receiving backlinks."
+        label="Página"
+        helpText="Página del sitio objetivo que recibe enlaces entrantes."
       />
     ),
     cell: ({ getValue }) => {
@@ -45,8 +45,8 @@ const columns = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Backlinks"
-        helpText="Total backlinks pointing to this page."
+        label="Enlaces entrantes"
+        helpText="Total de enlaces entrantes que apuntan a esta página."
       />
     ),
     cell: ({ getValue }) => formatNumber(getValue()),
@@ -57,8 +57,8 @@ const columns = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Referring Domains"
-        helpText="Unique domains linking to this page."
+        label="Dominios de referencia"
+        helpText="Dominios únicos que enlazan a esta página."
       />
     ),
     cell: ({ getValue }) => formatNumber(getValue()),
@@ -69,8 +69,8 @@ const columns = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Rank"
-        helpText="Authority score for this target page."
+        label="Rango"
+        helpText="Puntuación de autoridad de esta página objetivo."
       />
     ),
     cell: ({ getValue }) => formatNumber(getValue()),
@@ -81,8 +81,8 @@ const columns = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Broken Backlinks"
-        helpText="Backlinks pointing here that are currently broken."
+        label="Enlaces entrantes rotos"
+        helpText="Enlaces entrantes que apuntan aquí y que ahora están rotos."
       />
     ),
     cell: ({ getValue }) => formatNumber(getValue()),
@@ -111,7 +111,9 @@ export function TopPagesTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "No top pages found for this target." }}
+      empty={{
+        title: "No se han encontrado páginas principales para este objetivo.",
+      }}
       {...frame}
     />
   );

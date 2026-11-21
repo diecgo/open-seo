@@ -21,266 +21,266 @@ interface AuditIssueDescriptor {
 export const AUDIT_ISSUE_TYPES = {
   "blocked-page": {
     severity: "critical",
-    title: "Crawler was blocked",
+    title: "El rastreador ha sido bloqueado",
     explanation:
-      "The site returned a bot challenge or access denial (e.g. a Cloudflare challenge or a 403) instead of the page. We report this honestly rather than pretending the page is broken — but it means this page could not be audited, and other crawlers like search engines may face similar friction.",
+      "El sitio devolvió un desafío antibots o una denegación de acceso (p. ej., un desafío de Cloudflare o un 403) en lugar de la página. Te lo indicamos tal cual en vez de dar la página por rota, pero significa que no se ha podido auditar y que otros rastreadores, como los buscadores, pueden encontrar trabas parecidas.",
     howToFix:
-      'If you own this site, allowlist the "OpenSEO-Audit" user agent in your WAF/bot-protection settings (on Cloudflare: a WAF custom rule that skips bot protection when the user agent contains "OpenSEO-Audit"; on some free tiers you may need to relax bot protection). Then re-run the audit. On Shopify, use Crawler access instead (Online Store → Preferences → Crawler access) and paste the signature into OpenSEO under Settings → Crawler access. How to allow and verify the crawler: https://openseo.so/docs/crawler',
+      'Si el sitio es tuyo, añade el user agent "OpenSEO-Audit" a la lista de permitidos de tu WAF o de la protección antibots (en Cloudflare: una regla personalizada del WAF que omita la protección antibots cuando el user agent contenga "OpenSEO-Audit"; en algunos planes gratuitos tendrás que suavizar la protección antibots). Después vuelve a lanzar la auditoría. En Shopify, usa el acceso de rastreadores (Tienda online → Preferencias → Acceso de rastreadores) y pega la firma en OpenSEO, en Ajustes del proyecto → Integraciones → Shopify. Cómo permitir y verificar el rastreador: https://openseo.so/docs/crawler',
   },
   "javascript-rendering-suspected": {
     severity: "warning",
-    title: "Content may require JavaScript",
+    title: "El contenido puede requerir JavaScript",
     explanation:
-      "The page's HTML contains a JavaScript app container with very little readable content and no headings, links, or images. The page may load its content in the browser, or it was still loading when rendered. Content checks were skipped because this HTML may not represent the complete page.",
+      "El HTML de la página contiene un contenedor de aplicación JavaScript con muy poco contenido legible y sin encabezados, enlaces ni imágenes. Puede que la página cargue su contenido en el navegador o que aún estuviera cargando al renderizarla. Nos hemos saltado las comprobaciones de contenido porque este HTML podría no representar la página completa.",
     howToFix:
-      'If this audit did not render JavaScript, start a new audit with "Render JavaScript" enabled to check the loaded content. For reliable crawling, serve important content and navigation in the initial HTML using server-side rendering or prerendering. This warning does not prove that search engines cannot index the page.',
+      'Si esta auditoría no renderizó JavaScript, lanza una nueva con "Renderizar JavaScript" activado para revisar el contenido cargado. Para un rastreo fiable, sirve el contenido y la navegación importantes en el HTML inicial mediante renderizado en servidor o prerenderizado. Este aviso no demuestra que los buscadores no puedan indexar la página.',
   },
   "rate-limited-page": {
     severity: "warning",
-    title: "Rate limited (429)",
+    title: "Límite de solicitudes (429)",
     explanation:
-      "The server answered 429 Too Many Requests, so this page could not be audited. The crawler paused for the server's Retry-After and tried the page once more before moving on.",
+      "El servidor respondió 429 Too Many Requests, así que no se ha podido auditar esta página. El rastreador esperó el tiempo indicado en Retry-After y volvió a intentarlo una vez antes de seguir.",
     howToFix:
-      'Raise the rate limit for crawlers, or allowlist the "OpenSEO-Audit" user agent in your rate-limiting rules (on Cloudflare: a rate-limiting rule exception matching that user agent). Then re-run the audit. Re-running with fewer pages also helps if the limit is strict. On Shopify, use Crawler access instead (Online Store → Preferences → Crawler access) and paste the signature into OpenSEO under Settings → Crawler access. How to allow and verify the crawler: https://openseo.so/docs/crawler',
+      'Sube el límite de solicitudes para rastreadores o añade el user agent "OpenSEO-Audit" a la lista de permitidos de tus reglas de limitación (en Cloudflare: una excepción en la regla de limitación de velocidad que coincida con ese user agent). Después vuelve a lanzar la auditoría. Si el límite es estricto, también ayuda volver a lanzarla con menos páginas. En Shopify, usa el acceso de rastreadores (Tienda online → Preferencias → Acceso de rastreadores) y pega la firma en OpenSEO, en Ajustes del proyecto → Integraciones → Shopify. Cómo permitir y verificar el rastreador: https://openseo.so/docs/crawler',
   },
   "crawl-rate-limited": {
     severity: "warning",
-    title: "Crawl stopped early: rate limit",
+    title: "Rastreo detenido antes de tiempo: límite de solicitudes",
     explanation:
-      "The site refused several pages in a row with 429 Too Many Requests, or kept the crawler waiting for too long, so we stopped requesting pages. This report is incomplete; URLs we did not fetch are not recorded as broken or rate limited.",
+      "El sitio rechazó varias páginas seguidas con 429 Too Many Requests, o hizo esperar demasiado al rastreador, así que dejamos de pedir páginas. Este informe está incompleto; las URL que no llegamos a descargar no se marcan como rotas ni como limitadas.",
     howToFix:
-      "Re-run the audit after the site's rate limit resets, or ask the site owner to allow the OpenSEO-Audit crawler (https://openseo.so/docs/crawler). On Shopify, use Crawler access instead (Online Store → Preferences → Crawler access) and paste the signature into OpenSEO under Settings → Crawler access.",
+      "Vuelve a lanzar la auditoría cuando se restablezca el límite de solicitudes del sitio o pide al propietario que permita el rastreador OpenSEO-Audit (https://openseo.so/docs/crawler). En Shopify, usa el acceso de rastreadores (Tienda online → Preferencias → Acceso de rastreadores) y pega la firma en OpenSEO, en Ajustes del proyecto → Integraciones → Shopify.",
   },
   "crawl-time-limit": {
     severity: "warning",
-    title: "Crawl stopped early: time limit",
-    explanation: `Audits that render JavaScript stop crawling after ${RENDERED_CRAWL_TIME_LIMIT_HOURS} hours, and this one reached that limit. This report is incomplete; URLs we did not fetch are not recorded as broken.`,
+    title: "Rastreo detenido antes de tiempo: límite de tiempo",
+    explanation: `Las auditorías que renderizan JavaScript dejan de rastrear a las ${RENDERED_CRAWL_TIME_LIMIT_HOURS} horas, y esta ha llegado a ese límite. Este informe está incompleto; las URL que no llegamos a descargar no se marcan como rotas.`,
     howToFix:
-      "Re-run the audit with a lower page limit, or without Render JavaScript if the site's content and links are in its HTML. Rendering is billed only for pages actually rendered.",
+      "Vuelve a lanzar la auditoría con un límite de páginas más bajo, o sin Renderizar JavaScript si el contenido y los enlaces del sitio están en su HTML. El renderizado solo se cobra por las páginas que realmente se renderizan.",
   },
   "crawl-credits-exhausted": {
     severity: "warning",
-    title: "Crawl stopped early: cost limit reached",
+    title: "Rastreo detenido antes de tiempo: límite de coste alcanzado",
     explanation:
-      "Many pages on this site needed our advanced renderer, so the audit reached its cost limit and stopped. You were only charged for the pages we rendered.",
+      "Muchas páginas de este sitio necesitaron nuestro renderizador avanzado, así que la auditoría alcanzó su límite de coste y se detuvo. Solo se te ha cobrado por las páginas que renderizamos.",
     howToFix:
-      "If the site doesn't need JavaScript to show its content, re-run with Render JavaScript off.",
+      "Si el sitio no necesita JavaScript para mostrar su contenido, vuelve a lanzarla con Renderizar JavaScript desactivado.",
   },
   "crawl-page-limit": {
     severity: "warning",
-    title: "Crawl stopped early: page limit",
+    title: "Rastreo detenido antes de tiempo: límite de páginas",
     explanation:
-      "The audit reached its page limit before visiting every URL it found, so this report covers part of the site. Orphan pages are not checked on a partial crawl.",
+      "La auditoría alcanzó su límite de páginas antes de visitar todas las URL que encontró, así que este informe cubre solo una parte del sitio. En un rastreo parcial no se comprueban las páginas huérfanas.",
     howToFix:
-      'Re-run the audit with a higher page limit. If it is already at the maximum, add a robots.txt group for the "OpenSEO-Audit" user agent that disallows sections you don\'t need audited, such as tag archives or filtered listings, so the limit goes to the pages that matter: https://openseo.so/docs/crawler',
+      'Vuelve a lanzar la auditoría con un límite de páginas más alto. Si ya está en el máximo, añade en el robots.txt un grupo para el user agent "OpenSEO-Audit" que bloquee las secciones que no necesitas auditar, como archivos de etiquetas o listados filtrados, para que el límite se dedique a las páginas que importan: https://openseo.so/docs/crawler',
   },
   "server-error": {
     severity: "critical",
-    title: "Server error (5xx)",
+    title: "Error del servidor (5xx)",
     explanation:
-      "The page returned a 5xx server error. Search engines that repeatedly see server errors will crawl the site less and may drop the page from the index.",
+      "La página devolvió un error de servidor 5xx. Los buscadores que ven errores de servidor de forma repetida rastrean menos el sitio y pueden sacar la página del índice.",
     howToFix:
-      "Check the server logs for this URL and fix the underlying error. If the page is gone, return a 404/410 or redirect it to a relevant page instead of erroring.",
+      "Revisa los logs del servidor para esta URL y corrige el error de fondo. Si la página ya no existe, devuelve un 404/410 o redirígela a una página relacionada en lugar de dar error.",
   },
   "broken-internal-link": {
     severity: "critical",
-    title: "Broken internal link",
+    title: "Enlace interno roto",
     explanation:
-      "This page links to an internal URL that returns an error status (4xx/5xx). Broken links waste crawl budget, leak link equity, and frustrate users — they are among the most common and most damaging technical SEO issues.",
+      "Esta página enlaza a una URL interna que devuelve un estado de error (4xx/5xx). Los enlaces rotos malgastan presupuesto de rastreo, pierden autoridad y frustran a los usuarios: están entre los problemas de SEO técnico más comunes y más dañinos.",
     howToFix:
-      "Update the link to point at the correct live URL, or remove it. If the target was moved, prefer linking directly to the new URL rather than relying on a redirect.",
+      "Actualiza el enlace para que apunte a la URL activa correcta o elimínalo. Si el destino se movió, enlaza directamente a la nueva URL en lugar de depender de una redirección.",
   },
   "missing-title": {
     severity: "critical",
-    title: "Missing title tag",
+    title: "Falta la etiqueta title",
     explanation:
-      "The page has no <title>. The title is the strongest on-page relevance signal and the headline shown in search results; without it search engines generate one themselves, usually badly.",
+      "La página no tiene <title>. El título es la señal de relevancia on-page más fuerte y el titular que se muestra en los resultados de búsqueda; sin él, los buscadores generan uno por su cuenta, normalmente mal.",
     howToFix:
-      "Add a unique, descriptive <title> of roughly 50–60 characters that includes the page's primary topic.",
+      "Añade un <title> único y descriptivo de unos 50–60 caracteres que incluya el tema principal de la página.",
   },
   "broken-page": {
     severity: "warning",
-    title: "Page returns an error (4xx)",
+    title: "La página devuelve un error (4xx)",
     explanation:
-      "This crawled URL returned a client error (e.g. 404). If it is referenced from your sitemap or other pages, crawlers keep wasting requests on it.",
+      "Esta URL rastreada devolvió un error de cliente (p. ej., 404). Si aparece en tu sitemap o en otras páginas, los rastreadores siguen malgastando solicitudes en ella.",
     howToFix:
-      "If the page should exist, restore it. If it is intentionally gone, remove it from the sitemap and internal links, and consider a 301 redirect to the closest live page.",
+      "Si la página debe existir, restáurala. Si se eliminó a propósito, quítala del sitemap y de los enlaces internos, y plantéate una redirección 301 a la página activa más parecida.",
   },
   "duplicate-title": {
     severity: "warning",
-    title: "Duplicate title",
+    title: "Título duplicado",
     explanation:
-      "Multiple pages share the same title tag. Search engines use titles to differentiate pages; duplicates make pages compete with each other and depress click-through rates.",
+      "Varias páginas comparten la misma etiqueta title. Los buscadores usan los títulos para diferenciar páginas; los duplicados hacen que compitan entre sí y bajan el porcentaje de clics.",
     howToFix:
-      "Write a unique title for each page describing its specific content. For templated pages, include the distinguishing attribute (name, category, location) in the template.",
+      "Escribe un título único para cada página que describa su contenido concreto. En páginas generadas con plantilla, incluye en la plantilla el atributo que las distingue (nombre, categoría, ubicación).",
   },
   "duplicate-meta-description": {
     severity: "warning",
-    title: "Duplicate meta description",
+    title: "Meta descripción duplicada",
     explanation:
-      "Multiple pages share the same meta description, so search results show identical snippets and users cannot tell the pages apart.",
+      "Varias páginas comparten la misma meta descripción, así que los resultados de búsqueda muestran fragmentos idénticos y los usuarios no pueden distinguirlas.",
     howToFix:
-      "Write a unique meta description per page, or remove the duplicated one entirely — search engines will generate a snippet from page content, which beats a wrong duplicate.",
+      "Escribe una meta descripción única para cada página o elimina la duplicada: los buscadores generarán un fragmento a partir del contenido de la página, que es mejor que un duplicado incorrecto.",
   },
   "duplicate-content": {
     severity: "warning",
-    title: "Duplicate page content",
+    title: "Contenido de página duplicado",
     explanation:
-      "Two or more URLs serve byte-identical visible text. Search engines pick one version to index and ignore the rest, and ranking signals get split across the duplicates.",
+      "Dos o más URL sirven exactamente el mismo texto visible. Los buscadores eligen una versión para indexar e ignoran el resto, y las señales de posicionamiento se reparten entre los duplicados.",
     howToFix:
-      "Consolidate duplicates: pick the canonical URL, add rel=canonical from the others, and 301-redirect duplicate URLs where possible (common causes: trailing-slash variants, URL parameters, http/https or www variants).",
+      "Consolida los duplicados: elige la URL canónica, añade rel=canonical desde las demás y aplica redirecciones 301 a las URL duplicadas cuando sea posible (causas habituales: variantes con o sin barra final, parámetros de URL, variantes http/https o con y sin www).",
   },
   "missing-meta-description": {
     severity: "warning",
-    title: "Missing meta description",
+    title: "Falta la meta descripción",
     explanation:
-      "The page has no meta description. Search engines will assemble a snippet from page text, which is often less compelling and hurts click-through rate.",
+      "La página no tiene meta descripción. Los buscadores montarán un fragmento con el texto de la página, que suele ser menos atractivo y reduce el porcentaje de clics.",
     howToFix:
-      "Add a meta description of roughly 70–160 characters that summarizes the page and gives a reason to click.",
+      "Añade una meta descripción de unos 70–160 caracteres que resuma la página y dé un motivo para hacer clic.",
   },
   "missing-h1": {
     severity: "warning",
-    title: "Missing H1 heading",
+    title: "Falta el encabezado H1",
     explanation:
-      "The page has no H1. The H1 tells users and search engines what the page is about; pages without one tend to have weaker topical clarity.",
+      "La página no tiene H1. El H1 indica a usuarios y buscadores de qué trata la página; las páginas sin él suelen transmitir peor su tema.",
     howToFix:
-      "Add a single H1 that states the page's main topic, consistent with the title tag.",
+      "Añade un único H1 que indique el tema principal de la página, coherente con la etiqueta title.",
   },
   "multiple-h1": {
     severity: "warning",
-    title: "Multiple H1 headings",
+    title: "Varios encabezados H1",
     explanation:
-      "The page has more than one H1, which dilutes the main-topic signal and usually indicates a templating mistake (e.g. a logo and a headline both marked up as H1).",
+      "La página tiene más de un H1, lo que diluye la señal del tema principal y suele indicar un error de plantilla (p. ej., el logo y el titular marcados ambos como H1).",
     howToFix:
-      "Keep one H1 for the page's main heading and demote the others to H2/H3 (or unstyled elements for non-headings like logos).",
+      "Deja un solo H1 para el encabezado principal de la página y baja los demás a H2/H3 (o a elementos sin estilo de encabezado en el caso de logos y similares).",
   },
   "redirect-chain": {
     severity: "warning",
-    title: "Redirect chain",
+    title: "Cadena de redirecciones",
     explanation:
-      "Reaching the final page requires two or more consecutive redirects. Each hop adds latency, leaks link equity, and burns crawl budget; long chains may not be followed at all.",
+      "Para llegar a la página final hacen falta dos o más redirecciones seguidas. Cada salto añade latencia, pierde autoridad y consume presupuesto de rastreo; las cadenas largas pueden no seguirse en absoluto.",
     howToFix:
-      "Point the first URL (and any internal links) directly at the final destination so there is at most one redirect.",
+      "Haz que la primera URL (y los enlaces internos) apunten directamente al destino final para que haya como máximo una redirección.",
   },
   "redirect-loop": {
     severity: "warning",
-    title: "Redirect loop",
+    title: "Bucle de redirecciones",
     explanation:
-      "This redirect eventually points back to itself, so the URL never resolves. Browsers and crawlers give up with an error.",
+      "Esta redirección acaba apuntando a sí misma, así que la URL nunca se resuelve. Navegadores y rastreadores se rinden con un error.",
     howToFix:
-      "Trace the redirect rules for this URL and break the cycle so the chain terminates at a real 200 page.",
+      "Revisa las reglas de redirección de esta URL y rompe el ciclo para que la cadena termine en una página real con 200.",
   },
   "canonical-conflict": {
     severity: "warning",
-    title: "Conflicting canonical signals",
+    title: "Señales canónicas contradictorias",
     explanation:
-      "The page declares different canonical URLs in its HTML <link rel=canonical> and its HTTP Link header. When signals conflict, search engines ignore both and choose their own canonical.",
+      "La página declara URL canónicas distintas en su <link rel=canonical> del HTML y en su cabecera HTTP Link. Cuando las señales se contradicen, los buscadores ignoran ambas y eligen su propia canónica.",
     howToFix:
-      "Pick one canonical URL and declare it in exactly one place (HTML head is the most common); remove or align the other declaration.",
+      "Elige una URL canónica y declárala en un solo sitio (lo más habitual es el head del HTML); elimina o alinea la otra declaración.",
   },
   "thin-content": {
     severity: "warning",
-    title: "Thin content",
+    title: "Contenido escaso",
     explanation:
-      "The page has very little visible text. Thin pages rarely rank, can drag down sitewide quality assessments, and (if the site renders client-side) may indicate content invisible to plain-HTML crawlers.",
+      "La página tiene muy poco texto visible. Las páginas con poco contenido rara vez posicionan, pueden empeorar la valoración de calidad de todo el sitio y (si el sitio se renderiza en el cliente) pueden indicar contenido invisible para los rastreadores que solo leen HTML.",
     howToFix:
-      "Either expand the page with genuinely useful content, noindex it, or consolidate it into a stronger page. If the content exists but is rendered by JavaScript, ensure it is server-rendered or pre-rendered.",
+      "Amplía la página con contenido realmente útil, márcala como noindex o intégrala en una página más sólida. Si el contenido existe pero lo renderiza JavaScript, asegúrate de que se renderiza en el servidor o se prerenderiza.",
   },
   "images-missing-alt": {
     severity: "warning",
-    title: "Images missing alt text",
+    title: "Imágenes sin texto alternativo",
     explanation:
-      "One or more images on the page lack alt attributes. Alt text is an accessibility requirement and the main way search engines understand images.",
+      "Una o más imágenes de la página no tienen atributo alt. El texto alternativo es un requisito de accesibilidad y la principal forma en que los buscadores entienden las imágenes.",
     howToFix:
-      'Add descriptive alt text to meaningful images; use an empty alt (alt="") only for purely decorative ones.',
+      'Añade un texto alternativo descriptivo a las imágenes con significado; usa un alt vacío (alt="") solo para las puramente decorativas.',
   },
   "orphan-page": {
     severity: "warning",
-    title: "Orphan page",
+    title: "Página huérfana",
     explanation:
-      "No crawled page links to this URL — it was only discoverable via the sitemap. Pages without internal links receive little crawl attention and no internal link equity, and users can't find them by browsing.",
+      "Ninguna página rastreada enlaza a esta URL: solo se pudo descubrir a través del sitemap. Las páginas sin enlaces internos reciben poca atención de los rastreadores y nada de autoridad interna, y los usuarios no pueden llegar a ellas navegando.",
     howToFix:
-      "Link to this page from relevant pages (navigation, related content, hub pages), or remove it from the sitemap if it shouldn't be indexed.",
+      "Enlaza esta página desde páginas relacionadas (navegación, contenido relacionado, páginas pilar) o quítala del sitemap si no debe indexarse.",
   },
   "no-outgoing-links": {
     severity: "warning",
-    title: "Page has no outgoing links",
+    title: "La página no tiene enlaces salientes",
     explanation:
-      "The page contains no links at all — a dead end. Link equity that flows into it stops there, crawlers have nowhere to go next, and users have to reach for the back button.",
+      "La página no contiene ningún enlace: es un callejón sin salida. La autoridad que le llega se queda ahí, los rastreadores no tienen adónde ir y los usuarios tienen que recurrir al botón de volver.",
     howToFix:
-      "Add links to related pages, the parent category, or the homepage. If the page's navigation is rendered by JavaScript, make sure it also exists in the server-rendered HTML.",
+      "Añade enlaces a páginas relacionadas, a la categoría superior o a la página de inicio. Si la navegación de la página la renderiza JavaScript, asegúrate de que también existe en el HTML renderizado en el servidor.",
   },
   "title-too-long": {
     severity: "info",
-    title: "Title too long",
+    title: "Título demasiado largo",
     explanation:
-      "The title exceeds ~60 characters, so search results will truncate it and the ending may be cut off mid-phrase.",
+      "El título supera los ~60 caracteres, así que los resultados de búsqueda lo truncarán y el final puede quedar cortado a media frase.",
     howToFix:
-      "Shorten the title to roughly 50–60 characters, front-loading the most important words.",
+      "Acorta el título a unos 50–60 caracteres y pon delante las palabras más importantes.",
   },
   "title-too-short": {
     severity: "info",
-    title: "Title too short",
+    title: "Título demasiado corto",
     explanation:
-      "The title is under ~10 characters, which is usually too generic to describe the page or attract clicks.",
+      "El título tiene menos de ~10 caracteres, lo que suele ser demasiado genérico para describir la página o atraer clics.",
     howToFix:
-      "Expand the title into a descriptive phrase (roughly 30–60 characters) that states what the page offers.",
+      "Amplía el título con una frase descriptiva (unos 30–60 caracteres) que diga lo que ofrece la página.",
   },
   "meta-description-too-long": {
     severity: "info",
-    title: "Meta description too long",
+    title: "Meta descripción demasiado larga",
     explanation:
-      "The meta description exceeds ~160 characters, so search engines will truncate the snippet.",
+      "La meta descripción supera los ~160 caracteres, así que los buscadores truncarán el fragmento.",
     howToFix:
-      "Trim the description to roughly 70–160 characters while keeping the core message and call to action.",
+      "Recorta la descripción a unos 70–160 caracteres manteniendo el mensaje principal y la llamada a la acción.",
   },
   "meta-description-too-short": {
     severity: "info",
-    title: "Meta description too short",
+    title: "Meta descripción demasiado corta",
     explanation:
-      "The meta description is under ~70 characters. Short descriptions waste the snippet space search results give you, and search engines often ignore them in favor of text pulled from the page.",
+      "La meta descripción tiene menos de ~70 caracteres. Las descripciones cortas desaprovechan el espacio del fragmento en los resultados de búsqueda, y los buscadores suelen ignorarlas en favor de texto extraído de la página.",
     howToFix:
-      "Expand the description to roughly 70–160 characters that summarize the page and give a reason to click.",
+      "Amplía la descripción a unos 70–160 caracteres que resuman la página y den un motivo para hacer clic.",
   },
   "heading-order-skip": {
     severity: "info",
-    title: "Heading levels skip",
+    title: "Saltos en los niveles de encabezado",
     explanation:
-      "The heading hierarchy skips levels (e.g. an H4 directly after an H2). This weakens document structure for accessibility tools and content parsing.",
+      "La jerarquía de encabezados se salta niveles (p. ej., un H4 justo después de un H2). Esto debilita la estructura del documento para las herramientas de accesibilidad y el análisis del contenido.",
     howToFix:
-      "Adjust heading levels so they descend one step at a time (H1 → H2 → H3) without skipping.",
+      "Ajusta los niveles de encabezado para que bajen de uno en uno (H1 → H2 → H3) sin saltarse ninguno.",
   },
   "slow-response": {
     severity: "info",
-    title: "Slow server response",
+    title: "Respuesta lenta del servidor",
     explanation:
-      "The HTML response took over 1.5 seconds. Slow time-to-first-byte drags down every downstream performance metric and reduces crawl rate on large sites.",
+      "La respuesta HTML tardó más de 1,5 segundos. Un tiempo hasta el primer byte lento empeora todas las métricas de rendimiento posteriores y reduce la frecuencia de rastreo en sitios grandes.",
     howToFix:
-      "Investigate server/database time and caching for this route; serving cached or statically generated HTML usually fixes it.",
+      "Revisa el tiempo de servidor y de base de datos y la caché de esta ruta; servir HTML en caché o generado de forma estática suele resolverlo.",
   },
   "noindex-page": {
     severity: "info",
-    title: "Page is noindex",
+    title: "La página es noindex",
     explanation:
-      "The page asks search engines not to index it (via robots meta tag or X-Robots-Tag header). That's often intentional — this is a heads-up, not an error.",
+      "La página pide a los buscadores que no la indexen (con la metaetiqueta robots o la cabecera X-Robots-Tag). Suele ser intencionado: es un aviso, no un error.",
     howToFix:
-      "If this page should rank, remove the noindex directive. If it's intentional (admin, thank-you, filter pages), no action is needed.",
+      "Si esta página debe posicionar, elimina la directiva noindex. Si es intencionado (páginas de administración, de agradecimiento o de filtros), no hace falta hacer nada.",
   },
   "canonicalized-page": {
     severity: "info",
-    title: "Canonicalized to another URL",
+    title: "Canonicalizada a otra URL",
     explanation:
-      "The page declares a different URL as its canonical, telling search engines to index that URL instead. Fine when intentional (parameter pages, syndication) — a problem if this page was meant to rank.",
+      "La página declara otra URL como canónica, lo que indica a los buscadores que indexen esa URL en su lugar. Está bien si es intencionado (páginas con parámetros, contenido sindicado), pero es un problema si esta página debía posicionar.",
     howToFix:
-      "If this page should rank on its own, set its canonical to itself. Otherwise no action is needed.",
+      "Si esta página debe posicionar por sí misma, haz que su canónica apunte a sí misma. Si no, no hace falta hacer nada.",
   },
   "deep-page": {
     severity: "info",
-    title: "Page is deep in the site structure",
+    title: "Página muy profunda en la estructura del sitio",
     explanation:
-      "The page is 5+ clicks from the homepage. Deep pages get crawled less often and receive less link equity.",
+      "La página está a 5 o más clics de la página de inicio. Las páginas profundas se rastrean con menos frecuencia y reciben menos autoridad.",
     howToFix:
-      "Add links from higher-level pages (hubs, category pages, navigation) to flatten the path to this page.",
+      "Añade enlaces desde páginas de nivel superior (páginas pilar, categorías, navegación) para acortar el camino hasta esta página.",
   },
 } as const satisfies Record<string, AuditIssueDescriptor>;
 

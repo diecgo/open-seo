@@ -25,14 +25,14 @@ export function TableBulkActionBar({
     <div className="pointer-events-none fixed inset-x-0 bottom-6 z-30 flex justify-center px-4">
       <div
         role="toolbar"
-        aria-label="Bulk actions"
+        aria-label="Acciones en bloque"
         className="pointer-events-auto flex items-stretch rounded-xl border border-border bg-popover/90 text-popover-foreground shadow-2xl backdrop-blur"
       >
         <div className="flex items-center gap-2 border-r border-border py-2 pr-3 pl-2 text-sm">
           <Button
             variant="ghost"
             size="icon-xs"
-            aria-label="Clear selection"
+            aria-label="Borrar selección"
             className="text-muted-foreground"
             onClick={onClear}
           >
@@ -96,7 +96,7 @@ export function TableBulkExportMenu({
         render={<Button variant="ghost" size="sm" pending={busy} />}
       >
         {busy ? null : <Download data-icon="inline-start" />}
-        Export
+        Exportar
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="end" className="w-52">
         {actions.map((action, index) => (

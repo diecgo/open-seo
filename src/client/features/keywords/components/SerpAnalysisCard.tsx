@@ -25,7 +25,7 @@ const columns = [
   }),
   columnHelper.display({
     id: "page",
-    header: "Page",
+    header: "Página",
     cell: ({ row }) => {
       const label = row.original.title || row.original.url;
       // Provider URLs are untrusted: only http(s) links become clickable.
@@ -108,7 +108,7 @@ export function SerpAnalysisCard({
           pending={retrying}
           onClick={onRetry}
         >
-          {deepFetchFailed ? "Show top results" : "Retry"}
+          {deepFetchFailed ? "Ver primeros resultados" : "Reintentar"}
         </Button>
       )}
     </>
@@ -132,7 +132,7 @@ export function SerpAnalysisCard({
                     void exportRows({
                       format,
                       feature: "serp_analysis",
-                      headers: ["Rank", "Title", "URL", "Domain"],
+                      headers: ["Posición", "Título", "URL", "Dominio"],
                       rows: items.map((item) => [
                         item.rank,
                         item.title ?? "",
@@ -149,7 +149,7 @@ export function SerpAnalysisCard({
             <div className="flex min-w-0 flex-col">
               <h3 className="flex min-w-0 items-center gap-1.5 text-sm font-semibold">
                 <Globe className="size-3.5 shrink-0" />
-                SERP Analysis
+                Análisis de la SERP
                 {keyword ? (
                   <span className="truncate font-normal text-muted-foreground">
                     : {keyword}
@@ -158,11 +158,12 @@ export function SerpAnalysisCard({
               </h3>
               {hasItems ? (
                 <span className="text-xs text-muted-foreground">
-                  {items.length} organic results
+                  {items.length} resultados orgánicos
                 </span>
               ) : loading ? (
                 <span className="text-xs text-muted-foreground" role="status">
-                  Fetching live results… This can take up to a minute.
+                  Obteniendo resultados en directo… Puede tardar hasta un
+                  minuto.
                 </span>
               ) : null}
             </div>
@@ -182,9 +183,9 @@ export function SerpAnalysisCard({
         error
           ? { kind: "error", title: error, action: errorAction }
           : {
-              title: "No SERP details available for this keyword yet.",
+              title: "Aún no hay datos de la SERP para esta palabra clave.",
               description: keyword
-                ? "Try clicking another keyword to load data."
+                ? "Haz clic en otra palabra clave para cargar sus datos."
                 : undefined,
             }
       }
@@ -197,7 +198,7 @@ export function SerpAnalysisCard({
             isLoading={loadingMore}
             // Past the loaded results, "Next" buys a deeper crawl. The button
             // says so rather than spending silently.
-            loadMoreLabel={canLoadMore ? "Load top 100" : undefined}
+            loadMoreLabel={canLoadMore ? "Cargar top 100" : undefined}
             onPageChange={(nextPage) => onPageChange(nextPage - 1)}
           />
         ) : null

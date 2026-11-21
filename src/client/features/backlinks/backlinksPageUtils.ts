@@ -3,11 +3,11 @@ import type { BacklinksOverviewData } from "./backlinksPageTypes";
 
 export const TAB_DESCRIPTIONS: Record<BacklinksTab, string> = {
   backlinks:
-    "See the individual links pointing to your target, including source page, anchor text, and link quality signals.",
+    "Mira cada enlace que apunta a tu objetivo, con la página de origen, el texto ancla y las señales de calidad del enlace.",
   domains:
-    "View the unique domains linking to your target, grouped at the site level instead of by individual link.",
+    "Mira los dominios únicos que enlazan a tu objetivo, agrupados por sitio en lugar de por enlace.",
   pages:
-    "See which pages on the target site attract the most backlinks and referring domains.",
+    "Descubre qué páginas del sitio objetivo atraen más enlaces entrantes y dominios de referencia.",
 };
 
 export function buildSummaryStats(data: BacklinksOverviewData | undefined) {
@@ -15,44 +15,45 @@ export function buildSummaryStats(data: BacklinksOverviewData | undefined) {
 
   return [
     {
-      label: "Backlinks",
+      label: "Enlaces entrantes",
       value: formatNumber(data.summary.backlinks),
-      description: "Total links pointing to this site or page.",
+      description: "Total de enlaces que apuntan a este sitio o página.",
     },
     {
-      label: "Referring Domains",
+      label: "Dominios de referencia",
       value: formatNumber(data.summary.referringDomains),
-      description: "Unique domains linking to this site or page.",
+      description: "Dominios únicos que enlazan a este sitio o página.",
     },
     {
-      label: "Referring Pages",
+      label: "Páginas de referencia",
       value: formatNumber(data.summary.referringPages),
-      description: "Unique pages linking to this site or page.",
+      description: "Páginas únicas que enlazan a este sitio o página.",
     },
     {
-      label: "Rank",
+      label: "Rango",
       value: formatNumber(data.summary.rank),
-      description: "DataForSEO's 0-100 authority score.",
+      description: "Puntuación de autoridad de DataForSEO (0-100).",
     },
     {
-      label: "Backlink Spam Score",
+      label: "Puntuación de spam de enlaces entrantes",
       value: formatDecimal(data.summary.backlinksSpamScore),
-      description: "Estimated spam risk of links pointing here.",
+      description: "Riesgo de spam estimado de los enlaces que apuntan aquí.",
     },
     {
-      label: "Broken Backlinks",
+      label: "Enlaces entrantes rotos",
       value: formatNumber(data.summary.brokenBacklinks),
-      description: "Links pointing to broken pages here.",
+      description: "Enlaces que apuntan a páginas rotas de aquí.",
     },
     {
-      label: "Broken Pages",
+      label: "Páginas rotas",
       value: formatNumber(data.summary.brokenPages),
-      description: "Broken pages here that still have backlinks.",
+      description:
+        "Páginas rotas de aquí que siguen teniendo enlaces entrantes.",
     },
     {
-      label: "Target Spam Score",
+      label: "Puntuación de spam del objetivo",
       value: formatDecimal(data.summary.targetSpamScore),
-      description: "Estimated spam risk of this site or page.",
+      description: "Riesgo de spam estimado de este sitio o página.",
     },
   ];
 }

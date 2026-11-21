@@ -62,7 +62,7 @@ export function useSavedKeywordsExport(params: {
       const result = await exportSavedKeywords({ data: exportInput });
       await runExport(format, result.rows);
     } catch (error) {
-      toast.error(getStandardErrorMessage(error, "Could not export"));
+      toast.error(getStandardErrorMessage(error, "No se ha podido exportar"));
     } finally {
       setExporting(null);
     }

@@ -17,18 +17,20 @@ export function PrivacySettings() {
     // The session is served from a signed cookie cache, so bypass it to pick
     // up the saved choice.
     onSuccess: () => refetch({ query: { disableCookieCache: true } }),
-    onError: () => toast.error("We couldn't save your email choice."),
+    onError: () =>
+      toast.error("No hemos podido guardar tu preferencia de emails."),
   });
   if (!choices || !session) return null;
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="Privacy and emails" />
+      <SectionHeader title="Privacidad y emails" />
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Usage analytics</p>
+          <p className="text-sm">Analítica de uso</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Share usage analytics and session replays to help improve OpenSEO.
+            Comparte la analítica de uso y las grabaciones de sesión para ayudar
+            a mejorar OpenSEO.
           </p>
         </div>
         <Switch
@@ -36,14 +38,15 @@ export function PrivacySettings() {
           onCheckedChange={(analytics) =>
             void updatePrivacyChoices({ ...choices, analytics }, true)
           }
-          aria-label="Share usage analytics"
+          aria-label="Compartir analítica de uso"
         />
       </div>
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Product updates</p>
+          <p className="text-sm">Novedades del producto</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Occasional emails about new features and tips. Unsubscribe anytime.
+            Emails ocasionales sobre funciones nuevas y consejos. Puedes darte
+            de baja cuando quieras.
           </p>
         </div>
         <Switch
@@ -54,7 +57,7 @@ export function PrivacySettings() {
           }
           disabled={productUpdates.isPending}
           onCheckedChange={(optIn) => productUpdates.mutate(optIn)}
-          aria-label="Get product update emails"
+          aria-label="Recibir emails con novedades del producto"
         />
       </div>
     </section>

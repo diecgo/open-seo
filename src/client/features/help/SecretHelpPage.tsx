@@ -22,8 +22,8 @@ export function CommandBlock({ command }: { command: string }) {
       </pre>
       <CopyButton
         value={command}
-        successMessage="Command copied"
-        label="Copy command"
+        successMessage="Comando copiado"
+        label="Copiar comando"
         variant="ghost"
         size="icon-xs"
       />
@@ -69,7 +69,7 @@ export function SecretHelpPage({
         <Card>
           <CardHeader>
             <CardTitle>
-              <h2>Steps</h2>
+              <h2>Pasos</h2>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -81,27 +81,27 @@ export function SecretHelpPage({
 
         {everyApp ? (
           <p className="text-sm text-muted-foreground">
-            Not an owner or admin? Send this page to one.
+            ¿No eres propietario ni administrador? Envía esta página a uno.
           </p>
         ) : (
           <Card>
             <CardHeader>
               <CardTitle>
-                <h2>Cloudflare Workers (Dashboard UI)</h2>
+                <h2>Cloudflare Workers (panel web)</h2>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <ol className="list-decimal space-y-2 pl-5">
                 <li>
-                  In Cloudflare, go to <code>Compute</code> -&gt;{" "}
-                  <code>Workers &amp; Pages</code> and open your OpenSEO Worker.
+                  En Cloudflare, ve a <code>Compute</code> -&gt;{" "}
+                  <code>Workers &amp; Pages</code> y abre tu Worker de OpenSEO.
                 </li>
                 <li>
-                  Open <code>Settings</code>.
+                  Abre <code>Settings</code>.
                 </li>
                 <li>
-                  Go to <code>Variables &amp; Secrets</code> and add a new
-                  secret named <code>{secretName}</code>.
+                  Ve a <code>Variables &amp; Secrets</code> y añade un secreto
+                  nuevo llamado <code>{secretName}</code>.
                 </li>
                 <li>{dashboardPasteStep}</li>
               </ol>
@@ -109,7 +109,7 @@ export function SecretHelpPage({
               <Separator />
 
               <div>
-                <p>Or set the same secret from your terminal with:</p>
+                <p>O configura el mismo secreto desde tu terminal con:</p>
                 <CommandBlock
                   command={`npx wrangler secret put ${secretName}`}
                 />

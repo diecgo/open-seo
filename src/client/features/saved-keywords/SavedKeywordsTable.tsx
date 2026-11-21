@@ -58,7 +58,7 @@ export function SavedKeywordsTable({
       makeSelectionColumn<SavedKeywordRow>(selectAnchorRef),
       columnHelper.accessor("keyword", {
         header: ({ column }) => (
-          <SortableHeader column={column} label="Keyword" />
+          <SortableHeader column={column} label="Palabra clave" />
         ),
         cell: ({ getValue }) => (
           <span className="font-medium">{getValue()}</span>
@@ -66,7 +66,7 @@ export function SavedKeywordsTable({
       }),
       columnHelper.accessor("searchVolume", {
         header: ({ column }) => (
-          <SortableHeader column={column} label="Volume" align="right" />
+          <SortableHeader column={column} label="Volumen" align="right" />
         ),
         cell: ({ getValue }) => formatSavedKeywordNumber(getValue()),
         meta: RIGHT_ALIGNED,
@@ -85,8 +85,8 @@ export function SavedKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Competition"
-            helpText="Paid-search competition from Google Ads (0-1): higher means more advertisers bidding."
+            label="Competencia"
+            helpText="Competencia en búsqueda de pago según Google Ads (0-1): cuanto más alta, más anunciantes pujan."
             align="right"
           />
         ),
@@ -100,8 +100,8 @@ export function SavedKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Difficulty"
-            helpText="Organic ranking difficulty (0-100): higher means harder to reach Google's top 10."
+            label="Dificultad"
+            helpText="Dificultad para posicionar en orgánico (0-100): cuanto más alta, más cuesta llegar al top 10 de Google."
             align="right"
           />
         ),
@@ -109,7 +109,7 @@ export function SavedKeywordsTable({
         meta: { headerClassName: "text-right", cellClassName: "text-right" },
       }),
       columnHelper.accessor("intent", {
-        header: () => "Intent",
+        header: () => "Intención",
         cell: ({ getValue }) => (
           <IntentBadge intent={normalizeIntent(getValue())} />
         ),
@@ -117,14 +117,14 @@ export function SavedKeywordsTable({
       }),
       columnHelper.display({
         id: "tags",
-        header: () => "Tags",
+        header: () => "Etiquetas",
         cell: ({ row }) => <TagList tags={row.original.tags} />,
         enableSorting: false,
         meta: { cellClassName: "min-w-40 max-w-64" },
       }),
       columnHelper.accessor("fetchedAt", {
         header: ({ column }) => (
-          <SortableHeader column={column} label="Last Fetched" />
+          <SortableHeader column={column} label="Última actualización" />
         ),
         cell: ({ getValue }) => (
           <span className="text-xs text-muted-foreground">
@@ -157,8 +157,9 @@ export function SavedKeywordsTable({
       isFiltered={hasActiveFilters}
       onClearFilters={onClearFilters}
       empty={{
-        title: "No saved keywords yet",
-        description: "Use the Keyword Research page to find and save keywords.",
+        title: "Aún no hay palabras guardadas",
+        description:
+          "Usa la página de Palabras clave para encontrar y guardar palabras clave.",
       }}
       toolbar={toolbar}
       footer={footer}

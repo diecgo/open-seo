@@ -49,7 +49,7 @@ export function localGridZoom(spacingKm: number, latitude: number) {
 
 /** The grid as a customer reads it, e.g. "9 points across 4 km". */
 export function localAreaLabel(grid: { gridSize: number; spacingKm: number }) {
-  return `${grid.gridSize * grid.gridSize} points across ${(grid.gridSize - 1) * grid.spacingKm} km`;
+  return `${grid.gridSize * grid.gridSize} puntos en ${(grid.gridSize - 1) * grid.spacingKm} km`;
 }
 
 const KM_PER_LATITUDE_DEGREE = 110.574;

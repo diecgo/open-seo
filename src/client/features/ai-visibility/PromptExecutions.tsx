@@ -25,27 +25,27 @@ export function PromptExecutions({
 }) {
   return (
     <section
-      aria-label="Executions"
+      aria-label="Ejecuciones"
       className="overflow-hidden rounded-lg border border-border bg-card"
     >
       <div className="flex items-center justify-between border-b border-border px-4 py-2">
-        <h2 className="text-sm font-medium">Executions</h2>
+        <h2 className="text-sm font-medium">Ejecuciones</h2>
         <span className="text-xs text-muted-foreground">
-          {executions.length} in this period
+          {executions.length} en este periodo
         </span>
       </div>
       <div
         className="hidden grid-cols-[minmax(0,1fr)_minmax(0,1fr)_140px_140px] gap-3 border-b border-border px-4 py-2 text-xs text-muted-foreground sm:grid"
         aria-hidden="true"
       >
-        <span>Date</span>
-        <span>Engine</span>
-        <span>Brand mentioned</span>
-        <span>Owned citation</span>
+        <span>Fecha</span>
+        <span>Motor</span>
+        <span>Marca mencionada</span>
+        <span>Cita propia</span>
       </div>
       <ul
         className="max-h-64 overflow-y-auto sm:max-h-44"
-        aria-label="Select an execution"
+        aria-label="Selecciona una ejecución"
       >
         {executions.map(({ observation, run }) => {
           const own = observation.brands.find((brand) => brand.own);
@@ -55,7 +55,7 @@ export function PromptExecutions({
               ? aiObservationStatusLabel(observation.status)
               : observation.answerStatus === "no_answer"
                 ? aiNoAnswerLabel(observation.engine)
-                : "Answer unavailable";
+                : "Respuesta no disponible";
           return (
             <li
               key={observation.id}
@@ -71,7 +71,7 @@ export function PromptExecutions({
                   {aiDate(observation.collectedAt ?? run.createdAt)}
                   {run.trigger !== "manual" && (
                     <span className="ml-2 hidden text-[0.625rem] lg:inline">
-                      {run.trigger === "baseline" ? "Baseline" : "Scheduled"}
+                      {run.trigger === "baseline" ? "Referencia" : "Programada"}
                     </span>
                   )}
                 </span>

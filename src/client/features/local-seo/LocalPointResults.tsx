@@ -36,7 +36,7 @@ export function LocalPointResults({
   return (
     <Card className="h-full min-h-0 min-w-0 gap-0 overflow-hidden py-0 shadow-none">
       <CardHeader className="shrink-0 items-center gap-2 px-4 py-3">
-        <CardTitle className="text-sm">Results</CardTitle>
+        <CardTitle className="text-sm">Resultados</CardTitle>
         <CardAction className="row-span-1 self-center text-xs text-muted-foreground">
           {searchedFrom(point, center)}
         </CardAction>
@@ -47,28 +47,28 @@ export function LocalPointResults({
             variant="plain"
             title={
               point.status === LocalPointStatus.Pending
-                ? "Search pending"
-                : "Search failed"
+                ? "Búsqueda pendiente"
+                : "Búsqueda fallida"
             }
             description={
               point.status === LocalPointStatus.Pending
-                ? "The saved scan will update when results arrive."
-                : "This point has no ranking result. Other points remain available."
+                ? "El análisis guardado se actualizará cuando lleguen los resultados."
+                : "Este punto no tiene resultado de posición. Los demás puntos siguen disponibles."
             }
           />
         ) : results.length === 0 ? (
           <EmptyState
             variant="plain"
-            title="No listings returned"
-            description="Google Maps returned no businesses at this coordinate."
+            title="No se han devuelto fichas"
+            description="Google Maps no ha devuelto negocios en esta coordenada."
           />
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Rank</TableHead>
-                <TableHead>Business</TableHead>
-                <TableHead>Reviews</TableHead>
+                <TableHead>Posición</TableHead>
+                <TableHead>Negocio</TableHead>
+                <TableHead>Reseñas</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -112,10 +112,10 @@ function searchedFrom(
 ) {
   const { north, east } = localPointOffsetKm(center, point);
   const parts = [
-    north && `${Math.abs(north)} km ${north > 0 ? "north" : "south"}`,
-    east && `${Math.abs(east)} km ${east > 0 ? "east" : "west"}`,
+    north && `${Math.abs(north)} km ${north > 0 ? "al norte" : "al sur"}`,
+    east && `${Math.abs(east)} km ${east > 0 ? "al este" : "al oeste"}`,
   ].filter(Boolean);
   return parts.length
-    ? `Searched ${parts.join(", ")} of the center`
-    : "Searched from the center";
+    ? `Búsqueda a ${parts.join(", ")} del centro`
+    : "Búsqueda desde el centro";
 }

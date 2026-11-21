@@ -37,7 +37,7 @@ import { authClient } from "@/lib/auth-client";
 const MAX_KEY_NAME_LENGTH = 32;
 
 const createKeySchema = z.object({
-  name: z.string().trim().min(1, "Name is required"),
+  name: z.string().trim().min(1, "El nombre es obligatorio"),
 });
 
 // Stamped server-side when the key is created (see the /api-key/create hook
@@ -70,7 +70,9 @@ export function ApiKeySettings() {
     queryFn: async () => {
       const result = await authClient.apiKey.list();
       if (result.error) {
-        throw new Error(result.error.message ?? "Failed to load API keys");
+        throw new Error(
+          result.error.message ?? "No se han podido cargar las claves API",
+        );
       }
       return result.data.apiKeys.map((key) => ({
         id: key.id,
@@ -89,7 +91,9 @@ export function ApiKeySettings() {
     mutationFn: async (keyName: string) => {
       const result = await authClient.apiKey.create({ name: keyName });
       if (result.error || !result.data?.key) {
-        throw new Error(result.error?.message ?? "Failed to create the key");
+        throw new Error(
+          result.error?.message ?? "No se ha podido crear la clave",
+        );
       }
       return result.data.key;
     },
@@ -104,12 +108,14 @@ export function ApiKeySettings() {
     mutationFn: async (keyId: string) => {
       const result = await authClient.apiKey.delete({ keyId });
       if (result.error) {
-        throw new Error(result.error.message ?? "Failed to revoke the key");
+        throw new Error(
+          result.error.message ?? "No se ha podido revocar la clave",
+        );
       }
     },
     onSuccess: () => {
       captureClientEvent("mcp:api_key_revoked");
-      toast.success("API key revoked");
+      toast.success("Clave API revocada");
       setRevoking(null);
       void queryClient.invalidateQueries({ queryKey: ["apiKeys"] });
     },
@@ -132,15 +138,15 @@ export function ApiKeySettings() {
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="API keys" />
+      <SectionHeader title="Claves API" />
       <div className="flex items-start justify-between gap-6">
         <div>
           <p className="text-sm">
-            Authenticate MCP clients when OAuth doesn't work
+            Autentica clientes MCP cuando OAuth no funciona
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Use this for remote agents like Hermes where the normal login flow
-            doesn't work.
+            Úsala con agentes remotos como Hermes en los que el inicio de sesión
+            normal no funciona.
           </p>
           <p className="mt-1 text-sm">
             <a
@@ -149,34 +155,36 @@ export function ApiKeySettings() {
               target="_blank"
               rel="noreferrer"
             >
-              Setup guide
+              Guía de configuración
             </a>
           </p>
         </div>
         <Button size="sm" onClick={() => setIsCreateOpen(true)}>
-          Create API key
+          Crear clave API
         </Button>
       </div>
 
       <QueryState
         query={apiKeysQuery}
-        errorFallback="We couldn't load your API keys."
+        errorFallback="No hemos podido cargar tus claves API."
       >
         {(apiKeys) =>
           apiKeys.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No API keys yet.</p>
+            <p className="text-sm text-muted-foreground">
+              Aún no hay claves API.
+            </p>
           ) : (
             <TableCard>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Key</TableHead>
+                    <TableHead>Nombre</TableHead>
+                    <TableHead>Clave</TableHead>
                     {showOrganization ? (
-                      <TableHead>Organization</TableHead>
+                      <TableHead>Organización</TableHead>
                     ) : null}
-                    <TableHead>Created</TableHead>
-                    <TableHead>Last used</TableHead>
+                    <TableHead>Creada</TableHead>
+                    <TableHead>Último uso</TableHead>
                     <TableHead className="w-10" />
                   </TableRow>
                 </TableHeader>
@@ -184,7 +192,7 @@ export function ApiKeySettings() {
                   {apiKeys.map((key) => (
                     <TableRow key={key.id}>
                       <TableCell className="max-w-[220px] truncate font-medium">
-                        {key.name || "Unnamed key"}
+                        {key.name || "Clave sin nombre"}
                       </TableCell>
                       <TableCell
                         className="font-mono text-xs text-muted-foreground"
@@ -203,23 +211,23 @@ export function ApiKeySettings() {
                       <TableCell className="text-xs text-muted-foreground">
                         {key.lastRequest
                           ? key.lastRequest.toLocaleDateString()
-                          : "Never"}
+                          : "Nunca"}
                       </TableCell>
                       <TableCell>
                         <RowActionsMenu
-                          label={`Actions for ${key.name || "API key"}`}
+                          label={`Acciones de ${key.name || "clave API"}`}
                         >
                           <DropdownMenuItem
                             variant="destructive"
                             onClick={() =>
                               setRevoking({
                                 id: key.id,
-                                name: key.name || "Unnamed key",
+                                name: key.name || "Clave sin nombre",
                               })
                             }
                           >
                             <Trash2 />
-                            Revoke key
+                            Revocar clave
                           </DropdownMenuItem>
                         </RowActionsMenu>
                       </TableCell>
@@ -234,14 +242,14 @@ export function ApiKeySettings() {
 
       {revoking ? (
         <ConfirmDialog
-          title={`Revoke \u201c${revoking.name}\u201d?`}
-          confirmLabel="Revoke key"
+          title={`¿Revocar \u201c${revoking.name}\u201d?`}
+          confirmLabel="Revocar clave"
           destructive
           pending={revokeMutation.isPending}
           onClose={() => setRevoking(null)}
           onConfirm={() => revokeMutation.mutate(revoking.id)}
         >
-          Clients using it will stop working.
+          Los clientes que la usen dejarán de funcionar.
         </ConfirmDialog>
       ) : null}
 
@@ -262,13 +270,13 @@ export function ApiKeySettings() {
           {createdKey ? (
             <>
               <DialogHeader>
-                <DialogTitle>Copy your new API key</DialogTitle>
+                <DialogTitle>Copia tu nueva clave API</DialogTitle>
                 <DialogDescription>
-                  It won't be shown again. Send it as{" "}
+                  No se volverá a mostrar. Envíala como{" "}
                   <span className="font-mono text-xs">
                     Authorization: Bearer
                   </span>{" "}
-                  to{" "}
+                  a{" "}
                   <span className="font-mono text-xs break-all">{mcpUrl}</span>.
                 </DialogDescription>
               </DialogHeader>
@@ -281,27 +289,27 @@ export function ApiKeySettings() {
                 </code>
                 <CopyButton
                   value={createdKey}
-                  successMessage="API key copied"
-                  label="Copy API key"
+                  successMessage="Clave API copiada"
+                  label="Copiar clave API"
                   variant="ghost"
                   size="icon-sm"
                 />
               </div>
               <DialogFooter>
-                <Button onClick={closeCreateModal}>Done</Button>
+                <Button onClick={closeCreateModal}>Hecho</Button>
               </DialogFooter>
             </>
           ) : (
             <form.AppForm>
               <form.Form className="grid gap-4">
                 <DialogHeader>
-                  <DialogTitle>Create API key</DialogTitle>
+                  <DialogTitle>Crear clave API</DialogTitle>
                 </DialogHeader>
                 <form.AppField name="name">
                   {(field) => (
                     <field.TextField
-                      label="Name"
-                      placeholder="Claude Code on laptop"
+                      label="Nombre"
+                      placeholder="Claude Code en el portátil"
                       maxLength={MAX_KEY_NAME_LENGTH}
                       required
                       autoFocus
@@ -310,14 +318,14 @@ export function ApiKeySettings() {
                 </form.AppField>
                 {showOrganization ? (
                   <p className="text-sm text-muted-foreground">
-                    This key works in {activeOrganizationName}.
+                    Esta clave funciona en {activeOrganizationName}.
                   </p>
                 ) : null}
                 <DialogFooter>
                   <Button variant="ghost" onClick={closeCreateModal}>
-                    Cancel
+                    Cancelar
                   </Button>
-                  <form.SubmitButton>Create</form.SubmitButton>
+                  <form.SubmitButton>Crear</form.SubmitButton>
                 </DialogFooter>
               </form.Form>
             </form.AppForm>

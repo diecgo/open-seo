@@ -27,7 +27,7 @@ function SeoApiStatusBanners({
       {...dataforseoHelpLinkOptions}
       className="font-medium text-primary underline-offset-4 hover:underline"
     >
-      help page
+      página de ayuda
     </Link>
   );
   return (
@@ -36,16 +36,16 @@ function SeoApiStatusBanners({
         <AppBanner variant="warning" icon={icon}>
           {isEveryAppClientAuthMode() ? (
             <>
-              DataForSEO isn&apos;t set up on your Every App gateway yet. An
-              owner or admin sets it with{" "}
-              <code>pnpm everyapp secret set DATAFORSEO_API_KEY</code>, or{" "}
-              <code>TREG_API_TOKEN</code> to use treg instead. Steps on the{" "}
+              DataForSEO aún no está configurado en tu gateway de Every App. Un
+              propietario o administrador lo configura con{" "}
+              <code>pnpm everyapp secret set DATAFORSEO_API_KEY</code>, o{" "}
+              <code>TREG_API_TOKEN</code> para usar treg. Tienes los pasos en la{" "}
               {helpLink}.
             </>
           ) : (
             <>
-              Setup needed: add your DataForSEO API key to use OpenSEO features.
-              See the quick steps on the {helpLink}.
+              Falta configurar: añade tu clave API de DataForSEO para usar las
+              funciones de OpenSEO. Tienes los pasos rápidos en la {helpLink}.
             </>
           )}
         </AppBanner>
@@ -53,8 +53,8 @@ function SeoApiStatusBanners({
 
       {seoApiKeyStatusError ? (
         <AppBanner variant="info" icon={icon}>
-          We could not verify your DataForSEO setup. If features are not
-          working, check the setup steps on the {helpLink}.
+          No hemos podido verificar tu configuración de DataForSEO. Si algo no
+          funciona, revisa los pasos de configuración en la {helpLink}.
         </AppBanner>
       ) : null}
     </>
@@ -76,15 +76,16 @@ function LegacyDockerBanner() {
   }
   return (
     <AppBanner variant="info" icon={<Info className="size-4 shrink-0" />}>
-      A new OpenSEO Docker setup starts in seconds and supports accounts. This
-      image keeps getting updates, and moving keeps your data.{" "}
+      La nueva instalación de OpenSEO con Docker arranca en segundos y admite
+      cuentas. Esta imagen sigue recibiendo actualizaciones y al migrar
+      conservas tus datos.{" "}
       <a
         href={DOCKER_MOVE_URL}
         target="_blank"
         rel="noreferrer"
         className="font-medium text-primary underline-offset-4 hover:underline"
       >
-        How to move
+        Cómo migrar
       </a>{" "}
       ·{" "}
       <button
@@ -95,7 +96,7 @@ function LegacyDockerBanner() {
           setDismissed(true);
         }}
       >
-        Dismiss
+        Descartar
       </button>
     </AppBanner>
   );
@@ -113,31 +114,32 @@ function MissingSeoSetupModal({ onClose }: { onClose: () => void }) {
           <div className="space-y-2">
             <DialogTitle>
               {everyApp
-                ? "DataForSEO isn't set up yet"
-                : "One quick setup step"}
+                ? "DataForSEO aún no está configurado"
+                : "Un paso rápido de configuración"}
             </DialogTitle>
             <DialogDescription>
               {everyApp ? (
                 <>
-                  An owner or admin sets it on your Every App gateway with{" "}
-                  <code>pnpm everyapp secret set DATAFORSEO_API_KEY</code>, or{" "}
-                  <code>TREG_API_TOKEN</code> to use treg instead.
+                  Un propietario o administrador lo configura en tu gateway de
+                  Every App con{" "}
+                  <code>pnpm everyapp secret set DATAFORSEO_API_KEY</code>, o{" "}
+                  <code>TREG_API_TOKEN</code> para usar treg.
                 </>
               ) : (
-                "Add your DataForSEO API key to start using OpenSEO."
+                "Añade tu clave API de DataForSEO para empezar a usar OpenSEO."
               )}
             </DialogDescription>
           </div>
         </DialogHeader>
         <DialogFooter>
           <Button variant="ghost" onClick={onClose}>
-            Dismiss
+            Descartar
           </Button>
           <Button
             nativeButton={false}
             render={<Link {...dataforseoHelpLinkOptions} onClick={onClose} />}
           >
-            Open setup guide
+            Abrir la guía de configuración
             <ExternalLink className="size-4" />
           </Button>
         </DialogFooter>

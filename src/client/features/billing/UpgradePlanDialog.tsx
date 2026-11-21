@@ -27,7 +27,7 @@ function upgradeErrorMessage(error: unknown, fallback: string) {
   // A charge that got no answer may still land, so ask for a look before
   // another try. The standard message for the code is about auto-reload.
   if (getErrorCode(error) === "PAYMENT_ACTION_REQUIRED") {
-    return "Your bank needs more time or a confirmation for this charge. Check your plan on the Billing page in a minute before trying again.";
+    return "Tu banco necesita más tiempo o una confirmación para este cargo. Revisa tu plan en la página de Facturación dentro de un minuto antes de volver a intentarlo.";
   }
   return getStandardErrorMessage(error, fallback);
 }
@@ -70,7 +70,7 @@ export function UpgradePlanDialog({
         queryKey: ["billing"],
         predicate: (query) => query.queryKey[1] !== "upgrade-preview",
       });
-      toast.success(`You're on the ${offer.name}`);
+      toast.success(`Ya tienes el ${offer.name}`);
       void navigate({ to: BILLING_ROUTE });
     },
   });
@@ -90,10 +90,10 @@ export function UpgradePlanDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Upgrade to the {offer.name}</DialogTitle>
+          <DialogTitle>Mejorar al {offer.name}</DialogTitle>
           <DialogDescription>
-            Your plan starts over today. Credits you haven&rsquo;t used carry
-            over until it renews.
+            Tu plan vuelve a empezar hoy. Los créditos que no hayas usado se
+            mantienen hasta que se renueve.
           </DialogDescription>
         </DialogHeader>
 
@@ -102,22 +102,22 @@ export function UpgradePlanDialog({
           // are dollar amounts, so they must not read as one list.
           <dl className="space-y-3 text-sm">
             <div className="flex justify-between gap-4">
-              <dt className="text-muted-foreground">Due today</dt>
+              <dt className="text-muted-foreground">A pagar hoy</dt>
               <dd className="font-medium tabular-nums">
                 {usd(preview.chargeUsd)}
               </dd>
             </div>
             <div className="flex justify-between gap-4">
-              <dt className="text-muted-foreground">Then</dt>
-              <dd className="tabular-nums">{usd(preview.renewalUsd)}/month</dd>
+              <dt className="text-muted-foreground">Después</dt>
+              <dd className="tabular-nums">{usd(preview.renewalUsd)}/mes</dd>
             </div>
             <div className="flex justify-between gap-4 border-t border-border pt-3">
               <dt className="text-muted-foreground">
-                Usage credits until {renewalDate(preview.renewsAt)}
+                Créditos de uso hasta el {renewalDate(preview.renewsAt)}
                 {preview.carriedUsd > 0 ? (
                   <span className="block text-xs tabular-nums">
-                    {usd(offer.monthlyCreditsUsd)} plan +{" "}
-                    {usd(preview.carriedUsd)} unused
+                    {usd(offer.monthlyCreditsUsd)} del plan +{" "}
+                    {usd(preview.carriedUsd)} sin usar
                   </span>
                 ) : null}
               </dt>
@@ -140,8 +140,8 @@ export function UpgradePlanDialog({
               {upgradeErrorMessage(
                 error,
                 mutation.error
-                  ? "We couldn't upgrade your plan. Please try again."
-                  : "We couldn't work out the price of this upgrade. Please try again.",
+                  ? "No hemos podido mejorar tu plan. Vuelve a intentarlo."
+                  : "No hemos podido calcular el precio de esta mejora. Vuelve a intentarlo.",
               )}
             </p>
             {getErrorCode(error) === "PAYMENT_METHOD_REQUIRED" ? (
@@ -156,14 +156,14 @@ export function UpgradePlanDialog({
             disabled={upgrading}
             onClick={() => handleOpenChange(false)}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             pending={upgrading}
             disabled={!preview || upgrading}
             onClick={() => mutation.mutate()}
           >
-            {preview ? `Pay ${usd(preview.chargeUsd)} and upgrade` : "Upgrade"}
+            {preview ? `Pagar ${usd(preview.chargeUsd)} y mejorar` : "Mejorar"}
           </Button>
         </DialogFooter>
       </DialogContent>

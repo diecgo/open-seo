@@ -96,7 +96,7 @@ export function RecentSearches<TItem extends { timestamp: number }>({
               size="icon-xs"
               className="reveal-on-hover"
               onClick={() => onRemove(item.timestamp)}
-              aria-label="Remove from recent searches"
+              aria-label="Quitar de las búsquedas recientes"
             >
               <X />
             </Button>
@@ -108,10 +108,10 @@ export function RecentSearches<TItem extends { timestamp: number }>({
 
   if (embedded) {
     return (
-      <section className="space-y-2 pt-2" aria-label="Recent searches">
+      <section className="space-y-2 pt-2" aria-label="Búsquedas recientes">
         <h2 className="flex items-center gap-2 text-sm text-muted-foreground">
           <History className="size-4" aria-hidden />
-          Recent searches
+          Búsquedas recientes
         </h2>
         {list}
       </section>
@@ -122,7 +122,8 @@ export function RecentSearches<TItem extends { timestamp: number }>({
     <Card size="lg">
       <CardHeader className="flex items-center gap-2 text-muted-foreground">
         <History className="size-4" aria-hidden />
-        {items.length} recent search{items.length !== 1 ? "es" : ""}
+        {items.length}{" "}
+        {items.length !== 1 ? "búsquedas recientes" : "búsqueda reciente"}
       </CardHeader>
 
       <CardContent>{list}</CardContent>

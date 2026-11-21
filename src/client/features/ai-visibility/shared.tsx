@@ -170,7 +170,7 @@ export function AiQueryError({
   return (
     <QueryError
       error={error}
-      fallback="Could not load AI visibility. Please try again."
+      fallback="No se pudo cargar la visibilidad en IA. Inténtalo de nuevo."
       onRetry={retry}
     />
   );
@@ -179,10 +179,23 @@ export function AiQueryError({
 export function AiLoading() {
   return (
     <div className="flex justify-center py-12">
-      <Spinner size="sm" label="Loading AI visibility…" />
+      <Spinner size="sm" label="Cargando visibilidad en IA…" />
     </div>
   );
 }
+
+const AI_MATCH_LABELS = {
+  Mentioned: ["Mencionada", "No mencionada"],
+  Cited: ["Citada", "No citada"],
+} as const;
+
+const AI_RUN_STATUS_LABELS: Record<AiRun["status"], string> = {
+  queued: "En cola",
+  running: "En curso",
+  completed: "Completada",
+  partial: "Parcial",
+  failed: "Fallida",
+};
 
 export function AiMatchBadge({
   value,
@@ -193,7 +206,7 @@ export function AiMatchBadge({
 }) {
   return (
     <Badge variant={value ? "success" : "secondary"}>
-      {value ? positive : positive === "Cited" ? "Not cited" : "Not mentioned"}
+      {AI_MATCH_LABELS[positive][value ? 0 : 1]}
     </Badge>
   );
 }
@@ -201,7 +214,7 @@ export function AiMatchBadge({
 export function aiDate(value: string | null) {
   if (!value) return "—";
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? "Unavailable" : date.toLocaleString();
+  return Number.isNaN(date.getTime()) ? "No disponible" : date.toLocaleString();
 }
 
 export function aiRate(count: number, eligible: number) {
@@ -228,11 +241,11 @@ export function AiRunStatus({ run }: { run: AiRun }) {
         <span className="flex items-center gap-2 font-medium">
           {pending && <Loader2 className="size-4 animate-spin" />}
           {run.trigger === "manual"
-            ? "One-off run"
+            ? "Ejecución puntual"
             : run.trigger === "baseline"
-              ? "First scheduled run"
-              : "Scheduled run"}
-          <Badge variant="secondary">{run.status}</Badge>
+              ? "Primera ejecución programada"
+              : "Ejecución programada"}
+          <Badge variant="secondary">{AI_RUN_STATUS_LABELS[run.status]}</Badge>
         </span>
         <span className="text-xs text-muted-foreground">
           {aiDate(run.createdAt)}
@@ -240,11 +253,11 @@ export function AiRunStatus({ run }: { run: AiRun }) {
       </div>
       <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground">
         <span>
-          {run.completed} of {run.expected} answers collected
+          {run.completed} de {run.expected} respuestas recopiladas
         </span>
-        {run.pending > 0 && <span>{run.pending} pending</span>}
+        {run.pending > 0 && <span>{run.pending} pendientes</span>}
         {run.failed > 0 && (
-          <span className="text-destructive">{run.failed} failed</span>
+          <span className="text-destructive">{run.failed} fallidas</span>
         )}
       </div>
       {pending && (
@@ -267,7 +280,7 @@ export function PromptTrackingWithoutUpgradeButton({
       nativeButton={false}
       render={<Link to="/p/$projectId/ai-visibility" params={{ projectId }} />}
     >
-      Use Prompt Tracking without upgrading
+      Usar Seguimiento de prompts sin mejorar el plan
     </Button>
   );
 }

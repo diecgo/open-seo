@@ -80,11 +80,11 @@ function ChangeTable({
               <TableHead>{keyLabel}</TableHead>
               {showPosition ? (
                 <TableHead className="hidden text-right sm:table-cell">
-                  Position
+                  Posición
                 </TableHead>
               ) : null}
-              <TableHead className="text-right">Clicks</TableHead>
-              <TableHead className="text-right">Change</TableHead>
+              <TableHead className="text-right">Clics</TableHead>
+              <TableHead className="text-right">Cambio</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -110,7 +110,7 @@ function ChangeTable({
                       <span aria-hidden className="px-1">
                         →
                       </span>
-                      <span className="sr-only">to</span>
+                      <span className="sr-only">a</span>
                       <span className="text-foreground">
                         {row.position === null
                           ? "—"
@@ -164,16 +164,16 @@ export function BiggestChangesCard({
   const changesQuery = useQuery(
     changesQueryOptions(projectId, dimension, filterInput),
   );
-  const noun = dimension === "query" ? "queries" : "pages";
-  const keyLabel = dimension === "query" ? "Query" : "Page";
+  const noun = dimension === "query" ? "consulta" : "página";
+  const keyLabel = dimension === "query" ? "Consulta" : "Página";
 
   return (
     <CardShell
-      title="Biggest changes"
+      title="Mayores cambios"
       icon={<TrendingUpDown className="size-5" />}
       titleInfo={
         <span className={cardMetaClass} title={comparedWith}>
-          vs previous period
+          vs. periodo anterior
         </span>
       }
       action={
@@ -185,12 +185,12 @@ export function BiggestChangesCard({
             items={[
               {
                 value: "query",
-                label: "Queries",
+                label: "Consultas",
                 icon: <Search className="size-3.5" />,
               },
               {
                 value: "page",
-                label: "Pages",
+                label: "Páginas",
                 icon: <FileText className="size-3.5" />,
               },
             ]}
@@ -200,7 +200,7 @@ export function BiggestChangesCard({
     >
       <QueryState
         query={changesQuery}
-        errorFallback="Failed to load changes"
+        errorFallback="No se han podido cargar los cambios"
         loading={
           <div className="grid gap-x-12 gap-y-6 lg:grid-cols-2">
             <SkeletonTableRows rows={5} columns={3} />
@@ -213,24 +213,24 @@ export function BiggestChangesCard({
           !changes.connected ? null : (
             <div className="grid gap-x-12 gap-y-6 lg:grid-cols-2">
               <ChangeTable
-                title="Gained clicks"
+                title="Clics ganados"
                 icon={
                   <TrendingUp className="size-4 text-green-700 dark:text-success" />
                 }
                 rows={changes.gained}
                 keyLabel={keyLabel}
-                emptyText={`No ${noun} gained clicks.`}
+                emptyText={`Ninguna ${noun} ha ganado clics.`}
                 showPosition={isWeb}
                 onSelect={(key) => onSelect({ dimension, key })}
               />
               <ChangeTable
-                title="Lost clicks"
+                title="Clics perdidos"
                 icon={
                   <TrendingDown className="size-4 text-red-700 dark:text-destructive" />
                 }
                 rows={changes.lost}
                 keyLabel={keyLabel}
-                emptyText={`No ${noun} lost clicks.`}
+                emptyText={`Ninguna ${noun} ha perdido clics.`}
                 showPosition={isWeb}
                 onSelect={(key) => onSelect({ dimension, key })}
               />

@@ -3,6 +3,13 @@ import { ChevronRight, ExternalLink } from "lucide-react";
 import { TableCell, TableRow } from "@/client/components/ui/table";
 import { SeverityBadge } from "@/client/features/audit/shared";
 import type { LighthouseIssue } from "./types";
+import { categoryLabel } from "./utils";
+
+const SEVERITY_LABEL = {
+  critical: "Crítico",
+  warning: "Aviso",
+  info: "Información",
+} as const;
 
 export function LighthouseIssueRow({ issue }: { issue: LighthouseIssue }) {
   const [open, setOpen] = useState(false);
@@ -23,7 +30,7 @@ export function LighthouseIssueRow({ issue }: { issue: LighthouseIssue }) {
         </TableCell>
         <TableCell className="py-3">
           <SeverityBadge severity={issue.severity}>
-            {issue.severity}
+            {SEVERITY_LABEL[issue.severity]}
           </SeverityBadge>
         </TableCell>
         <TableCell className="py-3">
@@ -38,7 +45,7 @@ export function LighthouseIssueRow({ issue }: { issue: LighthouseIssue }) {
         </TableCell>
         <TableCell className="py-3 hidden sm:table-cell">
           <span className="text-xs text-muted-foreground">
-            {issue.category}
+            {categoryLabel(issue.category)}
           </span>
         </TableCell>
         <TableCell className="py-3 hidden md:table-cell text-right">
@@ -73,7 +80,7 @@ export function LighthouseIssueRow({ issue }: { issue: LighthouseIssue }) {
               {issue.items.length > 0 ? (
                 <details className="text-sm">
                   <summary className="cursor-pointer font-medium text-muted-foreground text-xs">
-                    Affected items ({issue.items.length})
+                    Elementos afectados ({issue.items.length})
                   </summary>
                   <div className="mt-2 space-y-1.5">
                     {issue.items.map((item, itemIndex) => (

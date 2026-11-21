@@ -43,12 +43,12 @@ export function LighthouseIssuesHeader({
   return (
     <>
       <div className="flex items-center justify-between gap-3">
-        <BackButton onClick={onBack}>Site Audit</BackButton>
+        <BackButton onClick={onBack}>Auditoría del sitio</BackButton>
         <span className="text-xs text-muted-foreground">
           {scannedAt
-            ? `Scanned ${new Date(scannedAt).toLocaleString()}`
+            ? `Analizado el ${new Date(scannedAt).toLocaleString()}`
             : isLoading
-              ? "Reading latest issues..."
+              ? "Leyendo los últimos problemas…"
               : null}
         </span>
       </div>
@@ -56,21 +56,21 @@ export function LighthouseIssuesHeader({
       <Card>
         <CardContent className="space-y-4">
           <div className="space-y-1">
-            <h1 className="text-2xl font-semibold">Lighthouse Issues</h1>
+            <h1 className="text-2xl font-semibold">Problemas de Lighthouse</h1>
             <p className="text-sm text-muted-foreground break-all">
-              {finalUrl ?? (isLoading ? "Loading URL..." : null)}
+              {finalUrl ?? (isLoading ? "Cargando URL…" : null)}
             </p>
           </div>
           <LighthouseIssuesSummary scores={scores} metrics={metrics} />
           <div className="flex flex-wrap gap-2">
             <SeverityBadge severity="critical">
-              Critical {severityCounts.critical}
+              Crítico {severityCounts.critical}
             </SeverityBadge>
             <SeverityBadge severity="warning">
-              Warning {severityCounts.warning}
+              Aviso {severityCounts.warning}
             </SeverityBadge>
             <SeverityBadge severity="info">
-              Info {severityCounts.info}
+              Información {severityCounts.info}
             </SeverityBadge>
           </div>
         </CardContent>
@@ -109,7 +109,10 @@ export function LighthouseIssuesToolbar({
   const exportCurrentCategory: ExportPayload =
     category === "all" ? { mode: "issues" } : { mode: "category", category };
 
-  const categoryLabelLower = selectedCategoryLabel.toLowerCase();
+  const categoryLabelLower =
+    selectedCategoryLabel === "SEO"
+      ? "SEO"
+      : selectedCategoryLabel.toLowerCase();
 
   // One menu section per scope. The saved payload has no issue rows, so it
   // offers only the JSON formats.
@@ -123,25 +126,25 @@ export function LighthouseIssuesToolbar({
   }> = [
     {
       id: "current",
-      label: `${selectedCategoryLabel} issues`,
+      label: `Problemas de ${categoryLabelLower}`,
       issues: visibleIssues,
       payload: exportCurrentCategory,
-      copied: `Copied ${categoryLabelLower} issues`,
+      copied: `Problemas de ${categoryLabelLower} copiados`,
     },
     {
       id: "all",
-      label: "All actionable issues",
+      label: "Todos los problemas accionables",
       issues: allIssues,
       payload: { mode: "issues" },
-      copied: "Copied all actionable issues",
+      copied: "Todos los problemas accionables copiados",
     },
     {
       id: "full",
-      label: "Saved Lighthouse payload",
+      label: "Datos guardados de Lighthouse",
       actions: ["copy-json", "json"],
       issues: [],
       payload: { mode: "full" },
-      copied: "Copied saved Lighthouse payload",
+      copied: "Datos guardados de Lighthouse copiados",
     },
   ];
 
@@ -218,7 +221,7 @@ export function LighthouseIssueList({
   if (!issues.length) {
     return (
       <p className="p-4 text-sm text-muted-foreground">
-        {emptyMessage ?? "No actionable issues for this category."}
+        {emptyMessage ?? "No hay problemas accionables en esta categoría."}
       </p>
     );
   }
@@ -227,13 +230,13 @@ export function LighthouseIssueList({
       <TableHeader>
         <TableRow>
           <TableHead className="w-8" />
-          <TableHead className="w-24">Severity</TableHead>
-          <TableHead>Issue</TableHead>
-          <TableHead className="hidden w-28 sm:table-cell">Category</TableHead>
+          <TableHead className="w-24">Gravedad</TableHead>
+          <TableHead>Problema</TableHead>
+          <TableHead className="hidden w-28 sm:table-cell">Categoría</TableHead>
           <TableHead className="hidden w-28 md:table-cell text-right">
-            Impact
+            Impacto
           </TableHead>
-          <TableHead className="w-14 text-right">Score</TableHead>
+          <TableHead className="w-14 text-right">Puntuación</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

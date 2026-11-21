@@ -25,7 +25,10 @@ import {
 const urlsSchema = z.object({
   urls: z
     .string()
-    .refine((value) => splitUrls(value).length > 0, "Enter at least one URL."),
+    .refine(
+      (value) => splitUrls(value).length > 0,
+      "Introduce al menos una URL.",
+    ),
 });
 
 function splitUrls(value: string) {
@@ -35,20 +38,20 @@ function splitUrls(value: string) {
     .filter(Boolean);
 }
 
-const AGENT_PROMPT = "Submit the pages I just published to IndexNow.";
+const AGENT_PROMPT = "Envía a IndexNow las páginas que acabo de publicar.";
 
 type KeyFileHost = Awaited<
   ReturnType<typeof checkIndexNowKeyFiles>
 >["hosts"][number];
 
 const KEY_FILE_LABELS: Record<KeyFileHost["status"], string> = {
-  found: "Found",
-  missing: "Not found",
-  wrong_content: "Should contain only the key",
-  redirects: "Redirects. The file must load at this address itself",
-  moved: "Redirects to another address",
-  unreachable: "Couldn't reach this address",
-  unknown: "Couldn't check right now",
+  found: "Encontrado",
+  missing: "No encontrado",
+  wrong_content: "Solo debe contener la clave",
+  redirects: "Redirige. El archivo tiene que cargarse en esta misma dirección",
+  moved: "Redirige a otra dirección",
+  unreachable: "No se ha podido acceder a esta dirección",
+  unknown: "Ahora mismo no se puede comprobar",
 };
 
 // A host that forwards to another one or doesn't load has no pages to
@@ -56,7 +59,7 @@ const KEY_FILE_LABELS: Record<KeyFileHost["status"], string> = {
 const isUnused = (host: KeyFileHost) =>
   host.status === "moved" || host.status === "unreachable";
 
-const pluralUrls = (count: number) => `${count} URL${count === 1 ? "" : "s"}`;
+const pluralUrls = (count: number) => `${count} URL`;
 
 function downloadKeyFile(key: string) {
   const url = URL.createObjectURL(new Blob([key], { type: "text/plain" }));
@@ -111,15 +114,15 @@ export function IndexNowSettings({ projectId }: { projectId: string }) {
         .reduce((count, host) => count + host.urlCount, 0);
 
       for (const host of failed) {
-        toast.error("Couldn't submit to IndexNow", {
+        toast.error("No se ha podido enviar a IndexNow", {
           description: host.message,
           duration: 10_000,
         });
       }
-      if (sent > 0) toast.success(`Submitted ${pluralUrls(sent)}`);
+      if (sent > 0) toast.success(`${pluralUrls(sent)} enviadas`);
       if (result.skipped.length > 0) {
         toast.warning(
-          `Skipped ${pluralUrls(result.skipped.length)} not on ${setupQuery.data?.domain}`,
+          `${pluralUrls(result.skipped.length)} omitidas por no estar en ${setupQuery.data?.domain}`,
         );
       }
       if (failed.length > 0) {
@@ -135,7 +138,7 @@ export function IndexNowSettings({ projectId }: { projectId: string }) {
         <CardShell title="IndexNow">
           <QueryError
             error={setupQuery.error}
-            fallback="Couldn't load IndexNow."
+            fallback="No se ha podido cargar IndexNow."
             onRetry={() => void setupQuery.refetch()}
             isRetrying={setupQuery.isFetching}
           />
@@ -151,13 +154,14 @@ export function IndexNowSettings({ projectId }: { projectId: string }) {
       <CardShell title="IndexNow">
         <div className="flex flex-1 flex-col gap-4 text-sm">
           <p className="text-muted-foreground">
-            Tell Bing about new and updated pages as soon as you publish them,
-            instead of waiting for it to crawl your site. Bing also powers
-            DuckDuckGo and Yahoo results. Google doesn't use IndexNow.
+            Avisa a Bing de las páginas nuevas y actualizadas en cuanto las
+            publiques, en vez de esperar a que rastree tu web. Bing también
+            alimenta los resultados de DuckDuckGo y Yahoo. Google no usa
+            IndexNow.
           </p>
           {!domain ? (
             <p className="text-muted-foreground">
-              Add your website in General settings to use IndexNow.
+              Añade tu web en los ajustes generales para usar IndexNow.
             </p>
           ) : !key ? (
             <div className="mt-auto flex justify-end">
@@ -167,7 +171,7 @@ export function IndexNowSettings({ projectId }: { projectId: string }) {
                 pending={setUpMutation.isPending}
                 onClick={() => setUpMutation.mutate()}
               >
-                Set up IndexNow
+                Configurar IndexNow
               </Button>
             </div>
           ) : (
@@ -181,10 +185,10 @@ export function IndexNowSettings({ projectId }: { projectId: string }) {
               />
               <Step
                 number={2}
-                title="Submit pages when you publish or update them"
+                title="Envía las páginas cuando las publiques o actualices"
               >
                 <p className="text-muted-foreground">
-                  Paste just the pages that changed, not your whole site.
+                  Pega solo las páginas que han cambiado, no toda la web.
                 </p>
                 <form.AppForm>
                   <form.Form className="space-y-3">
@@ -193,34 +197,34 @@ export function IndexNowSettings({ projectId }: { projectId: string }) {
                         <field.TextareaField
                           label={
                             <span className="text-xs font-normal text-muted-foreground">
-                              URLs (one per line)
+                              URL (una por línea)
                             </span>
                           }
-                          placeholder={`https://${domain}/new-page`}
+                          placeholder={`https://${domain}/pagina-nueva`}
                           className="min-h-28 font-mono text-xs"
                         />
                       )}
                     </form.AppField>
-                    <form.SubmitButton>Submit to IndexNow</form.SubmitButton>
+                    <form.SubmitButton>Enviar a IndexNow</form.SubmitButton>
                   </form.Form>
                 </form.AppForm>
                 <div className="space-y-1 rounded-md bg-muted/50 p-3 text-muted-foreground">
                   <div className="flex flex-wrap items-center gap-2">
                     <span>
-                      Or ask your agent:{" "}
+                      O pídeselo a tu agente:{" "}
                       <span className="text-foreground">"{AGENT_PROMPT}"</span>
                     </span>
                     <CopyButton
                       value={AGENT_PROMPT}
-                      successMessage="Prompt copied"
+                      successMessage="Prompt copiado"
                       size="icon-xs"
                       variant="ghost"
-                      label="Copy prompt"
+                      label="Copiar prompt"
                     />
                   </div>
                   <p className="text-xs">
-                    If it can edit your site's code, it can add the key file
-                    too.
+                    Si puede editar el código de tu web, también puede añadir el
+                    archivo de clave.
                   </p>
                 </div>
               </Step>
@@ -259,7 +263,9 @@ function KeyFileStep({
     <Step
       number={1}
       title={
-        verified ? "Your key file is set up" : "Add this key file to your site"
+        verified
+          ? "Tu archivo de clave está configurado"
+          : "Añade este archivo de clave a tu web"
       }
     >
       {verified ? null : (
@@ -271,10 +277,10 @@ function KeyFileStep({
             onClick={() => downloadKeyFile(indexNowKey)}
           >
             <Download className="size-4" />
-            Download key file
+            Descargar archivo de clave
           </Button>
           <p className="text-muted-foreground">
-            Put it at the root of your site, so it opens at:
+            Ponlo en la raíz de tu web para que se abra en:
           </p>
         </>
       )}
@@ -300,7 +306,7 @@ function KeyFileStep({
         pending={isChecking}
         onClick={onCheck}
       >
-        Check again
+        Volver a comprobar
       </Button>
       {verified ? null : (
         <Collapsible>
@@ -309,28 +315,29 @@ function KeyFileStep({
               className="size-3.5 transition-transform group-data-[panel-open]:rotate-90"
               aria-hidden
             />
-            How do I add a file to my site?
+            ¿Cómo añado un archivo a mi web?
           </CollapsibleTrigger>
           <CollapsibleContent>
             <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
               <li>
-                Site built from code: put the file in the folder your site
-                serves as-is, often called <code>public</code> or{" "}
+                Web hecha con código: pon el archivo en la carpeta que tu web
+                sirve tal cual, que suele llamarse <code>public</code> o{" "}
                 <code>static</code>.
               </li>
               <li>
-                WordPress: upload it with your host's file manager or SFTP to
-                the folder that holds <code>wp-config.php</code>. SEO plugins
-                like Rank Math can also submit to IndexNow for you.
+                WordPress: súbelo con el gestor de archivos de tu hosting o por
+                SFTP a la carpeta que contiene <code>wp-config.php</code>.
+                Plugins de SEO como Rank Math también pueden enviar a IndexNow
+                por ti.
               </li>
               <li>
-                On Cloudflare: turn on Crawler Hints in Cloudflare's caching
-                settings and it submits changed pages to IndexNow for you.
+                En Cloudflare: activa Crawler Hints en los ajustes de caché de
+                Cloudflare y enviará por ti las páginas modificadas a IndexNow.
               </li>
               <li>
-                Website builders like Webflow, Shopify, Squarespace and Wix
-                usually don't let you add files at the root. Check whether yours
-                already supports IndexNow.
+                Los creadores de webs como Webflow, Shopify, Squarespace y Wix
+                no suelen dejarte añadir archivos en la raíz. Comprueba si el
+                tuyo ya es compatible con IndexNow.
               </li>
             </ul>
           </CollapsibleContent>

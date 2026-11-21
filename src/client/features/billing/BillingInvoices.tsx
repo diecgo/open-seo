@@ -43,6 +43,14 @@ function formatAmount(total: number, currency: string) {
   }).format(total);
 }
 
+const INVOICE_STATUS_LABELS: Record<string, string> = {
+  draft: "borrador",
+  open: "pendiente",
+  paid: "pagada",
+  uncollectible: "incobrable",
+  void: "anulada",
+};
+
 const invoicesQueryOptions = queryOptions({
   queryKey: ["billing", "invoices"],
   queryFn: () => listBillingInvoices(),
@@ -94,18 +102,18 @@ function InvoiceEmailsToggle({
           onCheckedChange={(enabled) => mutation.mutate(enabled)}
         />
         <FieldLabel htmlFor="billing-invoice-emails">
-          Email me a receipt for each invoice
+          Enviarme un recibo por email de cada factura
         </FieldLabel>
       </div>
       <FieldDescription>
-        Stripe sends the receipt to the billing email on your account after each
-        payment.
+        Stripe envía el recibo al email de facturación de tu cuenta después de
+        cada pago.
       </FieldDescription>
       {mutation.isError ? (
         <p role="alert" className="text-sm text-destructive">
           {getStandardErrorMessage(
             mutation.error,
-            "We couldn't save this setting. Please try again.",
+            "No hemos podido guardar este ajuste. Vuelve a intentarlo.",
           )}
         </p>
       ) : null}
@@ -130,7 +138,7 @@ function InvoiceTable() {
     return (
       <QueryError
         error={invoicesQuery.error}
-        fallback="We couldn't load your invoices. Please try again."
+        fallback="No hemos podido cargar tus facturas. Vuelve a intentarlo."
         onRetry={() => void invoicesQuery.refetch()}
         isRetrying={invoicesQuery.isFetching}
       />
@@ -144,8 +152,8 @@ function InvoiceTable() {
       <EmptyState
         variant="plain"
         icon={ReceiptText}
-        title="No invoices yet"
-        description="Invoices for your plan and credit purchases show up here."
+        title="Aún no hay facturas"
+        description="Aquí aparecerán las facturas de tu plan y de tus compras de créditos."
       />
     );
   }
@@ -155,13 +163,13 @@ function InvoiceTable() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Invoice</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Billing period</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead>Factura</TableHead>
+            <TableHead>Fecha</TableHead>
+            <TableHead>Periodo de facturación</TableHead>
+            <TableHead>Importe</TableHead>
+            <TableHead>Estado</TableHead>
             <TableHead>
-              <span className="sr-only">Download</span>
+              <span className="sr-only">Descargar</span>
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -182,7 +190,9 @@ function InvoiceTable() {
               <TableCell className="tabular-nums">
                 {formatAmount(invoice.total, invoice.currency)}
               </TableCell>
-              <TableCell className="capitalize">{invoice.status}</TableCell>
+              <TableCell className="capitalize">
+                {INVOICE_STATUS_LABELS[invoice.status ?? ""] ?? invoice.status}
+              </TableCell>
               <TableCell className="text-right">
                 {invoice.pdfUrl ? (
                   <a
@@ -193,7 +203,7 @@ function InvoiceTable() {
                       variant: "outline",
                       size: "sm",
                     })}
-                    aria-label={`Download ${invoice.number ?? "invoice"} PDF`}
+                    aria-label={`Descargar PDF de ${invoice.number ?? "la factura"}`}
                   >
                     <Download />
                     PDF
@@ -206,8 +216,8 @@ function InvoiceTable() {
       </Table>
       {hasMore ? (
         <p className="text-xs text-muted-foreground">
-          Showing your newest invoices. Find older invoices under Manage
-          subscription.
+          Se muestran tus facturas más recientes. Encontrarás las anteriores en
+          Gestionar suscripción.
         </p>
       ) : null}
     </div>

@@ -80,22 +80,24 @@ function LargeCrawlDialog({
   return (
     <ConfirmDialog
       title={
-        priced ? `Render up to ${pageCount} pages?` : "Start a large audit?"
+        priced
+          ? `¿Renderizar hasta ${pageCount} páginas?`
+          : "¿Lanzar una auditoría grande?"
       }
-      confirmLabel={priced ? "Start audit" : "Continue"}
+      confirmLabel={priced ? "Lanzar auditoría" : "Continuar"}
       onConfirm={onConfirm}
       onClose={onClose}
     >
       {priced ? (
         <>
-          {RENDERING_COST_NOTE} Rendered audits can take longer than regular
-          audits.
+          {RENDERING_COST_NOTE} Las auditorías con renderizado pueden tardar más
+          que las normales.
           <span className="mt-3 block font-semibold text-foreground">
             {renderingCostText(pages)}
           </span>
         </>
       ) : (
-        `You are about to crawl ${pageCount} pages. This is okay, but it may take a while. Continue?`
+        `Vas a rastrear ${pageCount} páginas. No pasa nada, pero puede tardar un rato. ¿Continuar?`
       )}
     </ConfirmDialog>
   );

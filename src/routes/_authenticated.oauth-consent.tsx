@@ -25,7 +25,7 @@ import { switchOrganization } from "@/serverFunctions/organization";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_authenticated/oauth-consent")({
-  head: () => pageHead("Authorize MCP access"),
+  head: () => pageHead("Autorizar acceso MCP"),
   // Reads the authorize params from window.location, which only the browser
   // has.
   ssr: false,
@@ -33,8 +33,8 @@ export const Route = createFileRoute("/_authenticated/oauth-consent")({
 });
 
 const PERMISSIONS = [
-  "Read your projects, keywords, and audits",
-  "Run tools and save results",
+  "Leer tus proyectos, palabras clave y auditorías",
+  "Ejecutar herramientas y guardar resultados",
 ];
 
 // Where the approval is sent. Only https is left out, so an app link or a
@@ -60,7 +60,7 @@ function OAuthConsentPage() {
     <div className="flex w-full max-w-md flex-col items-center">
       <QueryState
         query={requestQuery}
-        errorFallback="We couldn't load this request."
+        errorFallback="No hemos podido cargar esta solicitud."
         loading={<Spinner />}
       >
         {(request) => <ConsentRequest query={query} request={request} />}
@@ -124,7 +124,7 @@ function ConsentRequest({
       } = await response.json();
 
       if (!response.ok) {
-        setError(data.error ?? "Unable to complete authorization.");
+        setError(data.error ?? "No se ha podido completar la autorización.");
       } else if (data.redirectTo) {
         window.location.assign(data.redirectTo);
         // An app link like claude:// hands off to the desktop app and leaves
@@ -132,10 +132,12 @@ function ConsentRequest({
         if (/^https?:/i.test(data.redirectTo)) return;
         setAppRedirectUrl(data.redirectTo);
       } else {
-        setError("Authorization response did not include a redirect URL.");
+        setError(
+          "La respuesta de autorización no incluía una URL de redirección.",
+        );
       }
     } catch {
-      setError("We couldn't reach OpenSEO. Please try again.");
+      setError("No hemos podido conectar con OpenSEO. Inténtalo de nuevo.");
     }
     setPendingAction(null);
   }
@@ -145,7 +147,7 @@ function ConsentRequest({
       <CardContent>
         <AuthPageCard
           className="max-w-none"
-          title={`Allow ${request.clientName ?? "this app"} to access your OpenSEO account?`}
+          title={`¿Permitir que ${request.clientName ?? "esta app"} acceda a tu cuenta de OpenSEO?`}
         >
           <div className="flex items-center gap-3 text-sm">
             <div className="flex size-7 shrink-0 items-center justify-center rounded-full border border-border bg-muted/50">
@@ -163,13 +165,13 @@ function ConsentRequest({
               disabled={pendingAction !== null}
               onClick={() => signOutAndRedirect()}
             >
-              Switch account
+              Cambiar de cuenta
             </Button>
           </div>
 
           <dl className="space-y-3 rounded-lg border border-border bg-muted/50 px-3 py-3 text-sm sm:px-4">
             <div className="flex items-center justify-between gap-4">
-              <dt className="shrink-0 text-muted-foreground">Redirects to</dt>
+              <dt className="shrink-0 text-muted-foreground">Redirige a</dt>
               <dd className="truncate font-medium" title={request.redirectUri}>
                 {redirectTarget(request.redirectUri)}
               </dd>
@@ -179,7 +181,9 @@ function ConsentRequest({
             menu switcher and the Settings organization columns. */}
             {organizations.length > 1 ? (
               <div className="flex items-center justify-between gap-4">
-                <dt className="shrink-0 text-muted-foreground">Workspace</dt>
+                <dt className="shrink-0 text-muted-foreground">
+                  Espacio de trabajo
+                </dt>
                 <dd className="min-w-0">
                   <Select
                     items={organizations.map((organization) => ({
@@ -201,7 +205,7 @@ function ConsentRequest({
                   >
                     <SelectTrigger
                       size="sm"
-                      aria-label="Workspace"
+                      aria-label="Espacio de trabajo"
                       className="max-w-full font-medium"
                     >
                       <SelectValue />
@@ -240,14 +244,14 @@ function ConsentRequest({
           {appRedirectUrl ? (
             <div className="space-y-3 text-center">
               <p className="text-sm text-muted-foreground">
-                Opening your app... Didn't open?
+                Abriendo tu app… ¿No se ha abierto?
               </p>
               <Button
                 className="w-full"
                 nativeButton={false}
                 render={<a href={appRedirectUrl} />}
               >
-                Open app
+                Abrir app
               </Button>
             </div>
           ) : (
@@ -259,7 +263,7 @@ function ConsentRequest({
                 disabled={pendingAction !== null || switchWorkspace.isPending}
                 onClick={() => void respond(true)}
               >
-                Allow
+                Permitir
               </Button>
               <Button
                 type="button"
@@ -269,7 +273,7 @@ function ConsentRequest({
                 disabled={pendingAction !== null}
                 onClick={() => void respond(false)}
               >
-                Deny
+                Denegar
               </Button>
             </div>
           )}

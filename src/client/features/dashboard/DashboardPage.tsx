@@ -67,7 +67,7 @@ export function DashboardPage({
       <div className="px-4 py-4 md:px-6 md:py-6">
         <QueryError
           error={activationQuery.error}
-          fallback="Failed to load dashboard"
+          fallback="No se ha podido cargar el panel"
           onRetry={() => void activationQuery.refetch()}
           isRetrying={activationQuery.isFetching}
         />
@@ -99,10 +99,11 @@ export function DashboardPage({
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h1 className="text-2xl font-semibold">
-              {activation.domain || "Dashboard"}
+              {activation.domain || "Panel"}
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              Search visibility, links and site health in one place.
+              Visibilidad en búsquedas, enlaces y salud del sitio en un solo
+              lugar.
             </p>
           </div>
           <Button
@@ -111,7 +112,7 @@ export function DashboardPage({
             render={<Link to="/p/$projectId/settings" params={{ projectId }} />}
           >
             <Settings />
-            Project settings
+            Ajustes del proyecto
           </Button>
         </div>
 
@@ -134,7 +135,7 @@ export function DashboardPage({
         {activationQuery.isError ? (
           <QueryError
             error={activationQuery.error}
-            fallback="Failed to refresh dashboard"
+            fallback="No se ha podido actualizar el panel"
             onRetry={() => void activationQuery.refetch()}
             isRetrying={activationQuery.isFetching}
           />
@@ -143,7 +144,7 @@ export function DashboardPage({
         {overviewQuery.isError ? (
           <QueryError
             error={overviewQuery.error}
-            fallback="Failed to load site health"
+            fallback="No se ha podido cargar la salud del sitio"
             onRetry={() => void overviewQuery.refetch()}
             isRetrying={overviewQuery.isFetching}
           />
@@ -163,12 +164,12 @@ export function DashboardPage({
           }}
           className="gap-4"
         >
-          <TabsList aria-label="Your website dashboard" className="h-9">
+          <TabsList aria-label="Panel de tu sitio web" className="h-9">
             {(
               [
-                ["overview", "Overview"],
-                ["keywords", "Keywords"],
-                ["backlinks", "Backlinks"],
+                ["overview", "Resumen"],
+                ["keywords", "Palabras clave"],
+                ["backlinks", "Enlaces entrantes"],
               ] as const
             ).map(([value, label]) => (
               <TabsTrigger key={value} value={value} className="px-3">
@@ -233,8 +234,8 @@ export function DashboardPage({
               <EmptyState
                 variant="card"
                 icon={Link2}
-                title="See who links to your website"
-                description="Add your website to track new and lost backlinks and the sites sending them."
+                title="Descubre quién enlaza a tu sitio web"
+                description="Añade tu sitio web para seguir los enlaces entrantes nuevos y perdidos y los sitios que los envían."
                 action={
                   <Button
                     nativeButton={false}
@@ -245,7 +246,7 @@ export function DashboardPage({
                       />
                     }
                   >
-                    Add your website
+                    Añade tu sitio web
                   </Button>
                 }
               />

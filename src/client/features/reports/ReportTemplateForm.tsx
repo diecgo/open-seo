@@ -18,22 +18,22 @@ import type { ReportTemplate } from "@/types/schemas/report-templates";
 // One form for create and edit. Shape only, as at every other boundary: the
 // caps come back from the service with their copy and show in a toast.
 const formSchema = z.object({
-  name: z.string().trim().min(1, "Give the template a name."),
+  name: z.string().trim().min(1, "Ponle un nombre a la plantilla."),
   description: z
     .string()
     .trim()
-    .min(1, "Say in one line when to use this template."),
+    .min(1, "Indica en una línea cuándo usar esta plantilla."),
   instructions: z
     .string()
     .trim()
-    .min(1, "Say who the report is for and which sections it has."),
+    .min(1, "Indica para quién es el informe y qué secciones tiene."),
 });
 
-const INSTRUCTIONS_PLACEHOLDER = `Audience: the client's marketing lead, not technical.
-Sections, in order: Where we are / What we did this month / What moved / What to expect next.
-Tone: plain and confident. Gloss every SEO term. No exclamation points.
-Sign off as: Acme SEO
-Accent: #1C4ED8`;
+const INSTRUCTIONS_PLACEHOLDER = `Público: responsable de marketing del cliente, sin perfil técnico.
+Secciones, en orden: Dónde estamos / Qué hicimos este mes / Qué se movió / Qué esperar.
+Tono: claro y seguro. Explica cada término SEO. Sin exclamaciones.
+Firma como: Acme SEO
+Color de acento: #1C4ED8`;
 
 export function ReportTemplateForm({
   projectId,
@@ -64,7 +64,7 @@ export function ReportTemplateForm({
         is_update: !result.created,
         source: "app",
       });
-      toast.success(result.created ? "Template created" : "Template saved");
+      toast.success(result.created ? "Plantilla creada" : "Plantilla guardada");
       onSaved();
     },
   });
@@ -92,15 +92,15 @@ export function ReportTemplateForm({
           <form.Form className="flex flex-col gap-4">
             <DialogHeader>
               <DialogTitle>
-                {template ? "Edit template" : "New template"}
+                {template ? "Editar plantilla" : "Nueva plantilla"}
               </DialogTitle>
             </DialogHeader>
 
             <form.AppField name="name">
               {(field) => (
                 <field.TextField
-                  label="Name"
-                  placeholder="Monthly client check-in"
+                  label="Nombre"
+                  placeholder="Revisión mensual del cliente"
                   required
                 />
               )}
@@ -109,9 +109,9 @@ export function ReportTemplateForm({
             <form.AppField name="description">
               {(field) => (
                 <field.TextField
-                  label="Description"
-                  description="One line saying when to use it. This is what an agent reads to decide."
-                  placeholder="The monthly update we send retainer clients."
+                  label="Descripción"
+                  description="Una línea que diga cuándo usarla. Es lo que lee un agente para decidir."
+                  placeholder="La actualización mensual que enviamos a los clientes con cuota fija."
                   required
                 />
               )}
@@ -120,8 +120,8 @@ export function ReportTemplateForm({
             <form.AppField name="instructions">
               {(field) => (
                 <field.TextareaField
-                  label="Instructions"
-                  description="Brand voice for the whole project lives in Context › Writing preferences."
+                  label="Instrucciones"
+                  description="La voz de marca de todo el proyecto está en Contexto › Preferencias de redacción."
                   className="h-56 font-mono leading-relaxed md:text-xs"
                   placeholder={INSTRUCTIONS_PLACEHOLDER}
                   required
@@ -136,10 +136,10 @@ export function ReportTemplateForm({
                 onClick={onClose}
                 disabled={saveMutation.isPending}
               >
-                Cancel
+                Cancelar
               </Button>
               <form.SubmitButton>
-                {template ? "Save changes" : "Create template"}
+                {template ? "Guardar cambios" : "Crear plantilla"}
               </form.SubmitButton>
             </DialogFooter>
           </form.Form>

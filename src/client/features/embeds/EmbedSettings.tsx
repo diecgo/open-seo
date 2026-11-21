@@ -28,10 +28,10 @@ const OVERVIEW = "overview";
 
 // The overview has every widget; the others are one widget each.
 const VIEWS: { value: string; label: string; widget?: EmbedWidget }[] = [
-  { value: OVERVIEW, label: "Overview" },
+  { value: OVERVIEW, label: "Resumen" },
   {
     value: EmbedWidget.Rankings,
-    label: "Rank Tracking",
+    label: "Seguimiento de posiciones",
     widget: EmbedWidget.Rankings,
   },
   {
@@ -79,11 +79,11 @@ function EmbedSettingsCard({ projectId }: { projectId: string }) {
 
   return (
     <section id="embed-links" className="scroll-mt-6">
-      <CardShell title="Embed links">
+      <CardShell title="Enlaces para insertar">
         {linkQuery.isError ? (
           <QueryError
             error={linkQuery.error}
-            fallback="Couldn't load embed links."
+            fallback="No se han podido cargar los enlaces para insertar."
             onRetry={() => void linkQuery.refetch()}
             isRetrying={linkQuery.isFetching}
           />
@@ -92,12 +92,12 @@ function EmbedSettingsCard({ projectId }: { projectId: string }) {
             <Field orientation="horizontal">
               <FieldContent>
                 <FieldLabel htmlFor={switchId}>
-                  Show this project in another dashboard
+                  Mostrar este proyecto en otro panel
                 </FieldLabel>
                 <FieldDescription>
                   {token
-                    ? "Turning this off stops every embed link in this project."
-                    : "Live, read-only views for any site that can embed a page. Anyone with a link can view it."}
+                    ? "Si lo desactivas, dejarán de funcionar todos los enlaces para insertar de este proyecto."
+                    : "Vistas en directo y de solo lectura para cualquier sitio que pueda insertar una página. Cualquiera con el enlace puede verlas."}
                 </FieldDescription>
               </FieldContent>
               <Switch
@@ -116,7 +116,7 @@ function EmbedSettingsCard({ projectId }: { projectId: string }) {
                   value={view}
                   onValueChange={(value) => value && setView(value)}
                 >
-                  <SelectTrigger aria-label="View" className="w-44">
+                  <SelectTrigger aria-label="Vista" className="w-44">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -130,11 +130,11 @@ function EmbedSettingsCard({ projectId }: { projectId: string }) {
                 <Input
                   readOnly
                   value={url}
-                  aria-label="Embed link"
+                  aria-label="Enlace para insertar"
                   className="min-w-0 flex-1 font-mono text-xs"
                   onFocus={(event) => event.currentTarget.select()}
                 />
-                <CopyButton value={url} successMessage="Link copied" />
+                <CopyButton value={url} successMessage="Enlace copiado" />
               </div>
             ) : null}
           </div>

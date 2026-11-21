@@ -46,11 +46,13 @@ describe("dashboard onboarding visibility", () => {
       ...fresh,
       dismissedSteps: setupSteps.map((step) => step.id),
     });
-    expect(markup).toContain("saved for later");
+    expect(markup).toContain("guardados para más tarde");
   });
 
   it("shows the skills step only once an agent is connected, and hides the checklist once dismissed", () => {
-    expect(renderChecklist(fresh)).not.toContain("Try OpenSEO skills");
+    expect(renderChecklist(fresh)).not.toContain(
+      "Prueba las skills de OpenSEO",
+    );
 
     const allOtherStepsComplete: DashboardActivation = {
       ...fresh,
@@ -63,7 +65,7 @@ describe("dashboard onboarding visibility", () => {
     };
 
     expect(renderChecklist(allOtherStepsComplete)).toContain(
-      "Try OpenSEO skills",
+      "Prueba las skills de OpenSEO",
     );
     expect(
       renderChecklist({

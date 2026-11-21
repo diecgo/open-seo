@@ -87,8 +87,8 @@ function MessageActions({
     >
       <CopyButton
         value={messageText(message)}
-        successMessage="Message copied"
-        label="Copy message"
+        successMessage="Mensaje copiado"
+        label="Copiar mensaje"
         variant="ghost"
         size="icon-xs"
       />
@@ -96,8 +96,8 @@ function MessageActions({
         <Button
           variant="ghost"
           size="icon-xs"
-          aria-label="Edit message"
-          title="Edit and resend"
+          aria-label="Editar mensaje"
+          title="Editar y reenviar"
           onClick={onStartEdit}
         >
           <Pencil />
@@ -107,8 +107,8 @@ function MessageActions({
         <Button
           variant="ghost"
           size="icon-xs"
-          aria-label="Undo from this message"
-          title="Undo — remove this message and everything after it"
+          aria-label="Deshacer desde este mensaje"
+          title="Deshacer: quita este mensaje y todo lo que viene después"
           onClick={onUndo}
         >
           <Undo2 />
@@ -140,7 +140,7 @@ function ReasoningBlock({
         ) : (
           <ChevronRight className="size-3 transition-transform group-data-panel-open:rotate-90" />
         )}
-        <span>{isStreaming ? "Thinking…" : "Thought process"}</span>
+        <span>{isStreaming ? "Pensando…" : "Razonamiento"}</span>
       </CollapsibleTrigger>
       <CollapsibleContent className="mt-1.5 whitespace-pre-wrap border-l-2 border-border pl-3 text-xs">
         {part.text}
@@ -160,8 +160,8 @@ function ToolBadge({
 }) {
   const label = humanizeToolLabel(part.type);
   const skillName = skillNameFromPart(part);
-  const runningText = skillName ? `Activating ${skillName}` : label;
-  const doneText = skillName ? `Skill: ${skillName}` : label;
+  const runningText = skillName ? `Activando ${skillName}` : label;
+  const doneText = skillName ? `Habilidad: ${skillName}` : label;
   const state = "state" in part ? part.state : undefined;
   const isDone = state === "output-available";
   // A "running" part in a message that is no longer being generated never
@@ -231,10 +231,10 @@ export function ChatMessage({
           />
           <div className="flex gap-1.5">
             <Button variant="ghost" size="xs" onClick={() => setEditing(false)}>
-              Cancel
+              Cancelar
             </Button>
             <Button size="xs" onClick={submit}>
-              Save & resend
+              Guardar y reenviar
             </Button>
           </div>
         </div>

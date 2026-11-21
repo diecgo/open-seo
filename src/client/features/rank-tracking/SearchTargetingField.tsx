@@ -35,7 +35,7 @@ export function SearchTargetingField({
   return (
     <FieldSet className="gap-2" data-invalid={error ? true : undefined}>
       <FieldLegend variant="label" className="mb-0">
-        Search Targeting
+        Segmentación de la búsqueda
       </FieldLegend>
       <RadioGroup
         value={mode}
@@ -51,7 +51,7 @@ export function SearchTargetingField({
         <Field orientation="horizontal" className="w-auto">
           <RadioGroupItem value="national" id={`${id}-national`} />
           <FieldLabel htmlFor={`${id}-national`} className="font-normal">
-            National
+            Nacional
           </FieldLabel>
         </Field>
         <Field orientation="horizontal" className="w-auto">
@@ -64,26 +64,28 @@ export function SearchTargetingField({
       <FieldDescription>
         {mode === "local" ? (
           <>
-            <span className="font-medium text-success">Best for:</span> "near
-            me" queries, city/county keywords, service-area pages.
+            <span className="font-medium text-success">Ideal para:</span>{" "}
+            búsquedas «cerca de mí», palabras clave de ciudad o provincia y
+            páginas de zona de servicio.
           </>
         ) : (
           <>
-            Local targeting can understate rankings for non-geo-modified terms.
+            La segmentación local puede infravalorar las posiciones de términos
+            sin modificador geográfico.
           </>
         )}
       </FieldDescription>
       {mode === "local" && (
         <>
           <FieldLabel htmlFor={`${id}-city`} className="sr-only">
-            City or region
+            Ciudad o región
           </FieldLabel>
           <SerpLocationCombobox
             id={`${id}-city`}
             value={locationName}
             onChange={onLocationNameChange}
             countryCode={countryCode}
-            placeholder="Search cities..."
+            placeholder="Buscar ciudades…"
             invalid={Boolean(error)}
           />
         </>

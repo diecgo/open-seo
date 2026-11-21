@@ -38,9 +38,9 @@ const BACKLINKS_RESULTS_TABS: Array<{
   tab: BacklinksSearchState["tab"];
   label: string;
 }> = [
-  { tab: "backlinks", label: "Backlinks" },
-  { tab: "domains", label: "Referring Domains" },
-  { tab: "pages", label: "Top Pages" },
+  { tab: "backlinks", label: "Enlaces entrantes" },
+  { tab: "domains", label: "Dominios de referencia" },
+  { tab: "pages", label: "Páginas principales" },
 ];
 
 export function BacklinksResultsCard({
@@ -171,7 +171,9 @@ export function BacklinksResultsCard({
             <>
               <ExportMenu
                 actions={["sheets", "csv"]}
-                scopes={[{ id: "page", label: "Current page · selected view" }]}
+                scopes={[
+                  { id: "page", label: "Página actual · vista seleccionada" },
+                ]}
                 disabled={exportTable.rows.length === 0}
                 onExport={(format) =>
                   void exportRows({
@@ -216,9 +218,9 @@ export function BacklinksResultsCard({
                   {
                     value: "one",
                     icon: <Rows3 />,
-                    label: "One per domain",
+                    label: "Uno por dominio",
                   },
-                  { value: "all", icon: <List />, label: "All links" },
+                  { value: "all", icon: <List />, label: "Todos los enlaces" },
                 ]}
               />
             </>

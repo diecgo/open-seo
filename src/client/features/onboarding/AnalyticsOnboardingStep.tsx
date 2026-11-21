@@ -50,7 +50,7 @@ export function AnalyticsOnboardingStep({
     // A failed email sync shouldn't trap anyone in onboarding.
     onError: () =>
       toast.error(
-        "We couldn't save your email choice. You can change it in Settings.",
+        "No hemos podido guardar tu preferencia de emails. Puedes cambiarla en Ajustes.",
       ),
     onSettled: onNext,
   });
@@ -64,45 +64,47 @@ export function AnalyticsOnboardingStep({
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">
-          Help make OpenSEO better
+          Ayúdanos a mejorar OpenSEO
         </h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          You can change these anytime in Settings. See our{" "}
+          Puedes cambiarlo cuando quieras en Ajustes. Consulta nuestra{" "}
           <a
             href={PRIVACY_URL}
             target="_blank"
             rel="noreferrer"
             className="text-foreground underline underline-offset-2"
           >
-            Privacy Policy
+            Política de privacidad
           </a>
           .
         </p>
       </div>
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Usage analytics</p>
+          <p className="text-sm">Analítica de uso</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Share usage analytics and session replays to help improve OpenSEO.
+            Comparte la analítica de uso y las grabaciones de sesión para ayudar
+            a mejorar OpenSEO.
           </p>
         </div>
         <Switch
           checked={analyticsOn}
           onCheckedChange={setAnalytics}
-          aria-label="Share usage analytics"
+          aria-label="Compartir analítica de uso"
         />
       </div>
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Product updates</p>
+          <p className="text-sm">Novedades del producto</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Occasional emails about new features and tips. Unsubscribe anytime.
+            Emails ocasionales sobre funciones nuevas y consejos. Puedes darte
+            de baja cuando quieras.
           </p>
         </div>
         <Switch
           checked={productUpdatesOn}
           onCheckedChange={setProductUpdates}
-          aria-label="Get product update emails"
+          aria-label="Recibir emails con novedades del producto"
         />
       </div>
       <WizardFooter
@@ -119,7 +121,7 @@ export function AnalyticsOnboardingStep({
               })
             }
           >
-            Continue
+            Continuar
             <ArrowRight className="size-4" />
           </Button>
         }

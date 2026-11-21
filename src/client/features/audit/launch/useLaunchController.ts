@@ -36,7 +36,7 @@ function getLaunchValidationErrors(
 ) {
   return createFormValidationErrors({
     fields: {
-      url: !value.url.trim() && validate.url ? "Please enter a URL." : null,
+      url: !value.url.trim() && validate.url ? "Introduce una URL." : null,
       excludePathsInput: validate.excludePaths
         ? getExcludePathsError(value)
         : null,
@@ -56,7 +56,7 @@ function getExcludePathsError(value: LaunchFormValues) {
     /^https?:\/\//i.test(url) ? url : `https://${url}`,
   );
   return excludingPath
-    ? `"${excludingPath}" excludes the URL the audit starts from.`
+    ? `"${excludingPath}" excluye la URL desde la que empieza la auditoría.`
     : null;
 }
 
@@ -123,7 +123,7 @@ export function useLaunchController({
           renderJavaScript: value.renderJavaScript,
           excludePaths: splitExcludePathsInput(value.excludePathsInput),
         });
-        toast.success("Audit started!");
+        toast.success("¡Auditoría iniciada!");
         onAuditStarted(result.auditId);
       } catch (error) {
         // Starting an audit refuses for credits only when the rendering hold
@@ -134,7 +134,10 @@ export function useLaunchController({
         setOutOfCredits(creditsShort);
         const message = creditsShort
           ? renderingCreditsNeededText(effectiveMaxPages)
-          : getStandardErrorMessage(error, "Failed to start audit");
+          : getStandardErrorMessage(
+              error,
+              "No se ha podido iniciar la auditoría",
+            );
         formApi.setErrorMap({
           onSubmit: createFormValidationErrors({ form: message }),
         });
@@ -194,7 +197,7 @@ function useLaunchMutations({ projectId }: { projectId: string }) {
       deleteAudit({ data: { projectId, auditId } }),
     onSuccess: () => {
       void invalidateHistory();
-      toast.success("Audit deleted");
+      toast.success("Auditoría eliminada");
     },
   });
 

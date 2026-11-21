@@ -6,6 +6,12 @@ import { EngineLabel } from "./EngineLabel";
 import type { AiTrackerPatch } from "@/types/schemas/ai-visibility";
 import { AiQueryError, aiMoney } from "./shared";
 
+const SCHEDULE_FREQUENCY: Record<string, string> = {
+  daily: "cada día",
+  weekly: "cada semana",
+  monthly: "cada mes",
+};
+
 export type TrackerSetupReviewData = {
   patch: AiTrackerPatch;
   estimate: AiCostEstimate;
@@ -39,17 +45,17 @@ export function TrackerSetupReview({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        Review your changes before saving.{" "}
+        Revisa los cambios antes de guardar.{" "}
         {enabled
-          ? "These settings apply to your enabled schedule."
+          ? "Estos ajustes se aplican a tu programación activa."
           : creating
-            ? "Tracking runs weekly. The first check is a week from now; use Run now for results sooner."
-            : "Track weekly to collect fresh answers once a week. A tracker that has never run on a schedule also runs its first check now."}
+            ? "El seguimiento es semanal. La primera comprobación será dentro de una semana; usa Ejecutar ahora para tener resultados antes."
+            : "Haz un seguimiento semanal para recopilar respuestas nuevas una vez por semana. Un rastreador que nunca se ha ejecutado de forma programada también hace ahora su primera comprobación."}
       </p>
       <dl className="grid grid-cols-2 gap-4 rounded-lg border p-4 text-sm border-border">
         {review.patch.engines && (
           <div>
-            <dt className="text-muted-foreground">Engines</dt>
+            <dt className="text-muted-foreground">Motores</dt>
             <dd className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
               {review.patch.engines?.map((engine) => (
                 <EngineLabel key={engine} engine={engine} />
@@ -59,19 +65,19 @@ export function TrackerSetupReview({
         )}
         {review.patch.prompts !== undefined && (
           <div>
-            <dt className="text-muted-foreground">New prompts</dt>
+            <dt className="text-muted-foreground">Prompts nuevos</dt>
             <dd className="mt-1">{review.patch.prompts?.length ?? 0}</dd>
           </div>
         )}
         {review.patch.prompts?.[0]?.topic && (
           <div>
-            <dt className="text-muted-foreground">Topic</dt>
+            <dt className="text-muted-foreground">Tema</dt>
             <dd className="mt-1">{review.patch.prompts[0].topic}</dd>
           </div>
         )}
         {review.patch.locationCode && review.patch.languageCode && (
           <div>
-            <dt className="text-muted-foreground">Market</dt>
+            <dt className="text-muted-foreground">Mercado</dt>
             <dd className="mt-1">
               {aiMarketLabel({
                 locationCode: review.patch.locationCode,
@@ -86,7 +92,7 @@ export function TrackerSetupReview({
           className="max-h-56 space-y-2 overflow-y-auto rounded-lg border p-4 border-border"
           data-ph-mask
         >
-          <h3 className="text-sm font-semibold">Prompts to add</h3>
+          <h3 className="text-sm font-semibold">Prompts que se añadirán</h3>
           {review.patch.prompts.map((prompt) => (
             <p
               key={prompt.text}
@@ -99,13 +105,17 @@ export function TrackerSetupReview({
       )}
       <div className="space-y-1 rounded-lg bg-muted/60 p-4 text-sm">
         <p>
-          Each run collects <strong>{review.estimate.observations}</strong>{" "}
-          {review.estimate.observations === 1 ? "answer" : "answers"} for{" "}
+          Cada ejecución recopila{" "}
+          <strong>{review.estimate.observations}</strong>{" "}
+          {review.estimate.observations === 1 ? "respuesta" : "respuestas"} por{" "}
           <strong>{aiMoney(review.estimate.costUsd)}</strong>
         </p>
         <p>
-          <strong>{aiMoney(review.estimate.monthlyCostUsd)}</strong> estimated
-          per month if it runs {review.estimate.scheduleInterval}.
+          <strong>{aiMoney(review.estimate.monthlyCostUsd)}</strong> estimados
+          al mes si se ejecuta{" "}
+          {SCHEDULE_FREQUENCY[review.estimate.scheduleInterval] ??
+            review.estimate.scheduleInterval}
+          .
         </p>
       </div>
       {!!error && <AiQueryError error={error} />}
@@ -116,7 +126,7 @@ export function TrackerSetupReview({
           disabled={pending}
           onClick={onBack}
         >
-          Back to editing
+          Volver a editar
         </Button>
         <Button
           type="button"
@@ -128,10 +138,10 @@ export function TrackerSetupReview({
             <Loader2 className="size-4 animate-spin" />
           )}
           {enabled
-            ? "Save reviewed changes"
+            ? "Guardar cambios revisados"
             : creating
-              ? "Save and track weekly"
-              : "Save as paused"}
+              ? "Guardar y seguir cada semana"
+              : "Guardar en pausa"}
         </Button>
         {paused && (
           <Button
@@ -144,7 +154,7 @@ export function TrackerSetupReview({
             {pending && scheduling && (
               <Loader2 className="size-4 animate-spin" />
             )}
-            Save and track weekly
+            Guardar y seguir cada semana
           </Button>
         )}
       </DialogFooter>

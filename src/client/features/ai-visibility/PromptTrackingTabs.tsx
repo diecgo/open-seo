@@ -9,11 +9,11 @@ export const PROMPT_TRACKING_TABS = [
   },
   {
     value: "competitors",
-    label: "Competitors",
+    label: "Competidores",
   },
   {
     value: "citations",
-    label: "Citations",
+    label: "Citas",
   },
 ] as const;
 export type PromptTrackingTab = (typeof PROMPT_TRACKING_TABS)[number]["value"];

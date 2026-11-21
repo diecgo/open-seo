@@ -55,12 +55,15 @@ function ReportsPage() {
                 />
               }
             >
-              Templates
+              Plantillas
             </Button>
           }
         />
 
-        <QueryState query={reportsQuery} errorFallback="Failed to load reports">
+        <QueryState
+          query={reportsQuery}
+          errorFallback="No se han podido cargar los informes"
+        >
           {(data) => (
             <ReportsList
               projectId={projectId}

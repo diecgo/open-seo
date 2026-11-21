@@ -26,16 +26,16 @@ export function KeywordResearchNoResults({
       <EmptyState
         variant="card"
         icon={Globe}
-        title="Not enough keyword data for this query yet"
+        title="Aún no hay datos suficientes de palabras clave para esta búsqueda"
         description={
           <>
-            We could not find keyword opportunities for
+            No hemos encontrado oportunidades de palabras clave para
             <span className="font-medium text-foreground">
               {` "${lastSearchKeyword}" `}
             </span>
-            in
+            en
             <span className="font-medium text-foreground">
-              {` ${LOCATIONS[lastSearchLocationCode] || "this location"}`}
+              {` ${LOCATIONS[lastSearchLocationCode] || "esta ubicación"}`}
             </span>
             .
           </>
@@ -93,8 +93,8 @@ function RecentSearchList({ controller, projectId }: Props) {
       onRemove={controller.removeHistoryItem}
       emptyIcon={Search}
       emptyIllustration={<KeywordRowsIllustration />}
-      emptyTitle="Enter a keyword to get started"
-      emptyDescription="Search for any keyword to see volume, difficulty, CPC, and related keyword ideas."
+      emptyTitle="Introduce una palabra clave para empezar"
+      emptyDescription="Busca cualquier palabra clave para ver su volumen, dificultad, CPC e ideas de palabras clave relacionadas."
       getTitle={(item) => item.keyword}
       getSubtitle={(item) => (
         <span className="inline-flex items-center gap-1.5">

@@ -50,7 +50,7 @@ export function MarkdownAnswer({ text }: Props) {
   if (normalized.trim().length === 0 && thinking.length === 0) {
     return (
       <p className="text-sm text-muted-foreground italic">
-        Model returned an empty response.
+        El modelo ha devuelto una respuesta vacía.
       </p>
     );
   }
@@ -100,12 +100,12 @@ export function MarkdownAnswer({ text }: Props) {
           {expanded ? (
             <>
               <ChevronUp data-icon="inline-start" />
-              Show less
+              Ver menos
             </>
           ) : (
             <>
               <ChevronDown data-icon="inline-start" />
-              Read more
+              Leer más
             </>
           )}
         </Button>
@@ -122,7 +122,7 @@ function ThinkingBlock({ text }: { text: string }) {
     >
       <CollapsibleTrigger className="group flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
         <ChevronDown className="size-3.5 transition-transform group-data-panel-open:rotate-180" />
-        Model Thinking
+        Razonamiento del modelo
       </CollapsibleTrigger>
       <CollapsibleContent>
         <pre className="overflow-x-auto rounded-b-lg border-t border-border bg-muted/60 px-3 py-2.5 font-mono text-xs break-words whitespace-pre-wrap text-foreground/80">

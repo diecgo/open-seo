@@ -23,25 +23,25 @@ export function GoogleOAuthSetupWarning({
     return (
       <Alert variant="info">
         <Info className="size-4" />
-        <AlertTitle>Add Google to Every App first</AlertTitle>
+        <AlertTitle>Añade primero Google a Every App</AlertTitle>
         <AlertDescription>
           <p>
-            An owner or admin does this once: create a Google OAuth client with
-            the redirect URI{" "}
+            Un propietario o administrador lo hace una sola vez: crea un cliente
+            OAuth de Google con la URI de redirección{" "}
             <code>
-              https://&lt;your gateway&gt;/connect/google-workspace/callback
+              https://&lt;tu gateway&gt;/connect/google-workspace/callback
             </code>
-            , then paste its client ID and secret in Every App under Manage
-            workspace → Providers, or run{" "}
+            , y pega su ID de cliente y su secreto en Every App, en Manage
+            workspace → Providers, o ejecuta{" "}
             <code>
               pnpm everyapp secret set GOOGLE_WORKSPACE_CLIENT_ID
               GOOGLE_WORKSPACE_CLIENT_SECRET
             </code>
-            . Then connect {integrationName} here.
+            . Después conecta {integrationName} aquí.
           </p>
           <SafeExternalLink
             url={EVERY_APP_GOOGLE_SETUP_URL}
-            label="How to add a provider"
+            label="Cómo añadir un proveedor"
             className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
           />
         </AlertDescription>
@@ -51,15 +51,15 @@ export function GoogleOAuthSetupWarning({
   return (
     <Alert variant="warning">
       <AlertTriangle className="size-4" />
-      <AlertTitle>Google OAuth client not configured</AlertTitle>
+      <AlertTitle>Cliente OAuth de Google sin configurar</AlertTitle>
       <AlertDescription>
         <p>
-          Add your Google client ID and secret to this OpenSEO deployment before
-          connecting {integrationName}.
+          Añade tu ID de cliente y tu secreto de Google a esta instalación de
+          OpenSEO antes de conectar {integrationName}.
         </p>
         <SafeExternalLink
           url={docsUrl}
-          label="Open setup guide"
+          label="Abrir guía de configuración"
           className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
         />
       </AlertDescription>

@@ -17,7 +17,7 @@ export function ProjectWebsiteGate({
   if (query.isError)
     return (
       <QueryError
-        fallback="Couldn't load your project."
+        fallback="No se ha podido cargar tu proyecto."
         error={query.error}
         onRetry={() => void query.refetch()}
         isRetrying={query.isFetching}

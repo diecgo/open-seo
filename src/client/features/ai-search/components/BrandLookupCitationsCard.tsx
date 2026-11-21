@@ -159,22 +159,22 @@ export function CitationTabsCard({
               {pagesActive ? (
                 <>
                   {isUrlScoped
-                    ? "Cited pages within "
-                    : "Pages cited alongside "}
+                    ? "Páginas citadas dentro de "
+                    : "Páginas citadas junto a "}
                   <strong className="text-foreground">
                     {result.resolvedTarget}
                   </strong>
-                  {isUrlScoped ? "." : " in AI answers."} Prompt examples come
-                  from the fetched sample.
+                  {isUrlScoped ? "." : " en respuestas de IA."} Los ejemplos de
+                  prompts proceden de la muestra obtenida.
                 </>
               ) : (
                 <>
-                  Fetched sample of prompts whose AI answer cited{" "}
-                  {isUrlScoped ? "a page within " : null}
+                  Muestra obtenida de prompts cuya respuesta de IA citó{" "}
+                  {isUrlScoped ? "una página dentro de " : null}
                   <strong className="text-foreground">
                     {result.resolvedTarget}
                   </strong>
-                  {isUrlScoped ? "." : " in its text or sources."}
+                  {isUrlScoped ? "." : " en su texto o en sus fuentes."}
                 </>
               )}
             </p>
@@ -189,8 +189,8 @@ export function CitationTabsCard({
           </div>
         }
       >
-        <TabsTrigger value="queries">Queries</TabsTrigger>
-        <TabsTrigger value="pages">Cited sources</TabsTrigger>
+        <TabsTrigger value="queries">Consultas</TabsTrigger>
+        <TabsTrigger value="pages">Fuentes citadas</TabsTrigger>
       </DataTableTabs>
       <DataTableToolbar
         actions={
@@ -228,10 +228,10 @@ export function CitationTabsCard({
       table={pagesTable}
       empty={{
         title: isUrlScoped
-          ? `None of this domain's top cited pages fall under ${result.resolvedTarget}.`
-          : "No cited sources to show.",
+          ? `Ninguna de las páginas más citadas de este dominio está dentro de ${result.resolvedTarget}.`
+          : "No hay fuentes citadas que mostrar.",
         description: isUrlScoped
-          ? "Broaden the scope to see domain-level citations."
+          ? "Amplía el ámbito para ver las citas a nivel de dominio."
           : undefined,
       }}
       {...tableProps}
@@ -241,10 +241,10 @@ export function CitationTabsCard({
       table={queriesTable}
       empty={{
         title: isUrlScoped
-          ? `No sampled prompts cited a page under ${result.resolvedTarget}.`
-          : "No matching queries found.",
+          ? `Ningún prompt de la muestra citó una página dentro de ${result.resolvedTarget}.`
+          : "No se han encontrado consultas que coincidan.",
         description: isUrlScoped
-          ? "Broaden the scope to see domain-level prompts."
+          ? "Amplía el ámbito para ver los prompts a nivel de dominio."
           : undefined,
       }}
       {...tableProps}

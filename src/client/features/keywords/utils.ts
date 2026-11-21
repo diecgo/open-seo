@@ -4,18 +4,18 @@ import type { MonthlySearch } from "@/types/keywords";
 export { LOCATIONS } from "./locations";
 
 export const MONTH_SHORT_LABELS = [
-  "Jan",
+  "Ene",
   "Feb",
   "Mar",
-  "Apr",
+  "Abr",
   "May",
   "Jun",
   "Jul",
-  "Aug",
+  "Ago",
   "Sep",
   "Oct",
   "Nov",
-  "Dec",
+  "Dic",
 ] as const;
 
 /** The most recent 12 months of a trend, oldest first. */

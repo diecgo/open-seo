@@ -54,7 +54,9 @@ export function ImportKeywordsButton({ projectId }: { projectId: string }) {
     },
     onSuccess: (count) => {
       setOpen(false);
-      toast.success(`Imported ${count} keyword${count === 1 ? "" : "s"}`);
+      toast.success(
+        `${count} palabra${count === 1 ? "" : "s"} clave importada${count === 1 ? "" : "s"}`,
+      );
     },
     // Saved chunks stay saved when a later step fails, so refresh either way.
     onSettled: () =>
@@ -65,7 +67,7 @@ export function ImportKeywordsButton({ projectId }: { projectId: string }) {
     <>
       <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
         <Upload data-icon="inline-start" />
-        Import keywords
+        Importar palabras clave
       </Button>
       {open ? (
         <ImportKeywordsDialog
@@ -135,22 +137,25 @@ function ImportKeywordsDialog({
     >
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Import keywords</DialogTitle>
+          <DialogTitle>Importar palabras clave</DialogTitle>
           <DialogDescription>
-            Paste one keyword per line, or a CSV with keywords in the first
-            column. They are saved for this project&apos;s country and language.
+            Pega una palabra clave por línea, o un CSV con las palabras clave en
+            la primera columna. Se guardan con el país y el idioma de este
+            proyecto.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor={listId}>Keywords</Label>
+            <Label htmlFor={listId}>Palabras clave</Label>
             <Textarea
               id={listId}
               rows={8}
               value={text}
               onChange={(event) => setText(event.target.value)}
-              placeholder={"best running shoes\nrunning shoes for flat feet"}
+              placeholder={
+                "mejores zapatillas de running\nzapatillas para pie plano"
+              }
             />
             <p
               className={
@@ -160,19 +165,19 @@ function ImportKeywordsDialog({
               }
             >
               {tooMany
-                ? `${keywords.length.toLocaleString()} keywords. Import up to ${MAX_IMPORT_KEYWORDS.toLocaleString()} at a time.`
-                : `${keywords.length.toLocaleString()} keyword${keywords.length === 1 ? "" : "s"} to import`}
+                ? `${keywords.length.toLocaleString()} palabras clave. Importa hasta ${MAX_IMPORT_KEYWORDS.toLocaleString()} de cada vez.`
+                : `${keywords.length.toLocaleString()} palabra${keywords.length === 1 ? "" : "s"} clave para importar`}
             </p>
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor={tagId}>Tag (optional)</Label>
+            <Label htmlFor={tagId}>Etiqueta (opcional)</Label>
             <Input
               id={tagId}
               value={tag}
               maxLength={64}
               onChange={(event) => setTag(event.target.value)}
-              placeholder="e.g. Client list"
+              placeholder="p. ej. Lista del cliente"
             />
           </div>
 
@@ -183,14 +188,15 @@ function ImportKeywordsDialog({
               onCheckedChange={(checked) => setFetchStats(checked)}
             />
             <Label htmlFor={statsId} className="font-normal leading-snug">
-              Fetch volume, difficulty, and CPC now. Each keyword uses credits.
+              Obtener ahora volumen, dificultad y CPC. Cada palabra clave
+              consume créditos.
             </Label>
           </div>
         </div>
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose} disabled={isPending}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             disabled={!canImport}
@@ -198,7 +204,7 @@ function ImportKeywordsDialog({
               onImport({ keywords, tag: tag.trim() || null, fetchStats })
             }
           >
-            {isPending ? "Importing..." : "Import"}
+            {isPending ? "Importando..." : "Importar"}
           </Button>
         </DialogFooter>
       </DialogContent>

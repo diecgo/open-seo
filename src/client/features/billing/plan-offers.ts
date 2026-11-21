@@ -17,25 +17,25 @@ export type PlanOffer = {
 
 export const BASE_PLAN_OFFER: PlanOffer = {
   planId: AUTUMN_PAID_PLAN_ID,
-  name: "Base Plan",
+  name: "Plan Base",
   priceUsd: 10,
   monthlyCreditsUsd: 10,
 };
 
 export const PRO_PLAN_OFFER: PlanOffer = {
   planId: AUTUMN_PRO_PLAN_ID,
-  name: "Pro Plan",
+  name: "Plan Pro",
   priceUsd: 30,
   monthlyCreditsUsd: 36,
 };
 
 export const AGENCY_PLAN_OFFER: PlanOffer = {
   planId: AUTUMN_AGENCY_PLAN_ID,
-  name: "Agency Plan",
+  name: "Plan Agency",
   priceUsd: 100,
   monthlyCreditsUsd: 120,
 };
 
 export function monthlyCreditsFeature(offer: PlanOffer) {
-  return `Includes $${offer.monthlyCreditsUsd.toFixed(2)} of Usage Credits each month`;
+  return `Incluye $${offer.monthlyCreditsUsd.toFixed(2)} en créditos de uso cada mes`;
 }

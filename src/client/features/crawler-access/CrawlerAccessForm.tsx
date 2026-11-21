@@ -22,7 +22,7 @@ export function CrawlerAccessSetupHint() {
   if (isEveryAppClientAuthMode()) {
     return (
       <>
-        An admin sets <code>CRAWLER_ACCESS_SECRET</code> with{" "}
+        Un administrador configura <code>CRAWLER_ACCESS_SECRET</code> con{" "}
         <code>
           pnpm everyapp secret set CRAWLER_ACCESS_SECRET --app openseo
         </code>
@@ -32,8 +32,9 @@ export function CrawlerAccessSetupHint() {
   }
   return (
     <>
-      An admin sets <code>CRAWLER_ACCESS_SECRET</code> to at least 32 random
-      characters in the deployment's environment, then redeploys.
+      Un administrador configura <code>CRAWLER_ACCESS_SECRET</code> con al menos
+      32 caracteres aleatorios en el entorno de la instalación y vuelve a
+      desplegar.
     </>
   );
 }
@@ -44,16 +45,16 @@ export function useCrawlerAccessNeedsSetup(projectId: string) {
 }
 
 const signatureSchema = z.object({
-  host: z.string().trim().min(1, "Enter a domain."),
+  host: z.string().trim().min(1, "Introduce un dominio."),
   signatureInput: z
     .string()
     .trim()
-    .min(1, "Enter Signature-Input.")
+    .min(1, "Introduce Signature-Input.")
     .refine(
       (value) => !isCrawlerAccessExpired(parseSignatureExpiry(value)),
-      "This signature has already expired. Create a new one in Shopify admin.",
+      "Esta firma ya ha caducado. Crea una nueva en el admin de Shopify.",
     ),
-  signature: z.string().trim().min(1, "Enter Signature."),
+  signature: z.string().trim().min(1, "Introduce Signature."),
 });
 
 /**
@@ -85,7 +86,9 @@ export function CrawlerAccessForm({
       await queryClient.invalidateQueries({
         queryKey: crawlerCredentialsQueryKey,
       });
-      toast.success(`Crawler access saved for ${result.credential.host}`);
+      toast.success(
+        `Acceso del rastreador web guardado para ${result.credential.host}`,
+      );
       onSaved?.();
     },
   });
@@ -103,8 +106,8 @@ export function CrawlerAccessForm({
             fields: {
               signatureInput:
                 problem.reason === "wrong_domain"
-                  ? `This signature was created for ${problem.signedHost}, not ${problem.host}. In Shopify admin, create a signature for ${problem.host}.`
-                  : `Shopify won't accept this signature for ${problem.host}. Check that you created it for ${problem.host} and copied both values in full.`,
+                  ? `Esta firma se creó para ${problem.signedHost}, no para ${problem.host}. En el admin de Shopify, crea una firma para ${problem.host}.`
+                  : `Shopify no acepta esta firma para ${problem.host}. Comprueba que la creaste para ${problem.host} y que copiaste los dos valores completos.`,
             },
           },
         });
@@ -129,7 +132,7 @@ export function CrawlerAccessForm({
           <form.AppField name="host">
             {(field) => (
               <field.TextField
-                label="Domain"
+                label="Dominio"
                 placeholder="store.example.com"
                 className="font-mono"
                 required
@@ -154,7 +157,7 @@ export function CrawlerAccessForm({
           {(field) => (
             <field.TextField
               label="Signature"
-              description="Shopify also shows a Signature-Agent value. You don't need to paste it: OpenSEO sends it with every request."
+              description="Shopify también muestra un valor Signature-Agent. No hace falta que lo pegues: OpenSEO lo envía en cada petición."
               type="password"
               autoComplete="off"
               data-ph-mask
@@ -165,7 +168,7 @@ export function CrawlerAccessForm({
           )}
         </form.AppField>
         <form.SubmitButton disabled={!projectId}>
-          Save signature
+          Guardar firma
         </form.SubmitButton>
       </form.Form>
     </form.AppForm>

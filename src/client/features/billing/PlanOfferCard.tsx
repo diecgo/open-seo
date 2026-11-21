@@ -52,7 +52,9 @@ export function PlanOfferCard({
               <span className="text-3xl font-semibold tracking-tight tabular-nums">
                 ${priceUsd.toLocaleString()}
               </span>
-              <span className="text-sm text-muted-foreground">/{period}</span>
+              <span className="text-sm text-muted-foreground">
+                /{period === "year" ? "año" : "mes"}
+              </span>
             </p>
             <p className="text-sm text-muted-foreground">
               {monthlyCreditsFeature(offer)}
@@ -87,14 +89,14 @@ export function PlanGuarantee() {
     <p className="text-center text-xs text-muted-foreground">
       <Tooltip>
         <TooltipTrigger className={cn(PLAN_FOOTER_LINK_CLASS, "cursor-help")}>
-          30-day money-back guarantee
+          Garantía de devolución de 30 días
         </TooltipTrigger>
         <TooltipContent>
-          Not for you yet? Email {SUPPORT_EMAIL} within 30 days of your charge
-          and we'll refund your subscription.
+          ¿Aún no te convence? Escribe a {SUPPORT_EMAIL} en los 30 días
+          siguientes al cobro y te devolveremos la suscripción.
         </TooltipContent>
       </Tooltip>
-      . Cancel anytime. Powered by Stripe.
+      . Cancela cuando quieras. Pagos con Stripe.
     </p>
   );
 }

@@ -63,27 +63,28 @@ const LANGUAGE_ITEMS = SERP_LANGUAGE_OPTIONS.map((language) => ({
 }));
 
 const DEVICE_ITEMS: { value: SaveConfigInput["devices"]; label: string }[] = [
-  { value: "both", label: "Desktop + Mobile" },
-  { value: "desktop", label: "Desktop only" },
-  { value: "mobile", label: "Mobile only" },
+  { value: "both", label: "Escritorio + Móvil" },
+  { value: "desktop", label: "Solo escritorio" },
+  { value: "mobile", label: "Solo móvil" },
 ];
 
 const DEPTH_ITEMS = Array.from({ length: 10 }, (_, i) => i + 1).map(
   (pages) => ({
     value: pagesToDepth(pages),
-    label: `${pages} ${pages === 1 ? "page" : "pages"} (top ${pages * 10} results)`,
+    label: `${pages} ${pages === 1 ? "página" : "páginas"} (top ${pages * 10} resultados)`,
   }),
 );
 
 function validateConfig(values: ConfigFormValues) {
   const fields: Partial<Record<keyof ConfigFormValues, string>> = {};
   if (!values.domain.trim()) {
-    fields.domain = "Enter a domain";
+    fields.domain = "Introduce un dominio";
   } else if (!domainField.safeParse(values.domain).success) {
-    fields.domain = "Enter a valid domain, like example.com";
+    fields.domain = "Introduce un dominio válido, como example.com";
   }
   if (values.targetingMode === "local" && !values.locationName) {
-    fields.locationName = "Select a city or region for local targeting";
+    fields.locationName =
+      "Elige una ciudad o región para la segmentación local";
   }
   return Object.keys(fields).length > 0 ? { fields } : undefined;
 }
@@ -114,7 +115,7 @@ export function RankTrackingConfigModal({
       >
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle className="sr-only">Add Domain</DialogTitle>
+            <DialogTitle className="sr-only">Añadir dominio</DialogTitle>
           </DialogHeader>
           <div className="flex min-h-40 items-center justify-center">
             {projectsQuery.isPending ? (
@@ -122,7 +123,7 @@ export function RankTrackingConfigModal({
             ) : (
               <QueryError
                 error={projectsQuery.error}
-                fallback="Failed to load the project."
+                fallback="No se ha podido cargar el proyecto."
                 onRetry={() => void projectsQuery.refetch()}
                 isRetrying={projectsQuery.isFetching}
               />
@@ -245,7 +246,9 @@ function RankTrackingConfigModalContent({
             <form.Form className="flex flex-col gap-4">
               <DialogHeader>
                 <DialogTitle>
-                  {isEdit ? "Edit Domain Config" : "Add Domain"}
+                  {isEdit
+                    ? "Editar configuración del dominio"
+                    : "Añadir dominio"}
                 </DialogTitle>
               </DialogHeader>
 
@@ -265,14 +268,14 @@ function RankTrackingConfigModalContent({
               >
                 {(field) => (
                   <field.TextField
-                    label="Target Domain"
+                    label="Dominio objetivo"
                     placeholder="example.com"
                   />
                 )}
               </form.AppField>
 
               <Field>
-                <FieldLabel htmlFor={countryId}>Country</FieldLabel>
+                <FieldLabel htmlFor={countryId}>País</FieldLabel>
                 <CountryCombobox
                   id={countryId}
                   value={values.locationCode}
@@ -306,9 +309,9 @@ function RankTrackingConfigModalContent({
               <form.AppField name="languageCode">
                 {(field) => (
                   <field.SelectField
-                    label="Language"
+                    label="Idioma"
                     items={LANGUAGE_ITEMS}
-                    description="Defaults to the country's language. Any language can be tracked in any country — pick the one your customers search in."
+                    description="Por defecto, el idioma del país. Puedes seguir cualquier idioma en cualquier país: elige el que usan tus clientes para buscar."
                   />
                 )}
               </form.AppField>
@@ -317,16 +320,17 @@ function RankTrackingConfigModalContent({
                 <form.AppField name="devices">
                   {(field) => (
                     <field.SelectField
-                      label="Devices"
+                      label="Dispositivos"
                       items={DEVICE_ITEMS}
-                      description="Most Google searches come from mobile, but select this based on your customer."
+                      description="La mayoría de las búsquedas en Google son desde el móvil, pero elige según tu cliente."
                     />
                   )}
                 </form.AppField>
                 {values.devices === "both" && (
                   <p className="flex items-start gap-1.5 text-xs text-info">
                     <Info className="mt-0.5 size-3.5 shrink-0" />
-                    Tracking both devices uses 2x credits per keyword check
+                    Seguir ambos dispositivos usa el doble de créditos por
+                    comprobación
                   </p>
                 )}
               </div>
@@ -346,9 +350,9 @@ function RankTrackingConfigModalContent({
               <form.AppField name="serpDepth">
                 {(field) => (
                   <field.SelectField
-                    label="Search Depth"
+                    label="Profundidad de búsqueda"
                     items={DEPTH_ITEMS}
-                    description="10 pages is ~8x more expensive than 1 page"
+                    description="10 páginas cuestan unas 8 veces más que 1 página"
                   />
                 )}
               </form.AppField>
@@ -366,10 +370,10 @@ function RankTrackingConfigModalContent({
                   onClick={onClose}
                   disabled={isSubmitting}
                 >
-                  Cancel
+                  Cancelar
                 </Button>
                 <form.SubmitButton>
-                  {isEdit ? "Save Changes" : "Add Domain"}
+                  {isEdit ? "Guardar cambios" : "Añadir dominio"}
                 </form.SubmitButton>
               </DialogFooter>
             </form.Form>
@@ -396,18 +400,18 @@ function CostEstimate({
     <div className="space-y-0.5 rounded-lg bg-muted px-3 py-2.5 text-xs text-muted-foreground">
       <div>
         <span className="font-mono font-semibold text-foreground">
-          up to ${costPerKeyword.toFixed(4)}
+          hasta ${costPerKeyword.toFixed(4)}
         </span>{" "}
-        per keyword per check
+        por palabra clave y comprobación
       </div>
       <div>{RANK_CHECK_DURATION_COPY}</div>
       {schedule !== "manual" && (
         <div>
-          50 keywords would cost up to{" "}
+          50 palabras clave costarían hasta{" "}
           <span className="font-mono font-semibold text-foreground">
             ${(costPerKeyword * 50 * checksPerMonth).toFixed(2)}
           </span>
-          /month
+          /mes
         </div>
       )}
     </div>

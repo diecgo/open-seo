@@ -25,12 +25,12 @@ import type { ExportFormat } from "@/client/lib/exportRows";
 type ExportAction = ExportFormat | "copy-list";
 
 const ACTION_ITEMS: Record<ExportAction, { label: string; icon: ReactNode }> = {
-  sheets: { label: "Export to Sheets", icon: <Sheet /> },
-  csv: { label: "Export CSV", icon: <FileDown /> },
-  excel: { label: "Export Excel", icon: <FileSpreadsheet /> },
-  json: { label: "Download JSON", icon: <FileJson /> },
-  "copy-json": { label: "Copy JSON", icon: <Copy /> },
-  "copy-list": { label: "Copy list", icon: <List /> },
+  sheets: { label: "Exportar a Sheets", icon: <Sheet /> },
+  csv: { label: "Exportar CSV", icon: <FileDown /> },
+  excel: { label: "Exportar Excel", icon: <FileSpreadsheet /> },
+  json: { label: "Descargar JSON", icon: <FileJson /> },
+  "copy-json": { label: "Copiar JSON", icon: <Copy /> },
+  "copy-list": { label: "Copiar lista", icon: <List /> },
 };
 
 /**
@@ -80,7 +80,7 @@ export function ExportMenu<A extends ExportAction>({
         }
       >
         {busy ? null : <Download data-icon="inline-start" />}
-        Export
+        Exportar
         <ChevronDown data-icon="inline-end" className="opacity-60" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">

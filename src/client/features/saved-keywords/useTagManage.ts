@@ -40,9 +40,14 @@ export function useTagManage(projectId: string) {
         },
       });
       await invalidate();
-      toast.success("Tag updated");
+      toast.success("Etiqueta actualizada");
     } catch (error) {
-      toast.error(getStandardErrorMessage(error, "Could not update tag"));
+      toast.error(
+        getStandardErrorMessage(
+          error,
+          "No se ha podido actualizar la etiqueta",
+        ),
+      );
     } finally {
       markBusy(input.tagId, false);
     }
@@ -53,13 +58,13 @@ export function useTagManage(projectId: string) {
     try {
       await deleteSavedKeywordTag({ data: { projectId, tagId } });
       await invalidate();
-      toast.success("Tag deleted");
+      toast.success("Etiqueta eliminada");
       return true;
     } catch (error) {
       toast.error(
         getStandardErrorMessage(
           error,
-          "Could not delete tag. Detach it from all keywords and try again.",
+          "No se ha podido eliminar la etiqueta. Quítala de todas las palabras clave y vuelve a intentarlo.",
         ),
       );
       return false;

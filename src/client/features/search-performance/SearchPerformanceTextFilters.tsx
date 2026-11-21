@@ -14,8 +14,8 @@ import {
 import type { searchPerformanceInputSchema } from "@/types/schemas/search-performance";
 
 const MATCH_ITEMS = [
-  { value: "contains", label: "Contains" },
-  { value: "equals", label: "Exactly matches" },
+  { value: "contains", label: "Contiene" },
+  { value: "equals", label: "Coincide exactamente" },
 ];
 
 export type TextFilters = Pick<
@@ -82,13 +82,13 @@ export function SearchPerformanceTextFilters({
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-semibold">Refine table results</p>
+          <p className="text-sm font-semibold">Afinar resultados de la tabla</p>
           {activeFilterCount > 0 ? (
-            <Badge size="sm">{activeFilterCount} active</Badge>
+            <Badge size="sm">{activeFilterCount} activos</Badge>
           ) : null}
           {dirtyCount > 0 ? (
             <Badge variant="warning" size="sm">
-              {dirtyCount} unapplied
+              {dirtyCount} sin aplicar
             </Badge>
           ) : null}
         </div>
@@ -106,13 +106,13 @@ export function SearchPerformanceTextFilters({
           }}
         >
           <RotateCcw data-icon="inline-start" />
-          Clear all
+          Borrar todo
         </Button>
       </div>
       <div className="grid gap-3 md:grid-cols-2">
         <div className="space-y-1.5">
           <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Page URL
+            URL de la página
           </span>
           <div className="flex flex-col gap-2 sm:flex-row">
             <Select
@@ -125,7 +125,7 @@ export function SearchPerformanceTextFilters({
               <SelectTrigger
                 size="sm"
                 className="w-full sm:w-44 sm:shrink-0"
-                aria-label="Page match"
+                aria-label="Coincidencia de página"
               >
                 <SelectValue />
               </SelectTrigger>
@@ -139,17 +139,17 @@ export function SearchPerformanceTextFilters({
             </Select>
             <Input
               className="h-7 w-full min-w-0 sm:flex-1"
-              aria-label="Page URL filter"
+              aria-label="Filtro de URL de la página"
               value={page}
               maxLength={4096}
               onChange={(event) => setPage(event.target.value)}
-              placeholder="URL or subfolder"
+              placeholder="URL o subcarpeta"
             />
           </div>
         </div>
         <div className={showQuery ? "space-y-1.5" : "hidden"}>
           <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Query
+            Consulta
           </span>
           <div className="flex flex-col gap-2 sm:flex-row">
             <Select
@@ -162,7 +162,7 @@ export function SearchPerformanceTextFilters({
               <SelectTrigger
                 size="sm"
                 className="w-full sm:w-44 sm:shrink-0"
-                aria-label="Query match"
+                aria-label="Coincidencia de consulta"
               >
                 <SelectValue />
               </SelectTrigger>
@@ -176,19 +176,20 @@ export function SearchPerformanceTextFilters({
             </Select>
             <Input
               className="h-7 w-full min-w-0 sm:flex-1"
-              aria-label="Query filter"
+              aria-label="Filtro de consulta"
               value={query}
               maxLength={4096}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search term"
+              placeholder="Término de búsqueda"
             />
           </div>
         </div>
       </div>
       <p className="text-xs text-muted-foreground">
-        All filters must match. Contains ignores case and matches text anywhere,
-        including a subfolder. Exactly matches compares the full URL or query,
-        including case.
+        Deben cumplirse todos los filtros. «Contiene» no distingue mayúsculas y
+        encuentra el texto en cualquier parte, incluida una subcarpeta.
+        «Coincide exactamente» compara la URL o la consulta completa, mayúsculas
+        incluidas.
       </p>
       <div className="flex items-center justify-end gap-2 pt-1">
         <Button
@@ -198,10 +199,10 @@ export function SearchPerformanceTextFilters({
           onClick={cancel}
           disabled={dirtyCount === 0}
         >
-          Cancel
+          Cancelar
         </Button>
         <Button size="sm" type="submit" disabled={dirtyCount === 0}>
-          Apply filters
+          Aplicar filtros
           {dirtyCount > 0 ? (
             <Badge variant="secondary" size="sm" className="ml-1">
               {dirtyCount}

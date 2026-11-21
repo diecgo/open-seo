@@ -18,32 +18,32 @@ export function SamSetupGate({
     <GateCard
       icon={Wrench}
       tone="warning"
-      title="Enable AI Features"
+      title="Activa las funciones de IA"
       description={
         <>
           {isEveryAppClientAuthMode() ? (
             <p>
-              SAM, OpenSEO&apos;s in-app AI agent, uses OpenRouter through your
-              Every App gateway. An admin creates a key on OpenRouter and sets
-              it on the gateway with{" "}
-              <code>pnpm everyapp secret set OPENROUTER_API_KEY</code>, then
-              confirm here.
+              SAM, el agente de IA integrado en OpenSEO, usa OpenRouter a través
+              de tu gateway de Every App. Un administrador crea una clave en
+              OpenRouter y la configura en el gateway con{" "}
+              <code>pnpm everyapp secret set OPENROUTER_API_KEY</code>; después,
+              confírmalo aquí.
             </p>
           ) : (
             <p>
-              SAM, OpenSEO&apos;s in-app AI agent, needs an OpenRouter API key.
-              Create a key on OpenRouter, set it as the{" "}
-              <code>OPENROUTER_API_KEY</code> environment variable, restart
-              OpenSEO, then confirm here.
+              SAM, el agente de IA integrado en OpenSEO, necesita una clave de
+              API de OpenRouter. Crea una clave en OpenRouter, configúrala como
+              la variable de entorno <code>OPENROUTER_API_KEY</code>, reinicia
+              OpenSEO y confírmalo aquí.
             </p>
           )}
           <p className="text-xs">
-            Step-by-step instructions for every deployment are in the{" "}
+            Tienes las instrucciones paso a paso para cada despliegue en la{" "}
             <Link
               className="underline underline-offset-2 hover:text-foreground"
               to="/help/openrouter-api-key"
             >
-              OpenRouter API key setup guide
+              guía de configuración de la clave de API de OpenRouter
             </Link>
             .
           </p>
@@ -52,7 +52,7 @@ export function SamSetupGate({
       actions={
         <>
           <Button size="lg" pending={isRefetching} onClick={onRetry}>
-            Confirm API Key
+            Confirmar clave de API
           </Button>
           <Button
             size="lg"
@@ -66,7 +66,7 @@ export function SamSetupGate({
               />
             }
           >
-            Open OpenRouter Keys
+            Abrir claves de OpenRouter
           </Button>
         </>
       }

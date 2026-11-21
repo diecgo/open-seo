@@ -23,11 +23,11 @@ interface PromptPeriod {
 }
 
 const options = [
-  { value: PromptRange.Last7, label: "Last 7 days" },
-  { value: PromptRange.Last28, label: "Last 28 days" },
-  { value: PromptRange.Last90, label: "Last 90 days" },
-  { value: PromptRange.All, label: "All available history" },
-  { value: PromptRange.Custom, label: "Custom range" },
+  { value: PromptRange.Last7, label: "Últimos 7 días" },
+  { value: PromptRange.Last28, label: "Últimos 28 días" },
+  { value: PromptRange.Last90, label: "Últimos 90 días" },
+  { value: PromptRange.All, label: "Todo el historial disponible" },
+  { value: PromptRange.Custom, label: "Periodo personalizado" },
 ];
 
 function localDate(value: Date) {
@@ -81,7 +81,7 @@ export function PromptDateRange({
             );
         }}
       >
-        <SelectTrigger size="sm" aria-label="Analysis date range">
+        <SelectTrigger size="sm" aria-label="Periodo del análisis">
           <CalendarDays className="size-3.5" />
           <SelectValue />
         </SelectTrigger>
@@ -97,7 +97,7 @@ export function PromptDateRange({
         <>
           <Input
             type="date"
-            aria-label="Period start date"
+            aria-label="Fecha de inicio del periodo"
             className="h-7 w-36 text-xs"
             value={value.start}
             max={value.end || undefined}
@@ -105,10 +105,10 @@ export function PromptDateRange({
               onChange({ ...value, start: event.target.value })
             }
           />
-          <span className="text-xs text-muted-foreground">to</span>
+          <span className="text-xs text-muted-foreground">a</span>
           <Input
             type="date"
-            aria-label="Period end date"
+            aria-label="Fecha de fin del periodo"
             className="h-7 w-36 text-xs"
             value={value.end}
             min={value.start || undefined}
@@ -118,7 +118,7 @@ export function PromptDateRange({
           />
           {(!value.start || !value.end || value.start > value.end) && (
             <p role="alert" className="w-full text-xs text-destructive">
-              Choose a start date on or before the end date.
+              Elige una fecha de inicio igual o anterior a la de fin.
             </p>
           )}
         </>

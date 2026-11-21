@@ -150,7 +150,7 @@ function BillingPage() {
       ) : !account ? (
         <QueryError
           cause={accountQuery.error}
-          fallback="We couldn't load your billing details right now. Please try again."
+          fallback="No hemos podido cargar tus datos de facturación. Inténtalo de nuevo."
           onRetry={() => void accountQuery.refetch()}
           isRetrying={accountQuery.isFetching}
         />
@@ -159,7 +159,7 @@ function BillingPage() {
           {accountQuery.isError ? (
             <QueryError
               cause={accountQuery.error}
-              fallback="Failed to refresh billing details"
+              fallback="No se han podido actualizar los datos de facturación"
               onRetry={() => void accountQuery.refetch()}
               isRetrying={accountQuery.isFetching}
             />
@@ -177,17 +177,19 @@ function BillingPage() {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="space-y-1">
                   <p className="text-xl font-semibold tracking-tight">
-                    {account.paidPlanId ? account.paidPlanName : "Free Plan"}
+                    {account.paidPlanId
+                      ? account.paidPlanName
+                      : "Plan gratuito"}
                   </p>
                   {account.paidPlanId ? (
                     <p className="text-sm text-muted-foreground">
-                      ${account.monthlyCreditsUsd.toFixed(2)} of credits each
-                      month
+                      ${account.monthlyCreditsUsd.toFixed(2)} en créditos cada
+                      mes
                     </p>
                   ) : canManageBilling ? (
                     <p className="text-sm text-muted-foreground">
-                      Upgrade to access every feature and more credits each
-                      month
+                      Mejora tu plan para acceder a todas las funciones y a más
+                      créditos cada mes
                     </p>
                   ) : null}
                 </div>
@@ -200,7 +202,7 @@ function BillingPage() {
                       <Link to={SUBSCRIBE_ROUTE} search={{ upgrade: true }} />
                     }
                   >
-                    Upgrade Plan
+                    Mejorar plan
                   </Button>
                 ) : (
                   <div className="flex flex-wrap gap-2">
@@ -214,13 +216,13 @@ function BillingPage() {
                         void runAction(
                           "plan",
                           openPortal,
-                          "We couldn't open the billing portal. Please try again.",
+                          "No hemos podido abrir el portal de facturación. Inténtalo de nuevo.",
                         )
                       }
                     >
                       {pendingAction === "plan"
-                        ? "Redirecting to Stripe..."
-                        : "Manage subscription"}
+                        ? "Redirigiendo a Stripe…"
+                        : "Gestionar suscripción"}
                     </Button>
                   </div>
                 )}
@@ -228,8 +230,8 @@ function BillingPage() {
 
               {!canManageBilling ? (
                 <p className="text-sm text-muted-foreground">
-                  Only the organization owner can change the plan or buy
-                  credits. Ask them if you need more.
+                  Solo el propietario de la organización puede cambiar el plan o
+                  comprar créditos. Pídeselo si necesitas más.
                 </p>
               ) : (
                 actionError("plan")
@@ -243,11 +245,11 @@ function BillingPage() {
             {canManageBilling ? (
               <>
                 <BillingRow
-                  label="Top-up credits"
+                  label="Créditos de recarga"
                   summary={
                     isFreePlan
-                      ? "Need more than your monthly credits? On a paid plan, buy as many as you need. They never expire."
-                      : "Never expire and are used after your monthly credits."
+                      ? "¿Necesitas más que tus créditos mensuales? Con un plan de pago, compra todos los que necesites. No caducan nunca."
+                      : "No caducan nunca y se usan después de tus créditos mensuales."
                   }
                   action={
                     isFreePlan || buyingCredits ? null : (
@@ -256,7 +258,7 @@ function BillingPage() {
                         size="sm"
                         onClick={() => setBuyingCredits(true)}
                       >
-                        Buy credits
+                        Comprar créditos
                       </Button>
                     )
                   }
@@ -273,7 +275,7 @@ function BillingPage() {
                               max={TOP_UP_MAX_USD}
                               step={1}
                               inputMode="numeric"
-                              aria-label="Top-up amount in USD"
+                              aria-label="Importe de la recarga en USD"
                               aria-invalid={showTopUpError}
                               autoFocus
                               value={topUpAmount}
@@ -293,13 +295,13 @@ function BillingPage() {
                             void runAction(
                               "topUp",
                               startTopUpCheckout,
-                              "We couldn't start the checkout. Please try again.",
+                              "No hemos podido iniciar el pago. Inténtalo de nuevo.",
                             )
                           }
                         >
                           {pendingAction === "topUp"
-                            ? "Redirecting to Stripe..."
-                            : `Buy $${parsedTopUpAmount} of credits`}
+                            ? "Redirigiendo a Stripe…"
+                            : `Comprar $${parsedTopUpAmount} en créditos`}
                         </Button>
                         <Button
                           variant="ghost"
@@ -311,18 +313,18 @@ function BillingPage() {
                             setError((e) => (e?.action === "topUp" ? null : e));
                           }}
                         >
-                          Cancel
+                          Cancelar
                         </Button>
                       </div>
                       {showTopUpError ? (
                         <p className="text-xs text-destructive">
-                          Enter between ${TOP_UP_MIN_USD}–${TOP_UP_MAX_USD}.
+                          Introduce entre ${TOP_UP_MIN_USD} y ${TOP_UP_MAX_USD}.
                         </p>
                       ) : null}
                       {budgetSpent ? (
                         <p className="text-xs text-muted-foreground">
-                          You&rsquo;ve hit your monthly auto-reload budget.
-                          Raise it below to buy more.
+                          Has alcanzado tu presupuesto mensual de recarga
+                          automática. Súbelo abajo para comprar más.
                         </p>
                       ) : null}
                       {actionError("topUp")}
@@ -337,8 +339,8 @@ function BillingPage() {
                   <AutoReloadSettings />
                 ) : (
                   <BillingRow
-                    label="Auto-reload"
-                    summary="On a paid plan, buy more automatically when you run low, up to a monthly budget you set."
+                    label="Recarga automática"
+                    summary="Con un plan de pago, compra más automáticamente cuando te quedes sin créditos, hasta el presupuesto mensual que fijes."
                   />
                 )}
               </>
@@ -363,7 +365,7 @@ function BillingPage() {
       />
 
       <p className="text-xs text-muted-foreground">
-        Billing is powered by Stripe.
+        La facturación funciona con Stripe.
       </p>
     </div>
   );

@@ -60,12 +60,12 @@ export function LocalAreaDialog({
   });
   return (
     <FormDialog
-      title="Change area"
+      title="Cambiar zona"
       onClose={onClose}
       actions={
         <>
           <Button variant="outline" disabled={save.isPending} onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <form.Subscribe
             selector={(state) => !state.values.area || state.isDefaultValue}
@@ -77,7 +77,7 @@ export function LocalAreaDialog({
                 pending={save.isPending}
                 disabled={disabled}
               >
-                Save area
+                Guardar zona
               </Button>
             )}
           </form.Subscribe>
@@ -89,8 +89,8 @@ export function LocalAreaDialog({
           <form.AppField name="area">
             {(field) => (
               <field.SelectField
-                label="Area to check"
-                description="New checks search this area. Earlier results are kept."
+                label="Zona que comprobar"
+                description="Las nuevas comprobaciones buscarán en esta zona. Los resultados anteriores se conservan."
                 items={LOCAL_AREA_ITEMS}
               />
             )}
@@ -114,7 +114,10 @@ export function LocalAreaDialog({
         </form.Form>
       </form.AppForm>
       {save.isError && (
-        <QueryError error={save.error} fallback="Could not save this area." />
+        <QueryError
+          error={save.error}
+          fallback="No se ha podido guardar esta zona."
+        />
       )}
     </FormDialog>
   );
