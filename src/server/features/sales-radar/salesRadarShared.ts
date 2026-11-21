@@ -1,5 +1,7 @@
 /** Types and helpers shared by the sales radar rules and service. */
 
+import { getIssueDescriptor } from "@/shared/audit-issues";
+
 export const SERVICES = {
   maps: "SEO local en Google Maps",
   reviews: "Gestión de ficha y reseñas",
@@ -72,8 +74,9 @@ export const CRAWLER_ISSUES = new Set([
   "crawl-credits-exhausted",
   "crawl-page-limit",
 ]);
+/** The issue's readable title, falling back to its id for unknown types. */
 export const label = (i: { issueType: string; pages: number }) =>
-  `${i.issueType} (${i.pages} pág.)`;
+  `${getIssueDescriptor(i.issueType)?.title ?? i.issueType} (${i.pages} pág.)`;
 
 export function examples(items: string[], max = 3) {
   const shown = items.slice(0, max).join(", ");

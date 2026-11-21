@@ -71,6 +71,9 @@ describe("evaluateSalesRadar", () => {
     expect(weight("organic-near-top-ten")).toBe(12);
     expect(weight("maps-reviews")).toBe(20);
     expect(weight("technical-serious")).toBe(25);
+    expect(
+      result.signals.find((s) => s.id === "technical-serious")?.evidence,
+    ).toContain("Error del servidor (5xx) (3 pág.)");
     expect(weight("technical-issues")).toBeUndefined();
     expect(result.score).toBe(100);
     expect(result.signals[0].weight).toBe(30);
